@@ -115,6 +115,16 @@
             android:id="@+id/comments"
             android:textColor="@color/colorGray"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="10 hours ago"
+            android:id="@+id/time"
+            android:textColor="@color/colorGray"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

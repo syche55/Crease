@@ -8,4 +8,6 @@
     <string name="title_profile">Profile</string>
     <string name="username">Username</string>
     <string name="bookname">BookName</string>
+    <string name="crease">Crease</string>
+    <string name="record_the_days_reading_books">Record the days reading books</string>
 </resources>
