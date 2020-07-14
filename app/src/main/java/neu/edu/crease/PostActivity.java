@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import neu.edu.crease.data.model.Posts;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+
+import neu.edu.crease.Model.Post;
 
 public class PostActivity extends AppCompatActivity {
     private Uri imageUri;
@@ -67,6 +68,10 @@ public class PostActivity extends AppCompatActivity {
         edit_post_submit_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Bundle extras = getIntent().getExtras();
+                if (extras != null && extras.containsKey("KEY")) {
+                    imageUri= Uri.parse(extras.getString("KEY"));
+                }
                 uploadPost();      // connect zongwei's part
             }
         });
@@ -98,8 +103,9 @@ public class PostActivity extends AppCompatActivity {
 
                         String postID = reference.push().getKey();
 
-                        Posts newPost = new Posts(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
+
 
                         reference.child(postID).setValue(newPost);
 
