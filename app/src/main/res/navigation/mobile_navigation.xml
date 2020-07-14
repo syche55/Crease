@@ -7,30 +7,30 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.app.crease.ui.home.HomeFragment"
+        android:name="neu.edu.crease.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_explore"
-        android:name="com.app.crease.ui.explore.ExploreFragment"
+        android:name="neu.edu.crease.ui.explore.ExploreFragment"
         android:label="@string/title_explore"
         tools:layout="@layout/fragment_explore" />
 
     <fragment
         android:id="@+id/navigation_add"
-        android:name="com.app.crease.ui.add.AddFragment"
+        android:name="neu.edu.crease.ui.add.AddFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.app.crease.ui.favorite.FavoriteFragment"
+        android:name="neu.edu.crease.ui.favorite.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.app.crease.ui.profile.ProfileFragment"
+        android:name="neu.edu.crease.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
