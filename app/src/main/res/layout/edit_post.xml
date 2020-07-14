@@ -5,25 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/edit_post_cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/edit_post_cancel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/edit_post_reminder_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/new_post_reminder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/edit_post_new_post_prompt"
@@ -57,7 +40,8 @@
         android:id="@+id/edit_post_photo_add"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/edit_post_enter_title"
         app:layout_constraintStart_toStartOf="@+id/edit_post_enter_title"
@@ -66,8 +50,8 @@
 
     <EditText
         android:id="@+id/edit_post_enter_title"
-        android:layout_width="209dp"
-        android:layout_height="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/edit_post_input_background"
@@ -80,11 +64,11 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_post_photo_add" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="353dp"
+        android:id="@+id/edit_post_description"
+        android:layout_width="match_parent"
         android:layout_height="222dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="28dp"
         android:background="@drawable/edit_post_input_background"
         android:ems="10"
@@ -107,5 +91,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_hr1" />
+
+    <ImageView
+        android:id="@+id/edit_post_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <ImageView
+        android:id="@+id/edit_post_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
