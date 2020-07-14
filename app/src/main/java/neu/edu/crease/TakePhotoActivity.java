@@ -181,6 +181,10 @@ public class TakePhotoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
             Log.d("set image uri", image_uri.toString());
             mimageView.setImageURI(image_uri);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setClass(TakePhotoActivity.this,  PostActivity.class);
+            intent.putExtra("KEY", image_uri);
+            startActivity(intent);
         }
 
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
