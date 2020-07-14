@@ -16,4 +16,10 @@
     <string name="edit_post_cancel">Cancel</string>
     <string name="edit_post_book_title">Book Title</string>
     <string name="edit_post_publish">Post</string>
+
+
+    <string name="todo">TODO</string>
+    <string name="photo" />
+    <string name="capture_image">Capture Image</string>
+    <string name="get_from_gallery">get from gallery</string>
 </resources>
