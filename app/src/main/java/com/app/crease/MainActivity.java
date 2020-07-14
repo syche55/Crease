@@ -1,75 +1,54 @@
 package com.app.crease;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.app.crease.ui.add.AddFragment;
-import com.app.crease.ui.explore.ExploreFragment;
-import com.app.crease.ui.favorite.FavoriteFragment;
-import com.app.crease.ui.home.HomeFragment;
-import com.app.crease.ui.profile.ProfileFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView navView;
-    Fragment selectedFragment = null;
+    private static int SPLASH_SCREEN = 5000;
+
+    Animation topAnim, bottomAnim;
+    ImageView image;
+    TextView logo, slogan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        // Animation
+        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-        // Initialize And Assign Variable
-        navView = (BottomNavigationView) findViewById(R.id.nav_view);
-        // Set Listener
-        navView.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
+        // Hooks
+        image = findViewById(R.id.image);
+        logo = findViewById(R.id.logo);
+        slogan = findViewById(R.id.slogan);
+
+        image.setAnimation(topAnim);
+        logo.setAnimation(bottomAnim);
+        slogan.setAnimation(bottomAnim);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        },SPLASH_SCREEN);
+
     }
-
-    // Set bottom nav bar
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    switch (item.getItemId()){
-                        case R.id.navigation_explore:
-                            selectedFragment = new ExploreFragment();
-                            break;
-                        case R.id.navigation_add:
-                            // selectedFragment = null
-                            // startActivity(new Intent());
-                            selectedFragment = new AddFragment();
-                            break;
-                        case R.id.navigation_favorite:
-                            selectedFragment = new FavoriteFragment();
-                            break;
-                        case R.id.navigation_profile:
-//                            SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-//                            editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                            editor.apply();
-                            selectedFragment = new ProfileFragment();
-                            break;
-                        case R.id.navigation_home:
-                            selectedFragment = new HomeFragment();
-                            break;
-                    }
-                    if(selectedFragment != null){
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                                selectedFragment).commit();
-                    }
-                    return true;
-                }
-    };
 
 }

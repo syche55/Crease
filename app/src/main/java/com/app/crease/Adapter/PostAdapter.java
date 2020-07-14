@@ -49,7 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imageProfile, postImage, like, comment, save;
-        public TextView username, bookName, likes, publisher, description, comments;
+        public TextView username, bookName, likes, publisher, description, comments, time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,7 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
-
+            time = itemView.findViewById(R.id.time);
         }
     }
 
