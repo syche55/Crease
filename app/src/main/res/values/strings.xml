@@ -10,4 +10,10 @@
     <string name="bookname">BookName</string>
     <string name="crease">Crease</string>
     <string name="record_the_days_reading_books">Record the days reading books</string>
+
+    <string name="new_post_prompt_title">New Post</string>
+    <string name="new_post_reminder">Reminder</string>
+    <string name="edit_post_cancel">Cancel</string>
+    <string name="edit_post_book_title">Book Title</string>
+    <string name="edit_post_publish">Post</string>
 </resources>
