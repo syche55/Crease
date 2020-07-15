@@ -23,6 +23,11 @@ public class User {
         this.userBeingLiked=0;
     }
 
+    public User(String userID, String userName) {
+        this.userID = userID;
+        this.userName = userName;
+    }
+
     public String getUserName() {
         return userName;
     }
