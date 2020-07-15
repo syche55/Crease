@@ -36,6 +36,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private Button mGetFromGalleryButton;
     private ImageView mimageView;
     private Uri image_uri;
+    private Button mTakePhotoOk;
 
 
     @Override
@@ -46,6 +47,9 @@ public class TakePhotoActivity extends AppCompatActivity {
         mimageView = findViewById(R.id.image_view);
         mCaptureButton = findViewById(R.id.capture_image_btn);
         mGetFromGalleryButton = findViewById(R.id.get_from_gallery_btn);
+        mTakePhotoOk = findViewById(R.id.take_photo_ok);
+        mTakePhotoOk.setVisibility(View.GONE);
+
 
         // when user choose to take photo and click that button
         mCaptureButton.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +97,18 @@ public class TakePhotoActivity extends AppCompatActivity {
                     pickImageFromGallery();
                 }
             }
+        });
+
+        mTakePhotoOk.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (image_uri !=null){
+                    connectToPostActivity(image_uri);
+                    Log.e("On click", " "+image_uri);
+                }
+            }
+
+
         });
     }
 
@@ -176,16 +192,32 @@ public class TakePhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("In onActivityResult","");
 
         if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
-            Log.d("set image uri", image_uri.toString());
             mimageView.setImageURI(image_uri);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setClass(TakePhotoActivity.this,  PostActivity.class);
+            intent.putExtra("KEY", image_uri);
+            startActivity(intent);
         }
 
-        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            mimageView.setImageURI(data.getData());
+        if (resultCode == RESULT_OK){
+            if(requestCode == IMAGE_CAPTURE_CODE){
+                mimageView.setImageURI(image_uri);
+            } else if (requestCode == IMAGE_PICK_CODE) {
+                mimageView.setImageURI(data.getData());
+            }
+            mTakePhotoOk.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    private void connectToPostActivity(Uri imageUri){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setClass(TakePhotoActivity.this,  PostActivity.class);
+            intent.putExtra("imagePath", imageUri.toString());
+            Log.e("connect", " "+imageUri);
+            startActivity(intent);
     }
 
 

@@ -1,27 +1,49 @@
 package neu.edu.crease.Model;
 
+import org.w3c.dom.Comment;
+import java.util.ArrayList;
+
 public class Post {
-    private String postId;
+    private String postID = "";
+    private String postPublisher = "";
+    private String postTitle = "";
+    private String postContent = "";
     private String postImage;
-    private String description;
-    private String publisher;
+    private ArrayList<Comment> commentsUnderPost;
 
-    public Post(String postId, String postImage, String description, String publisher) {
-        this.postId = postId;
+    public Post(String postID, String postPublisher, String postImage, String postTitle, String postContent){
+        this.postID = postID;
+        this.postPublisher = postPublisher;
         this.postImage = postImage;
-        this.description = description;
-        this.publisher = publisher;
+        this.postContent = postContent;
+        this.postTitle = postTitle;
+    }
+    public Post(){
+
     }
 
-    public Post() {
+    public String getPostContent() {
+        return postContent;
     }
 
-    public String getPostId() {
-        return postId;
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
+    }
+
+    public String getPostPublisher() {
+        return postPublisher;
+    }
+
+    public void setPostPublisher(String postPublisher) {
+        this.postPublisher = postPublisher;
     }
 
     public String getPostImage() {
@@ -32,19 +54,11 @@ public class Post {
         this.postImage = postImage;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPostID() {
+        return postID;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public void setPostID(String postID) {
+        this.postID = postID;
     }
 }

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -15,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import neu.edu.crease.data.model.Posts;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+
+import neu.edu.crease.Model.Post;
 
 public class PostActivity extends AppCompatActivity {
     private Uri imageUri;
@@ -47,18 +49,24 @@ public class PostActivity extends AppCompatActivity {
         edit_post_enter_title=findViewById(R.id.edit_post_enter_title);
         edit_post_description=findViewById(R.id.edit_post_description);
         edit_post_cancel=findViewById(R.id.edit_post_cancel);
-        edit_post_reminder=findViewById(R.id.edit_post_reminder);
+        //edit_post_reminder=findViewById(R.id.edit_post_reminder);
         edit_post_submit_button = findViewById(R.id.edit_post_submit_button);
 
 
         storageReference = FirebaseStorage.getInstance().getReference("posts");
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("imagePath")) {
+            Log.e("get image Uri ", ""+Uri.parse(extras.getString("imagePath")));
+            imageUri= Uri.parse(extras.getString("imagePath"));
+            edit_post_photo_add.setImageURI(imageUri);
+        }
 
         edit_post_cancel.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PostActivity.this, MainActivity.class));
+                startActivity(new Intent(PostActivity.this, StartActivity.class));
                 finish();
             }
         });
@@ -67,7 +75,7 @@ public class PostActivity extends AppCompatActivity {
         edit_post_submit_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                uploadPost();      // connect zongwei's part
+                uploadPost();
             }
         });
 
@@ -98,8 +106,10 @@ public class PostActivity extends AppCompatActivity {
 
                         String postID = reference.push().getKey();
 
-                        Posts newPost = new Posts(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
+
+                        Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
+
 
                         reference.child(postID).setValue(newPost);
 
@@ -129,18 +139,4 @@ public class PostActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && requestCode == RESULT_OK){
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            imageUri = result.getUri();
-//            edit_post_photo_add.setImageURI(imageUri);
-//        } else {
-//            Toast.makeText(this, "Uh oh! Something is wrong. Please try again", Toast.LENGTH_SHORT).show();
-//            //startActivity(new Intent(PostActivity.this, MainActivity.class));
-//            //finish();
-//        }
-//    }
 }
