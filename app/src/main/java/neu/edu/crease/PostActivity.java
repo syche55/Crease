@@ -106,11 +106,10 @@ public class PostActivity extends AppCompatActivity {
 
                         String postID = reference.push().getKey();
 
-//                        Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
-//                                myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
 
-                        Post newPost = new Post(postID, "testUser",
+                        Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
+
 
                         reference.child(postID).setValue(newPost);
 
