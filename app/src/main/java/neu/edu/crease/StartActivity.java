@@ -11,6 +11,7 @@ import neu.edu.crease.ui.home.HomeFragment;
 import neu.edu.crease.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -42,9 +43,9 @@ public class StartActivity extends AppCompatActivity {
                             selectedFragment = new ExploreFragment();
                             break;
                         case R.id.navigation_add:
-                            // selectedFragment = null
-                            // startActivity(new Intent());
-                            selectedFragment = new AddFragment();
+                            selectedFragment = null;
+                            startActivity(new Intent(StartActivity.this, TakePhotoActivity.class));
+                            //selectedFragment = new AddFragment();
                             break;
                         case R.id.navigation_favorite:
                             selectedFragment = new FavoriteFragment();
