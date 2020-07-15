@@ -30,5 +30,12 @@
         android:layout_height="wrap_content"
         android:text="@string/get_from_gallery" />
 
+    <Button
+        android:id="@+id/take_photo_ok"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Ok!" />
+
 
 </LinearLayout>
