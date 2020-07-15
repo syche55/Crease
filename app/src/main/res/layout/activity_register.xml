@@ -27,6 +27,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/common_google_signin_btn_text_light_normal_background"
+        android:hint="Email"
+        android:layout_marginTop="15dp"
+        android:inputType="textEmailAddress"
+        android:id="@+id/email_register"
+        android:padding="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_google_signin_btn_text_light_normal_background"
         android:hint="Password"
         android:layout_marginTop="15dp"
         android:id="@+id/password_register"
@@ -36,7 +46,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/register_button"
+        android:id="@+id/login_button"
         android:text="Register"
         android:textColor="@drawable/common_google_signin_btn_icon_light"
         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "997218864462",
+    "firebase_url": "https://crease-reading-170ad.firebaseio.com",
+    "project_id": "crease-reading-170ad",
+    "storage_bucket": "crease-reading-170ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997218864462:android:642bd92f8ac91cc441621f",
+        "android_client_info": {
+          "package_name": "neu.edu.crease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997218864462-k7k5gcsbu3f5rbcgqd2a8efvtvss9que.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "neu.edu.crease",
+            "certificate_hash": "4d5457aeb0c66dfa9c8c75b0eeb8886fb595a8a9"
+          }
+        },
+        {
+          "client_id": "997218864462-4ql8phdmtdq9hmtrnvh78jtmep17iqhv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrTguVyDRV2OIsuXRtmyhlX32pwZgNMhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997218864462-4ql8phdmtdq9hmtrnvh78jtmep17iqhv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
