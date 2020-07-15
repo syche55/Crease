@@ -12,10 +12,10 @@
     <ImageView
         android:id="@+id/image_view"
         android:scaleType="centerCrop"
-
+        android:src="@drawable/ic_baseline_image_24"
         android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:contentDescription="TODO" />
+        android:layout_height="400dp" />
+
 
     <!--  button to capture image  -->
     <Button

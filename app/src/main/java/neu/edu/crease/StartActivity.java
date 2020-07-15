@@ -46,6 +46,7 @@ public class StartActivity extends AppCompatActivity {
                             selectedFragment = null;
                             startActivity(new Intent(StartActivity.this, TakePhotoActivity.class));
                             //selectedFragment = new AddFragment();
+
                             break;
                         case R.id.navigation_favorite:
                             selectedFragment = new FavoriteFragment();
