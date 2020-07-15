@@ -22,4 +22,5 @@
     <string name="photo" />
     <string name="capture_image">Capture Image</string>
     <string name="get_from_gallery">get from gallery</string>
+    <string name="got_it">Got It</string>
 </resources>
