@@ -1,34 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@null"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center">
 
-    <ImageView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:id="@+id/tip_logo"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_logo"/>
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/colorLightBrown"
+        android:layout_alignParentTop ="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:id="@+id/tip_description"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/tip_close"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_margin="5dp"
-        android:background="?android:attr/windowBackground"
-        android:gravity="center"
-        android:text="@string/got_it" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="24sp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:text="@string/post_tips"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
 
-</LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:foregroundGravity="center"
+                    android:id="@+id/tip_logo"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_tempura"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="1.clear photo \n2.waiting \n3.waiting \n4. waiting"
+                    android:gravity="center"
+                    android:lines="6"
+                    android:maxLines="8"
+                    android:id="@+id/tip_description"/>
+
+                <Button
+                    android:id="@+id/tip_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_post_tip_close_button"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="@string/got_it"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

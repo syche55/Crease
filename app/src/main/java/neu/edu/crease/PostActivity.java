@@ -3,6 +3,8 @@ package neu.edu.crease;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,12 +49,14 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_post);
 
+        edit_post_tip_dialog = new Dialog(this);
+
         edit_post_photo_add = findViewById(R.id.edit_post_photo_add);
         edit_post_enter_title=findViewById(R.id.edit_post_enter_title);
         edit_post_description=findViewById(R.id.edit_post_description);
         edit_post_cancel=findViewById(R.id.edit_post_cancel);
         edit_post_tip = findViewById(R.id.edit_post_tip);
-        //edit_post_reminder=findViewById(R.id.edit_post_reminder);
+        // open tip dialog
         edit_post_submit_button = findViewById(R.id.edit_post_submit_button);
 
 
@@ -150,7 +154,6 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void showDialog(){
-        edit_post_tip_dialog = new Dialog(PostActivity.this);
         edit_post_tip_dialog.setContentView(R.layout.dialog_tip);
         edit_post_tip_dialog.setTitle("Some tips");
 
@@ -164,6 +167,7 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+        edit_post_tip_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         edit_post_tip_dialog.show();
 
     }
