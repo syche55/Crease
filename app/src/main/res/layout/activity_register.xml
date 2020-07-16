@@ -27,6 +27,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/common_google_signin_btn_text_light_normal_background"
+        android:hint="Email"
+        android:layout_marginTop="15dp"
+        android:inputType="textEmailAddress"
+        android:id="@+id/email_register"
+        android:padding="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_google_signin_btn_text_light_normal_background"
         android:hint="Password"
         android:layout_marginTop="15dp"
         android:id="@+id/password_register"
@@ -36,7 +46,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/register_button"
+        android:id="@+id/login_button"
         android:text="Register"
         android:textColor="@drawable/common_google_signin_btn_icon_light"
         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
@@ -46,8 +56,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already have an account? Log In"
+        android:text="@string/already_have_an_account_log_in"
         android:id="@+id/login_text"
-        android:layout_marginTop="10px" />
+        android:layout_marginTop="30px" />
 
 </LinearLayout>
