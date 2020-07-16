@@ -25,13 +25,23 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import neu.edu.crease.Model.Post;
+import neu.edu.crease.Model.User;
 
 public class PostActivity extends AppCompatActivity {
     private Uri imageUri;
@@ -44,8 +54,11 @@ public class PostActivity extends AppCompatActivity {
     private Button edit_post_submit_button, tip_close;
     private Dialog edit_post_tip_dialog;
 
+    private User signOnUser;
     private ProgressDialog pd;
 
+    private ChildEventListener childEventListener;
+    private DatabaseReference mPostReference;
 
 
     @Override
@@ -97,11 +110,30 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        ValueEventListener postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Post post = snapshot.getValue(Post.class);
+//                updateUserPostHistory(post);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        };
+//        mPostReference.addValueEventListener(postListener);
+//    }
 
     private void uploadPost(){
         pd = new ProgressDialog(PostActivity.this);
-        pd.setMessage("Flipping, flipping...");
+        pd.setMessage("Uploading...");
         pd.show();
         if (imageUri != null){
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getMimeTypeFromUrl(imageUri));
@@ -125,12 +157,14 @@ public class PostActivity extends AppCompatActivity {
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
                         String postID = reference.push().getKey();
 
-                        Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        Post newPost = new Post(postID, userID,
                                 myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
-
 
                         reference.child(postID).setValue(newPost);
 
+
+                        updateUserPostHistory(newPost);
 
 
                         startActivity(new Intent(PostActivity.this, StartActivity.class));
@@ -178,4 +212,31 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    private void updateUserPostHistory(final Post newPost){
+        Log.e("Get newPost or not?", newPost.getPostPublisher());
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        Map<String, Object> postValues = newPost.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(newPost.getPostPublisher() + "/userPostHistory/" + newPost.getPostID(), postValues);
+
+        reference.updateChildren(childUpdates);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        edit_post_tip_dialog.dismiss();
+        pd.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        edit_post_tip_dialog.dismiss();
+        pd.dismiss();
+    }
 }

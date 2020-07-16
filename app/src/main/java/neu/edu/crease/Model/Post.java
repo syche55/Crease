@@ -1,7 +1,11 @@
 package neu.edu.crease.Model;
 
+import com.google.firebase.database.Exclude;
+
 import org.w3c.dom.Comment;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Post {
     private String postID = "";
@@ -60,5 +64,17 @@ public class Post {
 
     public void setPostID(String postID) {
         this.postID = postID;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("postID", postID);
+        result.put("postPublisher", postPublisher);
+        result.put("postTitle", postTitle);
+        result.put("postContent", postContent);
+        result.put("postImage", postImage);
+
+        return result;
     }
 }

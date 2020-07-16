@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -43,7 +46,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final User user = mUsers.get(position);
         holder.btn_follow.setVisibility(View.VISIBLE);
-        //holder.username_display.setText(user.);
+        holder.username_display.setText(user.getUserName());
+        holder.user_self_description.setText(user.getUserSelfDescription());
+        Glide.with(mContext).load(user.getUserProfileImage()).into(holder.user_profile_image);
+
+        if (user.getUserID().equals(firebaseUser.getUid())){
+            holder.btn_follow.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -65,5 +74,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             user_self_description = itemView.findViewById(R.id.user_self_description);
             btn_follow = itemView.findViewById(R.id.btn_follow);
         }
+    }
+
+    private void isFollowing(String userid, Button button){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("following");
+        //TODO
     }
 }

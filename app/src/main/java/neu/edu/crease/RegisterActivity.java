@@ -78,6 +78,9 @@ public class RegisterActivity extends AppCompatActivity {
                 // if some info not correct
                 if (TextUtils.isEmpty(str_username) || TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)) {
                     Toast.makeText(RegisterActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+                    if(pd.isShowing()){
+                        pd.dismiss();
+                    }
                 }
                 else if (str_password.length() < 6) {
                     Toast.makeText(RegisterActivity.this, "Password must have at least 6 characters!", Toast.LENGTH_LONG).show();
@@ -141,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
                             // register failed
                             pd.dismiss();
                             Log.e("failed: ", "onComplete: Failed=" + task.getException().getMessage());
-                            Toast.makeText(RegisterActivity.this, "This email looks familiar to us. Please use another email or try login.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Please try another email.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 public class User {
     private String userID;
-    private String userName;
+    private String userName = "";
     private Uri userProfileImage;
     private ArrayList<Post> postsUserLiked;
     private int userBeingLiked;
+    private String userSelfDescription = "";
 
     public User()
     {
@@ -24,9 +25,12 @@ public class User {
     }
 
     public User(String userID, String userName) {
+        this.postsUserLiked = new ArrayList<>();
         this.userID = userID;
         this.userName = userName;
     }
+
+
 
     public String getUserName() {
         return userName;
@@ -50,5 +54,21 @@ public class User {
 
     public void setUserBeingLiked(int userBeingLiked) {
         this.userBeingLiked = userBeingLiked;
+    }
+
+    public void setUserSelfDescription(String userSelfDescription) {
+        this.userSelfDescription = userSelfDescription;
+    }
+
+    public String getUserSelfDescription() {
+        return userSelfDescription;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
