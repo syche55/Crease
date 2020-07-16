@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,33 +9,107 @@
     tools:context=".TakePhotoActivity">
 
     <!--  Image view in which image will be set  -->
+
+    <ImageView
+        android:id="@+id/take_photo_bg"
+        android:layout_width="640dp"
+        android:layout_height="960dp"
+        android:background="@drawable/photo_bg"
+        android:src="#80000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/capture_image"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/now_nrecord_nyour_reading_time"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="1"
+        android:columnCount="1"
+        android:rowCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!--  button to capture image  -->
+
+        <Button
+            android:id="@+id/capture_image_btn"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:background="@drawable/take_photo_button"
+            android:fontFamily="@font/montserrat_bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/capture_image"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <Button
+            android:id="@+id/get_from_gallery_btn"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_post_button"
+            android:fontFamily="@font/montserrat_bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/get_from_gallery"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </GridLayout>
+
+
     <ImageView
         android:id="@+id/image_view"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="208dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_image_24"
-        android:layout_width="400dp"
-        android:layout_height="400dp" />
-
-
-    <!--  button to capture image  -->
-    <Button
-        android:id="@+id/capture_image_btn"
-        android:text="@string/capture_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/get_from_gallery_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/get_from_gallery" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/capture_image"/>
 
     <Button
         android:id="@+id/take_photo_ok"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Ok!" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/take_photo_ok_button"
+        android:fontFamily="@font/montserrat_bold"
+        android:drawableStart="@drawable/ic_baseline_done_all_24"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
