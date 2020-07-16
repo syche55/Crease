@@ -28,4 +28,6 @@
     <string name="cancel_post">Cancel Post</string>
     <string name="show_tip">Show Tip</string>
     <string name="post_tips">Post Tips</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? <u>Sign up!</u></string>
+    <string name="already_have_an_account_log_in">Already have an account? <u>Log In</u></string>
 </resources>

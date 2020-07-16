@@ -45,10 +45,10 @@
         />
 
     <TextView
+        android:id="@+id/signup_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign up!"
-        android:id="@+id/signup_text"
-        android:layout_marginTop="10px" />
+        android:layout_marginTop="30px"
+        android:text="@string/don_t_have_an_account_sign_up" />
 
 </LinearLayout>

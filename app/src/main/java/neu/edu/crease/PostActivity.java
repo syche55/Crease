@@ -1,6 +1,7 @@
 package neu.edu.crease;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,6 +43,9 @@ public class PostActivity extends AppCompatActivity {
     private EditText edit_post_enter_title, edit_post_description;
     private Button edit_post_submit_button, tip_close;
     private Dialog edit_post_tip_dialog;
+
+    private ProgressDialog pd;
+
 
 
     @Override
@@ -93,14 +97,16 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-       // CropImage.activity().setAspectRatio(1,1).start(PostActivity.this);
     }
 
     private void uploadPost(){
-        // could add ProgressBar here TODO
+        pd = new ProgressDialog(PostActivity.this);
+        pd.setMessage("Flipping, flipping...");
+        pd.show();
         if (imageUri != null){
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getMimeTypeFromUrl(imageUri));
             uploadTask = fileReference.putFile(imageUri);
+
             uploadTask.continueWithTask(new Continuation() {
                 @Override
                 public Object then(@NonNull Task task) throws Exception {
@@ -112,14 +118,12 @@ public class PostActivity extends AppCompatActivity {
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
+
                     if (task.isSuccessful()){
                         Uri downloadUri = task.getResult();
                         myUri = downloadUri.toString();
-
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-
                         String postID = reference.push().getKey();
-
 
                         Post newPost = new Post(postID, FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
@@ -127,7 +131,9 @@ public class PostActivity extends AppCompatActivity {
 
                         reference.child(postID).setValue(newPost);
 
-                        startActivity(new Intent(PostActivity.this, MainActivity.class));
+
+
+                        startActivity(new Intent(PostActivity.this, StartActivity.class));
                         finish();
                     } else {
                         Toast.makeText(PostActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
@@ -140,7 +146,7 @@ public class PostActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(PostActivity.this, "Image not selected!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PostActivity.this, "Something is wrong with the image! Please try again", Toast.LENGTH_SHORT).show();
         }
 
 
