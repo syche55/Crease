@@ -20,8 +20,8 @@
 
     <string name="todo">TODO</string>
     <string name="photo" />
-    <string name="capture_image">Capture Image</string>
-    <string name="get_from_gallery">get from gallery</string>
+    <string name="capture_image">TAKE PHOTOS \nCAMERA</string>
+    <string name="get_from_gallery">OPEN ALBUM \nPHOTO</string>
     <string name="got_it">Got It</string>
     <string name="book_title">Book Title</string>
     <string name="what_s_on_your_thought">What\'s on your thought?...</string>
@@ -30,4 +30,5 @@
     <string name="post_tips">Post Tips</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? <u>Sign up!</u></string>
     <string name="already_have_an_account_log_in">Already have an account? <u>Log In</u></string>
+    <string name="now_nrecord_nyour_reading_time">Now \nRecord \nYour reading time</string>
 </resources>
