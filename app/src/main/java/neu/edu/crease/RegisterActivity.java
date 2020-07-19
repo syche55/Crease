@@ -112,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             // create the user for firebase database (different from firebase auth)
                             reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
+                            Log.d("Register", "User id for new registered user is " + userid);
 
 //                            HashMap<String, Object> map = new HashMap<>();
 //                            map.put("id", userid);
@@ -120,7 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
                             // set the fields for current user, and redirect to start page (code below could be replaced by the commented part)
                             User newUser = new User(userid, username);
                             Log.e("enter: ", "into firebase database user create");
-                            reference.push().setValue(newUser);
+                            reference.setValue(newUser);
+//                            reference.push().setValue(newUser);
                             pd.dismiss();
                             Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
