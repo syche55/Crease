@@ -10,6 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import neu.edu.crease.Adapter.PostAdapter;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.R;
@@ -22,6 +29,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postLists;
+
+    private List<String> followingList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,10 +55,55 @@ public class HomeFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
+        checkFollowing();
         return view;
     }
 
-    private  void readPost(){
+    private void checkFollowing(){
+        followingList = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("Following");
 
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                followingList.clear();
+                for(DataSnapshot datasnapshot: snapshot.getChildren()){
+                    followingList.add(datasnapshot.getKey());
+                }
+                readPost();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private  void readPost(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postLists.clear();
+                for(DataSnapshot datasnapshot: snapshot.getChildren()){
+                    Post post = datasnapshot.getValue(Post.class);
+                    for(String id: followingList){
+                        assert post != null;
+                        if(post.getPostPublisher().equals(id)){
+                            postLists.add(post);
+                        }
+                    }
+                }
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
