@@ -10,7 +10,7 @@ import java.util.Map;
 public class Post {
     private String postID = "";
     private String postPublisher = "";
-    private String postTitle = "";
+    private String postTitle = ""; //book title
     private String postContent = "";
     private String postImage;
     private ArrayList<Comment> commentsUnderPost;

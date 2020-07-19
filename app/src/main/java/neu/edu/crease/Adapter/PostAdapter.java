@@ -58,6 +58,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             holder.description.setText(post.getPostContent());
         }
 
+        holder.bookName.setText(post.getPostTitle());
+
         publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher());
 
     }
@@ -85,7 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
-            comments = itemView.findViewById(R.id.comments);
+//            comments = itemView.findViewById(R.id.comments);
             time = itemView.findViewById(R.id.time);
         }
     }

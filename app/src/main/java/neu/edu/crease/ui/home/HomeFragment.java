@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
 
     private void checkFollowing(){
         followingList = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("Following");
 
