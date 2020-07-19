@@ -31,4 +31,6 @@
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? <u>Sign up!</u></string>
     <string name="already_have_an_account_log_in">Already have an account? <u>Log In</u></string>
     <string name="now_nrecord_nyour_reading_time">Now \nRecord \nYour reading time</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 </resources>
