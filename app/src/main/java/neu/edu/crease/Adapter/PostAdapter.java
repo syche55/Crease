@@ -10,7 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import neu.edu.crease.Model.Post;
+import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
 import java.util.List;
@@ -20,8 +30,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public Context mContext;
     public List<Post> mPost;
 
-    // private FirebaseUser firebaseUser
-//    private User user;
+    private FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
@@ -37,6 +46,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Post post = mPost.get(position);
+
+        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+
+        if(post.getPostContent().equals("")){
+            holder.description.setVisibility(View.GONE);
+        }else{
+            holder.description.setVisibility(View.VISIBLE);
+            holder.description.setText(post.getPostContent());
+        }
+
+        publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher());
 
     }
 
@@ -68,9 +90,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
-//    private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId){
-//        DatabaseReference reference = FirebaseDatabase.getInstance("Users").child(userId);
-//
-//    }
+    private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                Glide.with(mContext).load(user.getUserProfileImage()).into(imageProfile);
+                username.setText(user.getUserName());
+                publisher.setText(user.getUserName());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }
