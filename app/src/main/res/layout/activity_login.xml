@@ -1,56 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="10dp"
+    android:background="@color/colorPrimary"
+    android:padding="8dp"
     tools:context=".LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:src = "@drawable/ic_logo"/>
+        android:src = "@drawable/ic_logo"
+        android:contentDescription="@string/app_name"/>
+
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/common_google_signin_btn_text_light_normal_background"
-        android:hint="Email"
-        android:maxLines="1"
-        android:layout_marginTop="15dp"
-        android:inputType="textEmailAddress"
         android:id="@+id/email_register"
-        android:padding="10dp" />
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        android:background="@drawable/edit_text_normal"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorLightGreen"
+        android:autofillHints="" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/common_google_signin_btn_text_light_normal_background"
-        android:hint="Password"
-        android:maxLines="1"
-        android:layout_marginTop="15dp"
         android:id="@+id/password_register"
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:gravity="center"
         android:inputType="textPassword"
-        android:padding="10dp" />
+        android:hint="@string/password"
+        android:background="@drawable/edit_text_normal"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorLightGreen"
+        android:autofillHints="" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/login_button"
-        android:text="Sign In"
-        android:textColor="@drawable/common_google_signin_btn_icon_light"
-        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-        android:layout_marginTop="40dp"
-        />
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/login"
+        android:background="@drawable/take_photo_album"
+        android:fontFamily="@font/montserrat_bold" />
 
     <TextView
         android:id="@+id/signup_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:text="@string/don_t_have_an_account_sign_up" />
+        android:layout_marginTop="16dp"
+        android:text="@string/don_t_have_an_account_sign_up"
+        android:fontFamily="@font/montserrat"
+        android:textSize="16sp" />
 
 </LinearLayout>
