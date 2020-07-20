@@ -59,6 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
 
         holder.bookName.setText(post.getPostTitle());
+        holder.time.setText(post.getPostTime());
 
         publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher());
 
@@ -99,6 +100,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
+                assert user != null;
                 Glide.with(mContext).load(user.getUserProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
                 publisher.setText(user.getUserName());
