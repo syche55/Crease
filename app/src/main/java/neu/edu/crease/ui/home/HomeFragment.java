@@ -1,9 +1,12 @@
 package neu.edu.crease.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import neu.edu.crease.Adapter.PostAdapter;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.R;
+import neu.edu.crease.SearchUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +33,11 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postLists;
+    private ImageView search_user_btn;
 
     private List<String> followingList;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -47,6 +52,16 @@ public class HomeFragment extends Fragment {
         postLists = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(),postLists);
         recyclerView.setAdapter(postAdapter);
+
+        search_user_btn = view.findViewById(R.id.search_user_btn);
+
+        search_user_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchUserActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        final TextView textView = root.findViewById(R.id.description);
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

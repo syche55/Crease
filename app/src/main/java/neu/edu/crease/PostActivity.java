@@ -54,7 +54,6 @@ public class PostActivity extends AppCompatActivity {
     private Button edit_post_submit_button, tip_close;
     private Dialog edit_post_tip_dialog;
 
-    private User signOnUser;
     private ProgressDialog pd;
 
     private ChildEventListener childEventListener;
