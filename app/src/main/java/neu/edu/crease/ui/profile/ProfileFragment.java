@@ -17,9 +17,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
 public class ProfileFragment extends Fragment {
@@ -64,12 +71,94 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else if (btn.equals("follow")) {
-
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
+                            .child("Following").child(profileid).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
+                            .child("Followers").child(firebaseUser.getUid()).setValue(true);
+                }
+                else if (btn.equals("following")) {
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
+                            .child("Following").child(profileid).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
+                            .child("Followers").child(firebaseUser.getUid()).removeValue();
                 }
             }
         });
 
 
         return view;
+    }
+
+    private void userInfo() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (getContext() == null) {
+                    return;
+                }
+
+                User user = snapshot.getValue(User.class);
+
+                Glide.with(getContext()).load(user.getUserProfileImage()).into(image_profile);
+                username.setText(user.getUserName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void checkFollow() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
+                .child(firebaseUser.getUid()).child("following");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(profileid).exists()) {
+                    edit_profile.setTag("following");
+                }
+                else {
+                    edit_profile.setTag("follow");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getFollowers() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
+                .child(profileid).child("followers");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                followers.setText("" + snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference referencel = FirebaseDatabase.getInstance().getReference().child("Follow")
+                .child(profileid).child("following");
+        referencel.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                following.setText("" + snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
