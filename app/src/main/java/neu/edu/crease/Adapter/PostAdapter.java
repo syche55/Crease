@@ -1,6 +1,7 @@
 package neu.edu.crease.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = mPost.get(position);
+        final Post post = mPost.get(position);
 
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
 
@@ -62,7 +63,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.time.setText(post.getPostTime());
 
         publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher());
+        isLiked(post.getPostID(), holder.like);
+        nrLikes(holder.likes, post.getPostID());
 
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("likeOnClick", "clicked");
+                if (holder.like.getTag().equals("like")){
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID())
+                            .child(firebaseUser.getUid()).setValue(true);
+                } else{
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID())
+                            .child(firebaseUser.getUid()).removeValue();
+                }
+            }
+        });
     }
 
     @Override
@@ -93,6 +109,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
+    private void isLiked(String postid, final ImageView imageView){
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Likes")
+                .child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(firebaseUser.getUid()).exists()){
+                    imageView.setImageResource(R.drawable.ic_liked_green);
+                    imageView.setTag("liked");
+                } else{
+                    imageView.setImageResource(R.drawable.ic_like);
+                    imageView.setTag(("like"));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void nrLikes (final TextView likes, final String postid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes")
+                .child(postid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                likes.setText(snapshot.getChildrenCount() + " likes");
+//                DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid).setValue()
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 

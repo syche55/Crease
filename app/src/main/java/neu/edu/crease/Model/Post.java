@@ -85,7 +85,6 @@ public class Post {
         result.put("postContent", postContent);
         result.put("postImage", postImage);
         result.put("postTime", postTime);
-
         return result;
     }
 }
