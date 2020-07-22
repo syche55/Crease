@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="4dp">
+
+    <com.google.android.material.circularreveal.CircularRevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/explore_post_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tempura" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/explore_user_profile_image"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_tempura"/>
+
+            <TextView
+                android:id="@+id/explore_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="10sp"
+                android:text="@string/username"
+                android:textColor="@color/colorWhite"/>
+
+            </LinearLayout>
+
+    </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/explore_book_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@string/book_title"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/explore_post_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@string/description"
+            android:textColor="@color/colorLightGray"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:id="@+id/explore_save_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/explore_save_button"
+            android:clickable="true"
+            android:layout_gravity="top"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_baseline_bookmark_26"
+                android:layout_gravity="center"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:text="SAVED"
+                android:textSize="10sp"
+                android:textColor="@color/colorLightGray"
+                android:fontFamily="@font/montserrat"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/explore_save_count"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="123"
+                android:textSize="10sp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/colorLightGray"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

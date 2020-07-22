@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import neu.edu.crease.Adapter.PostAdapter;
 import neu.edu.crease.Model.Post;
+import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 import neu.edu.crease.SearchUserActivity;
 
@@ -36,6 +37,7 @@ public class HomeFragment extends Fragment {
     private ImageView search_user_btn;
 
     private List<String> followingList;
+    String signOnUserID;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -103,11 +105,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postLists.clear();
+                signOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot datasnapshot: snapshot.getChildren()){
                     Post post = datasnapshot.getValue(Post.class);
+                    String postPublisherId = post.getPostPublisher();
+                    signOnUserID.equals(postPublisherId);
+                    postLists.add(post);
                     for(String id: followingList){
-                        assert post != null;
-                        if(post.getPostPublisher().equals(id)){
+                        if(postPublisherId.equals(id)){
                             postLists.add(post);
                         }
                     }
