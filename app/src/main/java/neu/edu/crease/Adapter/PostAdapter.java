@@ -179,12 +179,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // post liked, userBeingLiked count + 1
     public void updateUserBeingLiked(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(post.getPostPublisher()).child("userBeingLiked");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                Integer prevCount = snapshot.getValue(Integer.class);
+               // in case data change will call this listener again
                reference.removeEventListener(this);
                reference.setValue(prevCount+1);
             }
@@ -194,11 +196,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             }
         });
-
-
-
     }
 
+    // post unliked, userBeingLiked count -1
     public void updateUserBeingLikedCancelled(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(post.getPostPublisher()).child("userBeingLiked");
         reference.addValueEventListener(new ValueEventListener() {
