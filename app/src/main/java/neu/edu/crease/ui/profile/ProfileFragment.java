@@ -3,6 +3,7 @@ package neu.edu.crease.ui.profile;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
@@ -49,7 +51,7 @@ public class ProfileFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         SharedPreferences prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        profileid = prefs.getString("profileid", "none");
+        profileid = prefs.getString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         image_profile = view.findViewById(R.id.image_profile);
         options = view.findViewById(R.id.options);
@@ -60,6 +62,18 @@ public class ProfileFragment extends Fragment {
         edit_profile = view.findViewById(R.id.edit_profile);
         my_fotos = view.findViewById(R.id.my_fotos);
         saved_fotos = view.findViewById(R.id.saved_fotos);
+
+        userInfo();
+        getFollowers();
+        getNrPosts();
+
+        if (profileid.equals(firebaseUser.getUid())) {
+            edit_profile.setText("Edit Profile");
+        }
+        else {
+            checkFollow();
+            saved_fotos.setVisibility(View.GONE);
+        }
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +104,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void userInfo() {
+        Log.e("user profile id is ", profileid);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,6 +114,8 @@ public class ProfileFragment extends Fragment {
                 }
 
                 User user = snapshot.getValue(User.class);
+
+                Log.e("user is ", (user == null) ? "null" : "not null");
 
                 Glide.with(getContext()).load(user.getUserProfileImage()).into(image_profile);
                 username.setText(user.getUserName());
@@ -113,15 +130,15 @@ public class ProfileFragment extends Fragment {
 
     private void checkFollow() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
-                .child(firebaseUser.getUid()).child("following");
+                .child(firebaseUser.getUid()).child("Following");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(profileid).exists()) {
-                    edit_profile.setTag("following");
+                    edit_profile.setText("following");
                 }
                 else {
-                    edit_profile.setTag("follow");
+                    edit_profile.setText("follow");
                 }
             }
 
@@ -134,7 +151,7 @@ public class ProfileFragment extends Fragment {
 
     private void getFollowers() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
-                .child(profileid).child("followers");
+                .child(profileid).child("Followers");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,11 +165,34 @@ public class ProfileFragment extends Fragment {
         });
 
         DatabaseReference referencel = FirebaseDatabase.getInstance().getReference().child("Follow")
-                .child(profileid).child("following");
+                .child(profileid).child("Following");
         referencel.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 following.setText("" + snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getNrPosts() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i = 0;
+                for (DataSnapshot child: snapshot.getChildren()) {
+                    Post post = child.getValue(Post.class);
+                    if(post.getPostPublisher().equals(profileid)) {
+                        i++;
+                    }
+                }
+
+                posts.setText("" + i);
             }
 
             @Override
