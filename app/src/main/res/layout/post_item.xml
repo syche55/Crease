@@ -18,8 +18,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                android:id="@+id/imageProfile"
-                android:src="@drawable/ic_tempura"/>
+                android:id="@+id/imageProfile"/>
+            <!--                android:src="@drawable/ic_tempura"/>-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,8 +28,8 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:text="@string/username"/>
+                android:textColor="@color/colorBlack"/>
+            <!--                android:text="@string/username"/>-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,8 +38,8 @@
                 android:id="@+id/bookName"
                 android:layout_gravity="center_vertical"
                 android:textSize="14sp"
-                android:textColor="@color/colorGray"
-                android:text="@string/bookname"/>
+                android:textColor="@color/colorGray"/>
+            <!--                android:text="@string/bookname"/>-->
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -47,18 +47,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/postImage"
-            android:src="@drawable/ic_tempura"/>
+            android:contentDescription="@string/capture_image"/>
+        <!--            android:src="@drawable/ic_tempura"/>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
-            
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:id="@+id/like"
-                android:src="@drawable/ic_like"/>
+                android:src="@drawable/ic_like"
+                android:contentDescription="@string/title_add"/>
 
             <ImageView
                 android:layout_width="30dp"
@@ -66,7 +68,8 @@
                 android:id="@+id/comment"
                 android:src="@drawable/ic_comment"
                 android:layout_toEndOf="@id/like"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/title_add"/>
 
             <ImageView
                 android:layout_width="30dp"
@@ -74,7 +77,8 @@
                 android:id="@+id/save"
                 android:src="@drawable/ic_save"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/title_add"/>
 
         </RelativeLayout>
 
@@ -84,8 +88,8 @@
             android:layout_marginStart="8dp"
             android:textStyle="bold"
             android:id="@+id/likes"
-            android:text="20 likes"
             android:textColor="@color/colorBlack"/>
+        <!--            android:text="20 likes"-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,8 +97,9 @@
             android:layout_marginStart="8dp"
             android:textStyle="bold"
             android:id="@+id/publisher"
-            android:text="@string/username"
             android:textColor="@color/colorBlack"/>
+        <!--            android:text="@string/username"-->
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,8 +107,8 @@
             android:layout_marginStart="8dp"
             android:textStyle="bold"
             android:id="@+id/description"
-            android:text="description"
             android:textColor="@color/colorBlack"/>
+        <!--            android:text="description"-->
 
         <TextView
             android:layout_width="wrap_content"

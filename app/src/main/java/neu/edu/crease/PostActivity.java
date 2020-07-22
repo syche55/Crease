@@ -37,6 +37,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,17 +56,20 @@ public class PostActivity extends AppCompatActivity {
     private Button edit_post_submit_button, tip_close;
     private Dialog edit_post_tip_dialog;
 
-    private User signOnUser;
     private ProgressDialog pd;
 
     private ChildEventListener childEventListener;
     private DatabaseReference mPostReference;
+    private String currentDate;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_post);
+
+        Calendar calendar = Calendar.getInstance();
+        currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
         edit_post_tip_dialog = new Dialog(this);
 
@@ -159,7 +164,7 @@ public class PostActivity extends AppCompatActivity {
 
                         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Post newPost = new Post(postID, userID,
-                                myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString());
+                                myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString(), currentDate);
 
                         reference.child(postID).setValue(newPost);
 
