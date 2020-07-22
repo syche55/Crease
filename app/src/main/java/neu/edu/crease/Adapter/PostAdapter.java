@@ -24,9 +24,7 @@ import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
@@ -70,7 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // check like status
         isLiked(post.getPostID(), holder.like);
-        nrLikes(holder.likes, post.getPostID());
+        postLikesDisplay(holder.likes, post.getPostID());
 
         // click like button
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +141,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void nrLikes (final TextView likes, final String postid){
+    private void postLikesDisplay(final TextView likes, final String postid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes")
                 .child(postid);
         reference.addValueEventListener(new ValueEventListener() {
