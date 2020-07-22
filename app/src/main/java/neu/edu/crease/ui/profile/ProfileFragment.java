@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment {
 
                 User user = snapshot.getValue(User.class);
 
-                Log.e("user is ", (user == null) ? "null" : "not null");
+                Log.e("username is ", user.getUserName());
 
                 Glide.with(getContext()).load(user.getUserProfileImage()).into(image_profile);
                 username.setText(user.getUserName());

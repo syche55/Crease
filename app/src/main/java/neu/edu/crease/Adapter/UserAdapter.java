@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,8 +73,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 boolean successPut = editor.commit();
                 Log.e("holder setOnClickListener ", String.valueOf(successPut));
 
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_view_tag, new ProfileFragment()).commit();
+                // when click a user, go to his / her profile (code could be replaced by the following commented)
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                ProfileFragment newFragment = new ProfileFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.user_item, newFragment).addToBackStack(null).commit();
+
+
+//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.fragment_container_view_tag, new ProfileFragment()).commit();
+
+
             }
         });
 
