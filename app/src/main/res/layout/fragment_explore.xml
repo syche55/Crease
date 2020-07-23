@@ -35,16 +35,28 @@
             android:layout_marginBottom="8dp"/>
     </RelativeLayout>
 
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/refreshLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        -->
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/explore_item"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/explore_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
 </LinearLayout>
