@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +77,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 boolean successPut = editor.commit();
                 Log.e("holder setOnClickListener ", String.valueOf(successPut));
 
-                // when click a user, go to his / her profile (code could be replaced by the following commented)
+                // when click a user, go to his / her profile
 
                 // create a frame layout
                 FrameLayout fragmentLayout = new FrameLayout(mContext);

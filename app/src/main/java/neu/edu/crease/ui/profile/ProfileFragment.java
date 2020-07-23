@@ -42,15 +42,19 @@ import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
 public class ProfileFragment extends Fragment {
+
+    // init the top part
     ImageView image_profile, options;
     TextView posts, followers, following, username;
     Button edit_profile;
 
 
+    // init the posts
     RecyclerView recyclerView;
     MyPhotoAdapter myPhotoAdapter;
     List<Post> postList;
 
+    // things related to saving
     private List<String> mySaves;
     RecyclerView recyclerView_saves;
     MySaveAdapter mySaveAdapter_saves;
@@ -63,6 +67,9 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        // set view and init all variables
+
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -104,13 +111,14 @@ public class ProfileFragment extends Fragment {
         recyclerView_saves.setVisibility(View.GONE);
 
 
-
+        // get user info and display
         userInfo();
         getFollowers();
         getNrPosts();
         getMyPhotos();
         getMySaves();
 
+        // if the user see own profile, then display edit button
         if (profileid.equals(firebaseUser.getUid())) {
             edit_profile.setText("Edit Profile");
         }
@@ -119,7 +127,7 @@ public class ProfileFragment extends Fragment {
             saved_photos.setVisibility(View.GONE);
         }
 
-
+        // if the user see others' profile, then display follow / unfollow button
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,8 +172,11 @@ public class ProfileFragment extends Fragment {
 
 
 
+    // get user and display username & profile image
     private void userInfo() {
         Log.e("user profile id is ", profileid);
+
+        // get user from database using profile id
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -178,6 +189,7 @@ public class ProfileFragment extends Fragment {
 
                 Log.e("username is ", user.getUserName());
 
+                // display the username and user profile image
                 Glide.with(getContext()).load(user.getUserProfileImage()).into(image_profile);
                 username.setText(user.getUserName());
             }
@@ -210,7 +222,9 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    // display followers & followings number
     private void getFollowers() {
+        // get the followers from db, set text
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
                 .child(profileid).child("Followers");
         reference.addValueEventListener(new ValueEventListener() {
@@ -225,6 +239,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // get the followings from db, set text
         DatabaseReference referencel = FirebaseDatabase.getInstance().getReference().child("Follow")
                 .child(profileid).child("Following");
         referencel.addValueEventListener(new ValueEventListener() {
@@ -240,6 +255,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    // get posts number from db and display
     private void getNrPosts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
@@ -263,6 +279,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    // get photos from db and display
     private void getMyPhotos() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
@@ -286,6 +303,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    // get the saves and display
     private void getMySaves(){
         mySaves = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves")
