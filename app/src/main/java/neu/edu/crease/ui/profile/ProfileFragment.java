@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +31,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+
 import neu.edu.crease.Adapter.MyPhotoAdapter;
+
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
@@ -45,9 +47,16 @@ public class ProfileFragment extends Fragment {
     TextView posts, followers, following, username;
     Button edit_profile;
 
+
     RecyclerView recyclerView;
     MyPhotoAdapter myPhotoAdapter;
     List<Post> postList;
+
+    private List<String> mySaves;
+
+    RecyclerView recyclerView_saves;
+    MyPhotoAdapter photoAdapter_saves;
+    List<Post> postList_saves;
 
     FirebaseUser firebaseUser;
     String profileid;
@@ -70,6 +79,7 @@ public class ProfileFragment extends Fragment {
         following = view.findViewById(R.id.following);
         username = view.findViewById(R.id.username);
         edit_profile = view.findViewById(R.id.edit_profile);
+
         my_photos = view.findViewById(R.id.my_photos);
         saved_photos = view.findViewById(R.id.saved_photos);
 
@@ -80,6 +90,20 @@ public class ProfileFragment extends Fragment {
         postList = new ArrayList<>();
         myPhotoAdapter = new MyPhotoAdapter(getContext(), postList);
         recyclerView.setAdapter(myPhotoAdapter);
+
+
+        recyclerView_saves = view.findViewById(R.id.recycler_view_save);
+        recyclerView_saves.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager_saves = new GridLayoutManager(getContext(), 2);
+        recyclerView_saves.setLayoutManager(linearLayoutManager_saves);
+        postList_saves = new ArrayList<>();
+        photoAdapter_saves = new MyPhotoAdapter(getContext(), postList_saves);
+        recyclerView_saves.setAdapter(photoAdapter_saves);
+
+
+        recyclerView_saves.setVisibility(View.GONE);
+
+
 
         userInfo();
         getFollowers();
