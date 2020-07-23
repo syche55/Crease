@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     private List<User> mUsers;
 
     private FirebaseUser firebaseUser;
+
+
 
     public UserAdapter(Context mContext, List<User> mUsers) {
         this.mContext = mContext;
@@ -69,18 +72,27 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileID", user.getUserID());
+                editor.putString("profileid", user.getUserID());
                 boolean successPut = editor.commit();
                 Log.e("holder setOnClickListener ", String.valueOf(successPut));
 
                 // when click a user, go to his / her profile (code could be replaced by the following commented)
+
+                // create a frame layout
+                FrameLayout fragmentLayout = new FrameLayout(mContext);
+
+                // set the layout params to fill the activity
+                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // set an id to the layout
+                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+                // set the layout as Activity content
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.setContentView(fragmentLayout);
+                // Finally , add the fragment
                 ProfileFragment newFragment = new ProfileFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.user_item, newFragment).addToBackStack(null).commit();
-
-
-//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container_view_tag, new ProfileFragment()).commit();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
 
 
             }
