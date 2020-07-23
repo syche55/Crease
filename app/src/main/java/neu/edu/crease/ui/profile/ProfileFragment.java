@@ -148,6 +148,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView_saves.setVisibility(View.GONE);
+                saved_photos.setImageResource(R.drawable.ic_save);
             }
         });
         saved_photos.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +156,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 recyclerView.setVisibility(View.GONE);
                 recyclerView_saves.setVisibility(View.VISIBLE);
+                saved_photos.setImageResource(R.drawable.ic_saved);
             }
         });
         return view;

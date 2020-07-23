@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginStart="4dp">
+    android:layout_marginBottom="8dp">
 
     <com.google.android.material.circularreveal.CircularRevealFrameLayout
+        android:id="@+id/save_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:id="@+id/save_post"
-        >
+        android:scaleType="fitXY">
 
         <ImageView
             android:id="@+id/save_post_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_tempura"
-            />
+            android:src="@drawable/ic_tempura" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,22 +27,24 @@
             android:focusable="true" />
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
 
 
             <TextView
+                android:fontFamily="@font/montserrat"
                 android:id="@+id/save_book_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
                 android:text="@string/username"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
