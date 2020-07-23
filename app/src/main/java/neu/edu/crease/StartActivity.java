@@ -10,8 +10,10 @@ import neu.edu.crease.ui.favorite.FavoriteFragment;
 import neu.edu.crease.ui.home.HomeFragment;
 import neu.edu.crease.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -52,9 +54,9 @@ public class StartActivity extends AppCompatActivity {
                             selectedFragment = new FavoriteFragment();
                             break;
                         case R.id.navigation_profile:
-//                            SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-//                            editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                            editor.apply();
+                            SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+                            editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            editor.apply();
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.navigation_home:
