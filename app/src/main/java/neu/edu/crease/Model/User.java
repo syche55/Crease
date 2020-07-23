@@ -8,24 +8,19 @@ public class User {
     private String userID;
     private String userName = "";
     private Uri userProfileImage;
-    private ArrayList<Post> postsUserLiked;
     private int userBeingLiked;
     private String userSelfDescription = "";
 
     public User()
     {
-        this.postsUserLiked = new ArrayList<>();
     }
 
     public User(String userName, Uri userProfileImage){
         this.userName = userName;
         this.userProfileImage = userProfileImage;
-        this.postsUserLiked = new ArrayList<>();
-        this.userBeingLiked=0;
     }
 
     public User(String userID, String userName) {
-        this.postsUserLiked = new ArrayList<>();
         this.userID = userID;
         this.userName = userName;
     }

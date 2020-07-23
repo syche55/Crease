@@ -70,7 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         isLiked(post.getPostID(), holder.like);
         postLikesDisplay(holder.likes, post.getPostID());
 
-        // save
+        // click save button
         isSaved(post.getPostID(), holder.save);
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +78,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (holder.save.getTag().equals("save")){
                     FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
                             .child(post.getPostID()).setValue(true);
+                            updatePostBeingSaved(post);
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
                             .child(post.getPostID()).removeValue();
+                            updatePostBeingSavedCancelled(post);
                 }
             }
         });
@@ -218,7 +220,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     // post liked, userBeingLiked count + 1
     public void updateUserBeingLiked(Post post){
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(post.getPostPublisher()).child("userBeingLiked");
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(post.getPostPublisher()).child("userBeingLiked");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -237,7 +240,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     // post unliked, userBeingLiked count -1
     public void updateUserBeingLikedCancelled(Post post){
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(post.getPostPublisher()).child("userBeingLiked");
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(post.getPostPublisher()).child("userBeingLiked");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Integer prevCount = snapshot.getValue(Integer.class);
+                reference.removeEventListener(this);
+                reference.setValue(prevCount-1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updatePostBeingSaved(Post post){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
+                .child(post.getPostID()).child("postBeingSaved");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Integer prevCount = snapshot.getValue(Integer.class);
+                reference.removeEventListener(this);
+                reference.setValue(prevCount+1);
+                Log.e("prevCount", prevCount+"");
+                Log.e("currentCount", ""+snapshot.getValue(Integer.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void updatePostBeingSavedCancelled(Post post){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
+                .child(post.getPostID()).child("postBeingSaved");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

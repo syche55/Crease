@@ -26,13 +26,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -43,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import neu.edu.crease.Model.Post;
-import neu.edu.crease.Model.User;
 
 public class PostActivity extends AppCompatActivity {
     private Uri imageUri;
@@ -118,23 +112,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Post post = snapshot.getValue(Post.class);
-//                updateUserPostHistory(post);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        };
-//        mPostReference.addValueEventListener(postListener);
-//    }
+
 
     private void uploadPost(){
         pd = new ProgressDialog(PostActivity.this);
@@ -164,7 +142,7 @@ public class PostActivity extends AppCompatActivity {
 
                         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Post newPost = new Post(postID, userID,
-                                myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString(), currentDate);
+                                myUri, edit_post_enter_title.getText().toString(), edit_post_description.getText().toString(), currentDate, 0);
 
                         reference.child(postID).setValue(newPost);
 

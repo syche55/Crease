@@ -66,11 +66,12 @@
         android:ems="10"
         android:gravity="center|start"
         android:hint="@string/book_title"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
+        android:maxLines="1"
         android:textSize="20sp"
         android:textStyle="italic" />
 
