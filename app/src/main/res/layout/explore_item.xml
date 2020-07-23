@@ -72,7 +72,7 @@
             android:textSize="12sp"/>
 
         <LinearLayout
-            android:id="@+id/explore_save_layout"
+            android:id="@+id/explore_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -80,9 +80,11 @@
             android:background="@drawable/explore_save_button"
             android:clickable="true"
             android:layout_gravity="top"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:contextClickable="true">
 
             <ImageView
+                android:id="@+id/explore_save_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_baseline_bookmark_26"
@@ -92,6 +94,7 @@
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
             <TextView
+                android:id="@+id/explore_save_context"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:gravity="center"

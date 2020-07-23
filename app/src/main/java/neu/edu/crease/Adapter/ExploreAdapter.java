@@ -1,10 +1,15 @@
 package neu.edu.crease.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,9 +49,9 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = mPost.get(position);
+        final Post post = mPost.get(position);
 
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
 
@@ -58,11 +63,30 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         }
 
         holder.bookName.setText(post.getPostTitle());
-        // set to save after save finished
-        // holder.save.setText(post.getPostTitle());
-        holder.save.setText("3");
+        // Update - set to # of being saved
+        if(post.getPostBeingSaved().equals(0)){
+            holder.save.setText("");
+        }else{
+            holder.save.setText(String.valueOf(post.getPostBeingSaved()));
+        }
 
         publisherInfo(holder.imageProfile, holder.username, post.getPostPublisher());
+
+        isSaved(post.getPostID(), holder.saveBtn, holder.saveIcon);
+        holder.saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.saveBtn.getTag().equals("save")){
+                    FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
+                            .child(post.getPostID()).setValue(true);
+                    updatePostBeingSaved(post);
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
+                            .child(post.getPostID()).removeValue();
+                    updatePostBeingSavedCancelled(post);
+                }
+            }
+        });
     }
 
     @Override
@@ -72,8 +96,9 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView imageProfile, postImage;
-        public TextView username, bookName, description, save;
+        public ImageView imageProfile, postImage, saveIcon;
+        public TextView username, bookName, description, save, saveContext;
+        public LinearLayout saveBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +109,9 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             postImage = itemView.findViewById(R.id.explore_post_img);
             bookName = itemView.findViewById(R.id.explore_book_title);
             description = itemView.findViewById(R.id.explore_post_context);
+            saveContext = itemView.findViewById(R.id.explore_save_context);
+            saveIcon = itemView.findViewById(R.id.explore_save_icon);
+            saveBtn = itemView.findViewById(R.id.explore_save_button);
             save = itemView.findViewById(R.id.explore_save_count);
         }
     }
@@ -99,6 +127,71 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                 Glide.with(mContext).load(user.getUserProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void isSaved(final String postid, final LinearLayout linearLayout, final ImageView saveIcon) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
+                .child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(postid).exists()){
+                    saveIcon.setImageResource(R.drawable.ic_saved);
+                    //linearLayout.setBackgroundResource(R.drawable.explore_saved_button);
+                    linearLayout.setTag("saved");
+                } else{
+                    saveIcon.setImageResource(R.drawable.ic_save);
+                    //linearLayout.setBackgroundResource(R.drawable.explore_save_button);
+                    linearLayout.setTag("save");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void updatePostBeingSaved(Post post){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
+                .child(post.getPostID()).child("postBeingSaved");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Integer prevCount = snapshot.getValue(Integer.class);
+                reference.removeEventListener(this);
+                reference.setValue(prevCount+1);
+                Log.e("prevCount", prevCount+"");
+                Log.e("currentCount", ""+snapshot.getValue(Integer.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void updatePostBeingSavedCancelled(Post post){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
+                .child(post.getPostID()).child("postBeingSaved");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Integer prevCount = snapshot.getValue(Integer.class);
+                reference.removeEventListener(this);
+                reference.setValue(prevCount-1);
             }
 
             @Override
