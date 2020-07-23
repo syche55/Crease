@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +37,12 @@ import neu.edu.crease.R;
 
 public class ExploreFragment extends Fragment {
 
-    private static final int ITEM_INTERVAL = 5;
-    private int space = 5;
     private RecyclerView recyclerView;
     private ExploreAdapter exploreAdapter;
     private List<Post> exploreLists;
     private String signOnUserID;
+
+    public StaggeredGridLayoutManager layoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class ExploreFragment extends Fragment {
 
         // grid to 2 col & set auto match [gridlayout can't auto fixed match]
         // GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
         // GridLayoutManager does not support stack from end. Consider using reverse layout
@@ -61,6 +62,18 @@ public class ExploreFragment extends Fragment {
         exploreLists = new ArrayList<>();
         exploreAdapter = new ExploreAdapter(getContext(), exploreLists);
         recyclerView.setAdapter(exploreAdapter);
+
+        final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // func
+                exploreAdapter.notifyDataSetChanged();
+                //IMPORTANT - otherwise infinite refresh
+                refreshLayout.setRefreshing(false);
+
+            }
+        });
 
         //load all posts
         readPost();
@@ -77,9 +90,8 @@ public class ExploreFragment extends Fragment {
                 signOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot datasnapshot: snapshot.getChildren()){
                     Post post = datasnapshot.getValue(Post.class);
-                    String postPublisherId = post.getPostPublisher();
                     // do not load current sign user
-                    if(!postPublisherId.equals(signOnUserID)){
+                    if(!(post.getPostPublisher().equals(signOnUserID))){
                         exploreLists.add(post);
                     }
                 }
@@ -93,5 +105,12 @@ public class ExploreFragment extends Fragment {
 
             }
         });
+    }
+
+    public void addItemAtPosition(int position, String item) {
+        Collections.shuffle(exploreLists);
+        exploreAdapter.notifyItemChanged(position);
+        layoutManager.scrollToPosition(position);
+
     }
 }
