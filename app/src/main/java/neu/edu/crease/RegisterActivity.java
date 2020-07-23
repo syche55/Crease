@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText username_register, password_register, email_register;
     private Button register;
     private TextView login_text;
+    private ImageView back;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
@@ -93,6 +95,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.e("register user: ", "enter into register method");
                     register(str_username, str_email, str_password);
                 }
+            }
+        });
+
+        back = findViewById(R.id.register_back_to_main);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
