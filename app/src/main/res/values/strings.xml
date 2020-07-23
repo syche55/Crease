@@ -32,8 +32,9 @@
     <string name="already_have_an_account_log_in">Already have an account? <font color = '#75daad'><u>Log In</u></font></string>
     <string name="now_nrecord_nyour_reading_time">Now \nRecord \nYour reading time</string>
     <string name="register">Register</string>
-    <string name="login">Login</string>
+    <string name="login">Log In</string>
     <string name="email">Email: xxx@gmail.com</string>
     <string name="password">Password</string>
     <string name="description">Description</string>
+    <string name="sign_up">Sign up</string>
 </resources>
