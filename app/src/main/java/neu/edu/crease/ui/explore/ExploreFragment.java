@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,13 +49,14 @@ public class ExploreFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
         recyclerView = view.findViewById(R.id.explore_item);
-        // grid to 2 col & set new post fresh from top
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+
+        // grid to 2 col & set auto match [gridlayout can't auto fixed match]
+        // GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
         // GridLayoutManager does not support stack from end. Consider using reverse layout
         // gridLayoutManager.setStackFromEnd(true);
-
-         recyclerView.setLayoutManager(gridLayoutManager);
 
         exploreLists = new ArrayList<>();
         exploreAdapter = new ExploreAdapter(getContext(), exploreLists);
@@ -81,8 +83,8 @@ public class ExploreFragment extends Fragment {
                         exploreLists.add(post);
                     }
                 }
-                // should be replaced after saved implement
-                Collections.reverse(exploreLists);
+                // Random - or replaced after saved implement
+                Collections.shuffle(exploreLists);
                 exploreAdapter.notifyDataSetChanged();
             }
 

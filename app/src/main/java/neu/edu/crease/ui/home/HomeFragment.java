@@ -108,12 +108,13 @@ public class HomeFragment extends Fragment {
                 signOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot datasnapshot: snapshot.getChildren()){
                     Post post = datasnapshot.getValue(Post.class);
-                    String postPublisherId = post.getPostPublisher();
-                    signOnUserID.equals(postPublisherId);
-                    postLists.add(post);
-                    for(String id: followingList){
-                        if(postPublisherId.equals(id)){
-                            postLists.add(post);
+                    // check is curUser
+                    if(signOnUserID.equals(post.getPostPublisher())) postLists.add(post);
+                    else{
+                        for(String id: followingList){
+                            if(post.getPostPublisher().equals(id)){
+                                postLists.add(post);
+                            }
                         }
                     }
                 }
