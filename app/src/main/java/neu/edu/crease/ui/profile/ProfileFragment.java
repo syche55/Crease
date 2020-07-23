@@ -45,7 +45,7 @@ public class ProfileFragment extends Fragment {
 
     // init the top part
     ImageView image_profile, options;
-    TextView posts, followers, following, username;
+    TextView posts, followers, following, username, display_liked_count;
     Button edit_profile;
 
 
@@ -72,8 +72,10 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // get current user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // get parsed in userid, e.g. search user and jump to profile
         SharedPreferences prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         profileid = prefs.getString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -84,6 +86,7 @@ public class ProfileFragment extends Fragment {
         following = view.findViewById(R.id.following);
         username = view.findViewById(R.id.username);
         edit_profile = view.findViewById(R.id.edit_profile);
+        display_liked_count = view.findViewById(R.id.display_liked_count);
 
         my_photos = view.findViewById(R.id.my_photos);
         saved_photos = view.findViewById(R.id.saved_photos);
@@ -117,6 +120,7 @@ public class ProfileFragment extends Fragment {
         getNrPosts();
         getMyPhotos();
         getMySaves();
+        getMyLikesCount();
 
         // if the user see own profile, then display edit button
         if (profileid.equals(firebaseUser.getUid())) {
@@ -157,6 +161,7 @@ public class ProfileFragment extends Fragment {
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView_saves.setVisibility(View.GONE);
                 saved_photos.setImageResource(R.drawable.ic_save);
+                my_photos.setImageResource(R.drawable.ic_photos_green);
             }
         });
         saved_photos.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +170,7 @@ public class ProfileFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
                 recyclerView_saves.setVisibility(View.VISIBLE);
                 saved_photos.setImageResource(R.drawable.ic_saved);
+                my_photos.setImageResource(R.drawable.ic_grid);
             }
         });
         return view;
@@ -246,6 +252,23 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 following.setText("" + snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getMyLikesCount() {
+        // get the likes count from db, set text
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(profileid).child("userBeingLiked");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                display_liked_count.setText("" + snapshot.getValue());
             }
 
             @Override
