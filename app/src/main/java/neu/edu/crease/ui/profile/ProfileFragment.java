@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import neu.edu.crease.Adapter.MyPhotoAdapter;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
@@ -39,10 +45,14 @@ public class ProfileFragment extends Fragment {
     TextView posts, followers, following, username;
     Button edit_profile;
 
+    RecyclerView recyclerView;
+    MyPhotoAdapter myPhotoAdapter;
+    List<Post> postList;
+
     FirebaseUser firebaseUser;
     String profileid;
 
-    ImageButton my_fotos, saved_fotos;
+    ImageButton my_photos, saved_photos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,19 +70,28 @@ public class ProfileFragment extends Fragment {
         following = view.findViewById(R.id.following);
         username = view.findViewById(R.id.username);
         edit_profile = view.findViewById(R.id.edit_profile);
-        my_fotos = view.findViewById(R.id.my_fotos);
-        saved_fotos = view.findViewById(R.id.saved_fotos);
+        my_photos = view.findViewById(R.id.my_photos);
+        saved_photos = view.findViewById(R.id.saved_photos);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        postList = new ArrayList<>();
+        myPhotoAdapter = new MyPhotoAdapter(getContext(), postList);
+        recyclerView.setAdapter(myPhotoAdapter);
 
         userInfo();
         getFollowers();
         getNrPosts();
+        myPhotos();
 
         if (profileid.equals(firebaseUser.getUid())) {
             edit_profile.setText("Edit Profile");
         }
         else {
             checkFollow();
-            saved_fotos.setVisibility(View.GONE);
+            saved_photos.setVisibility(View.GONE);
         }
 
 
@@ -193,6 +212,29 @@ public class ProfileFragment extends Fragment {
                 }
 
                 posts.setText("" + i);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void myPhotos() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    if (post.getPostPublisher().equals(profileid)) {
+                        postList.add(post);
+                    }
+                }
+                Collections.reverse(postList);
+                myPhotoAdapter.notifyDataSetChanged();
             }
 
             @Override
