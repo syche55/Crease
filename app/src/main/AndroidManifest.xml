@@ -21,7 +21,12 @@
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".StartActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileInitActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".ProfileInitActivity" android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".PostActivity" android:screenOrientation="portrait" />
+        <activity android:name=".TakePhotoActivity" android:screenOrientation="portrait"/>
 
         <activity android:name=".SearchUserActivity" />
         <activity
@@ -38,8 +43,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".PostActivity" />
-        <activity android:name=".TakePhotoActivity" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

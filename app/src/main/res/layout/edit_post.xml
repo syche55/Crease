@@ -101,7 +101,6 @@
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
         android:textSize="18sp"
-        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/edit_post_submit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
