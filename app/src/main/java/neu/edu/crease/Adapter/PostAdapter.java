@@ -86,6 +86,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         // click save button
         isSaved(post.getPostID(), holder.save);
 
+        // if user clicks the profile image of a post, then direct to the publisher's profile
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +99,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        // if user clicks the publisher useername of a post, then direct to the publisher's profile
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +112,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        // if user clicks the publisher of a post, then direct to the publisher's profile
         holder.publisher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +125,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        // if user clicks the image of a post, then direct to the detail of that post
         holder.postImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,8 +133,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                 editor.putString("postID", post.getPostID());
                 boolean successPut = editor.commit();
-
-
 
                 ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
                         new PostDetailFragment()).addToBackStack(null).commit();

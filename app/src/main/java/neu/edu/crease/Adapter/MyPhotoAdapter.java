@@ -46,6 +46,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
 
         Glide.with(context).load(post.getPostImage()).into(holder.post_image);
 
+        // if user click the post image in the profile, then direct to the detail of the post
         holder.post_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

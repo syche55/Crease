@@ -34,15 +34,21 @@ public class PostDetailFragment extends Fragment {
     private PostAdapter postAdapter;
     private List<Post> postList;
 
+    // show the post detail after clicking
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
 
+        // get the post id from the parameter passing in
+
         SharedPreferences preferences = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         postID = preferences.getString("postID", "none");
 
         Log.e("you entered the post detail fragment! your post id is ", postID);
+
+        // init the view
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -53,17 +59,20 @@ public class PostDetailFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
 
+        // read the post
         readPost();
 
         return view;
     }
 
     private void readPost() {
+        // get the actual post from database
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postID);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // add the data to the layout
                 postList.clear();
                 Post post = snapshot.getValue(Post.class);
                 postList.add(post);
