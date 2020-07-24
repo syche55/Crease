@@ -2,6 +2,7 @@ package neu.edu.crease.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.btn_follow.setVisibility(View.VISIBLE);
         holder.username_display.setText(user.getUserName());
         holder.user_self_description.setText(user.getUserSelfDescription());
-//        Glide.with(mContext).load(user.getUserProfileImage()).into(holder.user_profile_image);
+//        Glide.with(mContext).load(Uri.parse(user.getUserProfileImage())).into(holder.user_profile_image);
         isFollowing(user.getUserID(), holder.btn_follow);
 
 //        Log.e("mUsers.getUserID", user.getUserID());

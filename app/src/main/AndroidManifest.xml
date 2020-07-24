@@ -21,6 +21,8 @@
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".StartActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileInitActivity" android:screenOrientation="portrait"/>
+
         <activity android:name=".SearchUserActivity" />
         <activity
             android:name=".BottomActivity"

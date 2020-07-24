@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                             reference.setValue(newUser);
 //                            reference.push().setValue(newUser);
                             pd.dismiss();
-                            Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this, ProfileInitActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 

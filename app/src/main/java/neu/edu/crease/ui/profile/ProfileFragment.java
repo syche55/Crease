@@ -2,6 +2,7 @@ package neu.edu.crease.ui.profile;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -193,10 +194,8 @@ public class ProfileFragment extends Fragment {
 
                 User user = snapshot.getValue(User.class);
 
-                Log.e("username is ", user.getUserName());
-
                 // display the username and user profile image
-                Glide.with(getContext()).load(user.getUserProfileImage()).into(image_profile);
+                Glide.with(getContext()).load(Uri.parse(snapshot.child("profileImage").getValue().toString())).into(image_profile);
                 username.setText(user.getUserName());
             }
 
