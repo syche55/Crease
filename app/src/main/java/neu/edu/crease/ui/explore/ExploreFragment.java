@@ -61,6 +61,7 @@ public class ExploreFragment extends Fragment {
 
         exploreLists = new ArrayList<>();
         exploreAdapter = new ExploreAdapter(getContext(), exploreLists);
+        exploreAdapter.setHasStableIds(true);
         recyclerView.setAdapter(exploreAdapter);
 
         final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
