@@ -73,6 +73,8 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/profile_image_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +126,7 @@
                     android:id="@+id/self_intro_prompt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat"
                     android:text="2. Give one sentence to describe yourself"
@@ -147,7 +149,10 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textColor="@color/colorLightGreen"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+
+                />
+
 
 
 
@@ -155,7 +160,7 @@
                 android:id="@+id/continue_button"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -169,25 +174,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
-<!--    -->
-
-
-
-
-
-
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/self_intro_input"-->
-<!--        android:layout_width="245dp"-->
-<!--        android:layout_height="21dp"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:text="TextView"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/self_intro_prompt" />-->
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
