@@ -54,23 +54,8 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
                 editor.putString("postID", post.getPostID());
                 editor.apply();
 
-                // when click a user, go to his / her profile
-
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(context);
-
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                PostDetailFragment newFragment = new PostDetailFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new PostDetailFragment()).addToBackStack(null).commit();
             }
         });
     }

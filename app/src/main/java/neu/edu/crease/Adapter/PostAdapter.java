@@ -93,23 +93,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 editor.putString("profileid", post.getPostPublisher());
                 editor.apply();
 
-                // when click a user, go to his / her profile
-
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(mContext);
-
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                ProfileFragment newFragment = new ProfileFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -120,23 +105,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 editor.putString("profileid", post.getPostPublisher());
                 editor.apply();
 
-                // when click a user, go to his / her profile
-
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(mContext);
-
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                ProfileFragment newFragment = new ProfileFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -147,23 +117,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 editor.putString("profileid", post.getPostPublisher());
                 editor.apply();
 
-                // when click a user, go to his / her profile
-
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(mContext);
-
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                ProfileFragment newFragment = new ProfileFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -173,25 +128,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Log.e("", "you clicked the post image in post adapter!");
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                 editor.putString("postID", post.getPostID());
-                editor.apply();
+                boolean successPut = editor.commit();
 
-                // when click a user, go to his / her profile
 
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(mContext);
 
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                PostDetailFragment newFragment = new PostDetailFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new PostDetailFragment()).addToBackStack(null).commit();
             }
         });
 

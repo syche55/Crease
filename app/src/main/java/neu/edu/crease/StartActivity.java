@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 public class StartActivity extends AppCompatActivity {
@@ -26,6 +27,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        Log.e("", "you entered into start activity!");
 
         // Initialize And Assign Variable
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
