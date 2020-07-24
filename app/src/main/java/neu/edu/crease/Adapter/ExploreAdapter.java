@@ -119,13 +119,12 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                assert user != null;
-                Glide.with(mContext).load(Uri.parse(snapshot.child("profileImage").getValue().toString())).into(imageProfile);
+
+                Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
 
             }

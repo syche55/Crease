@@ -1,6 +1,7 @@
 package neu.edu.crease;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,18 +12,27 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +49,8 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import neu.edu.crease.Model.Post;
+
 public class ProfileInitActivity extends AppCompatActivity {
     private Button random_profile_image;
     private Button upload_profile_image;
@@ -49,6 +61,10 @@ public class ProfileInitActivity extends AppCompatActivity {
     private static final int GALLERY_PERMISSION_CODE = 1003;
     private String self_intro;
     private FirebaseUser currentUser;
+    private StorageReference storageReference;
+    private StorageTask uploadTask;
+
+
 
 
     @Override
@@ -117,15 +133,55 @@ public class ProfileInitActivity extends AppCompatActivity {
 //        startActivityForResult(intent, IMAGE_PICK_CODE);
 //    }
 
-    public void updateProfile(Uri profile_uri, String self_intro){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+    public void updateProfile(final Uri profile_uri, final String self_intro){
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
                 .child(currentUser.getUid());
 
-        HashMap<String, Object> hashMap=new HashMap<>();
-        hashMap.put("profileImage", profile_uri.toString());
-        hashMap.put("userSelfDescription", self_intro);
+        if (profile_uri != null){
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getMimeTypeFromUrl(profile_uri));
+            uploadTask = fileReference.putFile(profile_uri);
 
-        reference.updateChildren(hashMap);
-    }
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isComplete()){
+                        throw task.getException();
+                    }
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+
+                    if (task.isSuccessful()){
+                        Uri downloadUri = task.getResult();
+                        String myUri = downloadUri.toString();
+
+                        HashMap<String, Object> hashMap=new HashMap<>();
+                        hashMap.put("profileImage", myUri);
+                        hashMap.put("userSelfDescription", self_intro);
+
+                        reference.updateChildren(hashMap);
+
+                    } else {
+                        Toast.makeText(ProfileInitActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ProfileInitActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(ProfileInitActivity.this, "Something is wrong with the image! Please try again", Toast.LENGTH_SHORT).show();
+        }
 
 }
+    private String getMimeTypeFromUrl(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+}
+
