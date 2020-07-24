@@ -1,14 +1,18 @@
 package neu.edu.crease.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
+import neu.edu.crease.ui.postDetail.PostDetailFragment;
+import neu.edu.crease.ui.profile.ProfileFragment;
 
 import java.util.List;
 import java.util.UUID;
@@ -79,6 +85,116 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // click save button
         isSaved(post.getPostID(), holder.save);
+
+        holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                // when click a user, go to his / her profile
+
+                // create a frame layout
+                FrameLayout fragmentLayout = new FrameLayout(mContext);
+
+                // set the layout params to fill the activity
+                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // set an id to the layout
+                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+                // set the layout as Activity content
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.setContentView(fragmentLayout);
+                // Finally , add the fragment
+                ProfileFragment newFragment = new ProfileFragment();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+            }
+        });
+
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                // when click a user, go to his / her profile
+
+                // create a frame layout
+                FrameLayout fragmentLayout = new FrameLayout(mContext);
+
+                // set the layout params to fill the activity
+                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // set an id to the layout
+                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+                // set the layout as Activity content
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.setContentView(fragmentLayout);
+                // Finally , add the fragment
+                ProfileFragment newFragment = new ProfileFragment();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+            }
+        });
+
+        holder.publisher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                // when click a user, go to his / her profile
+
+                // create a frame layout
+                FrameLayout fragmentLayout = new FrameLayout(mContext);
+
+                // set the layout params to fill the activity
+                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // set an id to the layout
+                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+                // set the layout as Activity content
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.setContentView(fragmentLayout);
+                // Finally , add the fragment
+                ProfileFragment newFragment = new ProfileFragment();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+            }
+        });
+
+        holder.postImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("", "you clicked the post image in post adapter!");
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("postID", post.getPostID());
+                editor.apply();
+
+                // when click a user, go to his / her profile
+
+                // create a frame layout
+                FrameLayout fragmentLayout = new FrameLayout(mContext);
+
+                // set the layout params to fill the activity
+                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // set an id to the layout
+                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+                // set the layout as Activity content
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.setContentView(fragmentLayout);
+                // Finally , add the fragment
+                PostDetailFragment newFragment = new PostDetailFragment();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+            }
+        });
+
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
