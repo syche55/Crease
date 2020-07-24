@@ -2,22 +2,21 @@ package neu.edu.crease.Model;
 
 import android.net.Uri;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String userID;
     private String userName = "";
-    private Uri userProfileImage;
+    private String userProfileImage;
     private int userBeingLiked;
     private String userSelfDescription = "";
 
     public User()
     {
-    }
-
-    public User(String userName, Uri userProfileImage){
-        this.userName = userName;
-        this.userProfileImage = userProfileImage;
     }
 
     public User(String userID, String userName) {
@@ -35,11 +34,11 @@ public class User {
         this.userName = userName;
     }
 
-    public Uri getUserProfileImage() {
+    public String getUserProfileImage() {
         return userProfileImage;
     }
 
-    public void setUserProfileImage(Uri userProfileImage) {
+    public void setUserProfileImage(String userProfileImage) {
         this.userProfileImage = userProfileImage;
     }
 
@@ -65,5 +64,13 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("userProfileImage", userProfileImage);
+        result.put("userSelfDescription", userSelfDescription);
+        return result;
     }
 }

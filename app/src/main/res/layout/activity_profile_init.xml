@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/open_book"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginTop="0dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/open_book" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="128dp"
+                android:layout_height="86dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/bangers"
+                android:text="@string/app_name"
+                android:textColor="@color/colorAccent"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_image_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserrat"
+                android:text="1. Choose a profile image to represent yourself"
+                app:layout_constraintHorizontal_bias="0.563"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/profile_image_init"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image_prompt"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/random_profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:text="Random"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@drawable/main_register_button"
+                    app:layout_constraintEnd_toStartOf="@+id/upload_profile_image"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
+
+                <Button
+                    android:id="@+id/upload_profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Upload"
+                    android:fontFamily="@font/montserrat"
+                    android:background="@drawable/main_register_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/profile_image_init"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+                <TextView
+                    android:id="@+id/self_intro_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat"
+                    android:text="2. Give one sentence to describe yourself"
+                    app:layout_constraintHorizontal_bias="0.491"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
+
+            <EditText
+                android:id="@+id/self_intro_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="48dp"
+                android:fontFamily="@font/montserrat"
+                android:hint="Let other book lovers know you better"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/colorLightGreen"
+                android:textSize="14sp" />
+
+
+
+            <Button
+                android:id="@+id/continue_button"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:text="Looking Good!"
+                android:background="@drawable/take_photo_ok_button"
+                android:fontFamily="@font/montserrat_bold" />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+<!--    -->
+
+
+
+
+
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/self_intro_input"-->
+<!--        android:layout_width="245dp"-->
+<!--        android:layout_height="21dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/self_intro_prompt" />-->
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

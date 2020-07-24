@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,7 +125,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 assert user != null;
-                Glide.with(mContext).load(user.getUserProfileImage()).into(imageProfile);
+                Glide.with(mContext).load(Uri.parse(snapshot.child("profileImage").getValue().toString())).into(imageProfile);
                 username.setText(user.getUserName());
 
             }
