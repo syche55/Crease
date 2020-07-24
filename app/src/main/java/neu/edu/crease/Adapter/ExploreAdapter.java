@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.UUID;
 
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
@@ -40,6 +41,11 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
     public ExploreAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
         this.mPost = mPost;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return UUID.nameUUIDFromBytes(mPost.get(position).getPostID().getBytes()).getMostSignificantBits();
     }
 
     @NonNull
@@ -71,7 +77,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             holder.save.setText(String.valueOf(post.getPostBeingSaved()));
         }
 
-        publisherInfo(holder.imageProfile, holder.username, post.getPostPublisher());
+        publisherInfo(holder.imageProfile, holder.username, post.getPostPublisher(), position);
 
         isSaved(post.getPostID(), holder.saveBtn, holder.saveIcon);
         holder.saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -117,16 +123,16 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         }
     }
 
-    private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId){
+    private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId, final int position){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-
+                assert user != null;
                 Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
-
+                Log.e("Publisher:", "postion: " + position + " user: " + user.getUserName());
             }
 
             @Override
@@ -138,10 +144,9 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     private void isSaved(final String postid, final LinearLayout linearLayout, final ImageView saveIcon) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
                 .child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("ResourceAsColor")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(postid).exists()){
@@ -153,6 +158,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                     //linearLayout.setBackgroundResource(R.drawable.explore_save_button);
                     linearLayout.setTag("save");
                 }
+                reference.removeEventListener(this);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

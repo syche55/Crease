@@ -104,7 +104,6 @@ public class TakePhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (image_uri !=null){
                     connectToPostActivity(image_uri);
-                    Log.e("On click", " "+image_uri);
                 }
             }
 
