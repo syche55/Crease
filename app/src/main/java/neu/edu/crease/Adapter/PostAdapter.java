@@ -25,6 +25,7 @@ import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
@@ -38,6 +39,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         this.mPost = mPost;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return UUID.nameUUIDFromBytes(mPost.get(position).getPostID().getBytes()).getMostSignificantBits();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,6 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        Log.e("BindView", "Binding " + position + "th post with title " + mPost.get(position).getPostTitle());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         // get current post
         final Post post = mPost.get(position);
@@ -64,7 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.time.setText(post.getPostTime());
 
         // display publisher information
-        publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher());
+        publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher(), position);
 
         // check like status
         isLiked(post.getPostID(), holder.like);
@@ -173,7 +180,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
     }
-    private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId){
+    private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId, final int position){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -181,10 +188,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 assert user != null;
-                Glide.with(mContext).load(user.getUserProfileImage()).into(imageProfile);
+                Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
                 publisher.setText(user.getUserName());
-
+                Log.e("Publisher:", "postion: " + position + " user: " + user.getUserName());
             }
 
             @Override
@@ -196,7 +203,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private void isSaved(final String postid, final ImageView imageView) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
                 .child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -208,6 +215,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     imageView.setImageResource(R.drawable.ic_save);
                     imageView.setTag("save");
                 }
+                reference.removeEventListener(this);
             }
 
             @Override

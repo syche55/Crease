@@ -2,6 +2,7 @@ package neu.edu.crease.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +54,8 @@ public class HomeFragment extends Fragment {
         // fresh from top
         recyclerView.setLayoutManager(linearLayoutManager);
         postLists = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(),postLists);
+        postAdapter = new PostAdapter(getContext(), postLists);
+        postAdapter.setHasStableIds(true);
         recyclerView.setAdapter(postAdapter);
 
         search_user_btn = view.findViewById(R.id.search_user_btn);
@@ -109,8 +112,9 @@ public class HomeFragment extends Fragment {
                 for(DataSnapshot datasnapshot: snapshot.getChildren()){
                     Post post = datasnapshot.getValue(Post.class);
                     // check is curUser
-                    if(signOnUserID.equals(post.getPostPublisher())) postLists.add(post);
-                    else{
+                    if(signOnUserID.equals(post.getPostPublisher())) {
+                        postLists.add(post);
+                    } else {
                         for(String id: followingList){
                             if(post.getPostPublisher().equals(id)){
                                 postLists.add(post);

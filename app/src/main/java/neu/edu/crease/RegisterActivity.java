@@ -125,9 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
                             reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
                             Log.d("Register", "User id for new registered user is " + userid);
 
-//                            HashMap<String, Object> map = new HashMap<>();
-//                            map.put("id", userid);
-//                            map.put("username", username.toLowerCase());
 
                             // set the fields for current user, and redirect to start page (code below could be replaced by the commented part)
                             User newUser = new User(userid, username);

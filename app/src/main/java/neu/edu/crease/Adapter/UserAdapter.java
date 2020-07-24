@@ -61,7 +61,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.btn_follow.setVisibility(View.VISIBLE);
         holder.username_display.setText(user.getUserName());
         holder.user_self_description.setText(user.getUserSelfDescription());
-//        Glide.with(mContext).load(Uri.parse(user.getUserProfileImage())).into(holder.user_profile_image);
+//        Log.e("what is null", Uri.parse(user.getProfileImage()).toString());
+        Glide.with(mContext).load(user.getProfileImage()).into(holder.user_profile_image);
         isFollowing(user.getUserID(), holder.btn_follow);
 
 //        Log.e("mUsers.getUserID", user.getUserID());
@@ -133,7 +134,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            user_profile_image = itemView.findViewById(R.id.imageProfile);
+            user_profile_image = itemView.findViewById(R.id.user_profileImage);
             username_display = itemView.findViewById(R.id.username_display);
             user_self_description = itemView.findViewById(R.id.user_self_description);
             btn_follow = itemView.findViewById(R.id.btn_follow);
