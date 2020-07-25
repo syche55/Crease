@@ -18,18 +18,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".CommentActivity"></activity>
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".StartActivity" android:screenOrientation="portrait"/>
         <activity android:name=".EditProfileActivity" android:screenOrientation="portrait"/>
-
-
         <activity android:name=".ProfileInitActivity" android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".PostActivity" android:screenOrientation="portrait" />
-        <activity android:name=".TakePhotoActivity" android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".PostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TakePhotoActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".SearchUserActivity" />
         <activity
             android:name=".BottomActivity"
@@ -37,6 +41,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,8 +49,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

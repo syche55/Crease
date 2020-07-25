@@ -15,38 +15,40 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:id="@+id/imageProfile"/>
+                android:layout_margin="10dp"/>
             <!--                android:src="@drawable/ic_tempura"/>-->
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/username"
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"/>
             <!--                android:text="@string/username"/>-->
 
             <TextView
+                android:id="@+id/bookName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:id="@+id/bookName"
                 android:layout_gravity="center_vertical"
                 android:textSize="14sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/colorGray"/>
             <!--                android:text="@string/bookname"/>-->
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ImageView
+            android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/postImage"
             android:contentDescription="@string/capture_image"/>
         <!--            android:src="@drawable/ic_tempura"/>-->
 
@@ -56,25 +58,25 @@
             android:padding="8dp">
 
             <ImageView
+                android:id="@+id/like"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/like"
                 android:src="@drawable/ic_like"
                 android:contentDescription="@string/title_add"/>
 
             <ImageView
+                android:id="@+id/comment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/comment"
                 android:src="@drawable/ic_comment"
                 android:layout_toEndOf="@id/like"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/title_add"/>
 
             <ImageView
+                android:id="@+id/save"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/save"
                 android:src="@drawable/ic_save"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
@@ -83,51 +85,55 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:id="@+id/likes"
+            android:fontFamily="@font/montserrat_bold"
             android:textColor="@color/colorBlack"/>
         <!--            android:text="20 likes"-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:id="@+id/publisher"
-            android:textColor="@color/colorBlack"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/publisher"-->
+<!--            android:textColor="@color/colorBlack"/>-->
         <!--            android:text="@string/username"-->
 
 
         <TextView
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:id="@+id/description"
-            android:textColor="@color/colorBlack"/>
+            android:text="@string/description"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
         <!--            android:text="description"-->
 
         <TextView
+            android:id="@+id/comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:text="view all 10 comments"
-            android:id="@+id/comments"
+            android:text="View all 0 comments"
+            android:fontFamily="@font/montserrat"
             android:textColor="@color/colorGray"/>
 
         <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:text="10 hours ago"
-            android:id="@+id/time"
+            android:fontFamily="@font/montserrat"
             android:textColor="@color/colorGray"/>
 
 

@@ -1,6 +1,8 @@
 package neu.edu.crease.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import neu.edu.crease.CommentActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
@@ -77,11 +80,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.time.setText(post.getPostTime());
 
         // display publisher information
-        publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPostPublisher(), position);
+        publisherInfo(holder.imageProfile, holder.username, post.getPostPublisher(), position);
 
         // check like status
         isLiked(post.getPostID(), holder.like);
         postLikesDisplay(holder.likes, post.getPostID());
+
+        // get comments
+        getComments(post.getPostID(), holder.comments);
 
         // click save button
         isSaved(post.getPostID(), holder.save);
@@ -112,18 +118,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        // if user clicks the publisher of a post, then direct to the publisher's profile
-        holder.publisher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileid", post.getPostPublisher());
-                editor.apply();
-
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                        new ProfileFragment()).addToBackStack(null).commit();
-            }
-        });
+//        // if user clicks the publisher of a post, then direct to the publisher's profile
+//        holder.publisher.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+//                editor.putString("profileid", post.getPostPublisher());
+//                editor.apply();
+//
+//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                        new ProfileFragment()).addToBackStack(null).commit();
+//            }
+//        });
 
         // if user clicks the image of a post, then direct to the detail of that post
         holder.postImage.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +176,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 }
             }
         });
+
+        // click comment button
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postID", post.getPostID());
+                intent.putExtra("publisherID", post.getPostPublisher());
+                mContext.startActivity(intent);
+            }
+        });
+
+        // click comments text - see more comments or send comments
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postID", post.getPostID());
+                intent.putExtra("publisherID", post.getPostPublisher());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -180,7 +208,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imageProfile, postImage, like, comment, save;
-        public TextView username, bookName, likes, publisher, description, comments, time;
+        public TextView username, bookName, likes, description, comments, time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -193,11 +221,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             save = itemView.findViewById(R.id.save);
             username = itemView.findViewById(R.id.username);
             likes = itemView.findViewById(R.id.likes);
-            publisher = itemView.findViewById(R.id.publisher);
+//            publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
-//            comments = itemView.findViewById(R.id.comments);
+            comments = itemView.findViewById(R.id.comments);
             time = itemView.findViewById(R.id.time);
         }
+    }
+
+    // comments
+    private void getComments(String postID, final TextView comments){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postID);
+        reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // set to invisible later
+                comments.setText("View all " + snapshot.getChildrenCount() + " comments");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void isLiked(String postid, final ImageView imageView){
@@ -240,7 +286,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
     }
-    private void publisherInfo(final ImageView imageProfile, final  TextView username, final TextView publisher, final String userId, final int position){
+    private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId, final int position){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -250,7 +296,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 assert user != null;
                 Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
-                publisher.setText(user.getUserName());
+//                publisher.setText(user.getUserName());
                 Log.e("Publisher:", "postion: " + position + " user: " + user.getUserName());
             }
 
