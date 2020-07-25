@@ -2,6 +2,7 @@ package neu.edu.crease.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,7 @@ import java.util.UUID;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
+import neu.edu.crease.ui.postDetail.PostDetailFragment;
 
 public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHolder>{
     public Context mContext;
@@ -92,6 +95,22 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                             .child(post.getPostID()).removeValue();
                     updatePostBeingSavedCancelled(post);
                 }
+            }
+        });
+
+
+        // if user click the post image in the explore page, then direct to the detail of the post
+        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+
+        holder.postImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("postID", post.getPostID());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new PostDetailFragment()).addToBackStack(null).commit();
             }
         });
     }
