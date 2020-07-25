@@ -1,6 +1,7 @@
 package neu.edu.crease.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
@@ -31,6 +32,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
+import neu.edu.crease.SearchUserActivity;
+import neu.edu.crease.StartActivity;
 import neu.edu.crease.ui.profile.ProfileFragment;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
@@ -74,28 +77,41 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileid", user.getUserID());
-                boolean successPut = editor.commit();
-                Log.e("holder setOnClickListener ", String.valueOf(successPut));
+
+//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+//                editor.putString("profileid", user.getUserID());
+//                boolean successPut = editor.commit();
+//                Log.e("holder setOnClickListener ", String.valueOf(successPut));
 
                 // when click a user, go to his / her profile
+                // we do not redirect here, because now we're in the search activity, and redirect will let the fragment contain
+                // the search activity container; but all fragments should be under the start activity container;
+                // so we first redirect to the start activity, and then open the user profile there
 
-                // create a frame layout
-                FrameLayout fragmentLayout = new FrameLayout(mContext);
+                String value = user.getUserID();
+                Intent i = new Intent(mContext, StartActivity.class);
+                i.putExtra("key",value);
+                mContext.startActivity(i);
 
-                // set the layout params to fill the activity
-                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                // set an id to the layout
-                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-                // set the layout as Activity content
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.setContentView(fragmentLayout);
-                // Finally , add the fragment
-                ProfileFragment newFragment = new ProfileFragment();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentLayout, newFragment).commit();  // 1000 - is the id set for the container layout
+
+//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container_search,
+//                        new ProfileFragment()).addToBackStack(null).commit();
+
+//                // create a frame layout
+//                FrameLayout fragmentLayout = new FrameLayout(mContext);
+//
+//                // set the layout params to fill the activity
+//                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                // set an id to the layout
+//                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
+//                // set the layout as Activity content
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                activity.setContentView(fragmentLayout);
+//                // Finally , add the fragment
+//                ProfileFragment newFragment = new ProfileFragment();
+//                activity.getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.fragmentLayout, newFragment).addToBackStack(null).commit();  // 1000 - is the id set for the container layout
 
 
             }

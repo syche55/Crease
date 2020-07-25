@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Log.e("", "you entered into home fragment!");
+
         recyclerView = view.findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

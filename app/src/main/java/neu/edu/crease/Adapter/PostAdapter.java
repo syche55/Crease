@@ -1,14 +1,18 @@
 package neu.edu.crease.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
+import neu.edu.crease.ui.postDetail.PostDetailFragment;
+import neu.edu.crease.ui.profile.ProfileFragment;
 
 import java.util.List;
 import java.util.UUID;
@@ -79,6 +85,60 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // click save button
         isSaved(post.getPostID(), holder.save);
+
+        // if user clicks the profile image of a post, then direct to the publisher's profile
+        holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
+            }
+        });
+
+        // if user clicks the publisher useername of a post, then direct to the publisher's profile
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
+            }
+        });
+
+        // if user clicks the publisher of a post, then direct to the publisher's profile
+        holder.publisher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPostPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new ProfileFragment()).addToBackStack(null).commit();
+            }
+        });
+
+        // if user clicks the image of a post, then direct to the detail of that post
+        holder.postImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("", "you clicked the post image in post adapter!");
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("postID", post.getPostID());
+                boolean successPut = editor.commit();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        new PostDetailFragment()).addToBackStack(null).commit();
+            }
+        });
+
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
