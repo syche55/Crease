@@ -38,6 +38,19 @@ public class StartActivity extends AppCompatActivity {
         // Set Listener
         navView.setOnNavigationItemSelectedListener(navListener);
 
+        // comment - click user - profile
+        Bundle intent =  getIntent().getExtras();
+        if(intent != null){
+            String publisher = intent.getString("publisherID");
+
+            SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+            editor.putString("profileid", publisher);
+            editor.apply();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new ProfileFragment()).commit();
+        }else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
+        }
+
         // if we come from the searching activity, then just redirect to the target user profile
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

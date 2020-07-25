@@ -69,6 +69,7 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onRefresh() {
                 // func
+                Collections.shuffle(exploreLists);
                 exploreAdapter.notifyDataSetChanged();
                 //IMPORTANT - otherwise infinite refresh
                 refreshLayout.setRefreshing(false);
@@ -97,7 +98,7 @@ public class ExploreFragment extends Fragment {
                     }
                 }
                 // Random - or replaced after saved implement
-                Collections.shuffle(exploreLists);
+                // Collections.shuffle(exploreLists);
                 exploreAdapter.notifyDataSetChanged();
             }
 
