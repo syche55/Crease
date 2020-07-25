@@ -1,6 +1,7 @@
 package neu.edu.crease.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,9 +39,12 @@ import java.util.List;
 import neu.edu.crease.Adapter.MyPhotoAdapter;
 import neu.edu.crease.Adapter.MySaveAdapter;
 
+import neu.edu.crease.EditProfileActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
+import neu.edu.crease.ProfileInitActivity;
 import neu.edu.crease.R;
+import neu.edu.crease.StartActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -139,6 +143,8 @@ public class ProfileFragment extends Fragment {
                 String btn = edit_profile.getText().toString();
 
                 if (btn.equals("Edit Profile")) {
+                    Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                    startActivity(intent);
 
                 }
                 else if (btn.equals("follow")) {
