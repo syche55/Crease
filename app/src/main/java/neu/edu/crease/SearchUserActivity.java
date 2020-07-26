@@ -45,7 +45,7 @@ public class SearchUserActivity extends AppCompatActivity {
         search_bar = findViewById(R.id.search_bar);
 
         mUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(this, mUsers);
+        userAdapter = new UserAdapter(this, mUsers, false);
         recyclerView.setAdapter(userAdapter);
 
         // load all users

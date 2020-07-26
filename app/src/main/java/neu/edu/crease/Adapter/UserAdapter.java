@@ -47,9 +47,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
 
 
-    public UserAdapter(Context mContext, List<User> mUsers) {
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment) {
         this.mContext = mContext;
-        this.mUsers=mUsers;
+        this.mUsers = mUsers;
+        this.isFragment = isFragment;
     }
 
     @NonNull
@@ -90,22 +91,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 // the search activity container; but all fragments should be under the start activity container;
                 // so we first redirect to the start activity, and then open the user profile there
 
-//                if(isFragment){
-//                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-//                    editor.putString("profileid", user.getUserID());
-//                    editor.apply();
-//                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
-//                            new ProfileFragment()).addToBackStack(null).commit();
-//                }else{
-//                    Intent intent = new Intent(mContext, StartActivity.class);
-//                    intent.putExtra("publisherID", user.getUserID());
-//                    mContext.startActivity(intent);
-//                }
-
-                String value = user.getUserID();
-                Intent i = new Intent(mContext, StartActivity.class);
-                i.putExtra("key",value);
-                mContext.startActivity(i);
+                if(isFragment){
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                    editor.putString("profileid", user.getUserID());
+                    editor.apply();
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                            new ProfileFragment()).addToBackStack(null).commit();
+                }else{
+                    Intent intent = new Intent(mContext, StartActivity.class);
+                    intent.putExtra("publisherID", user.getUserID());
+                    mContext.startActivity(intent);
+                }
+//
+//                String value = user.getUserID();
+//                Intent i = new Intent(mContext, StartActivity.class);
+//                i.putExtra("key",value);
+//                mContext.startActivity(i);
 
 
 //                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container_search,

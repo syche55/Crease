@@ -30,6 +30,7 @@
     <string name="cancel_post">Cancel Post</string>
     <string name="show_tip">Show Tip</string>
     <string name="post_tips">Post Tips</string>
+    <string name="photo_tips">Photo Tips</string>
 
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? <font color='#75daad'><u>Sign up!</u></font></string>
     <string name="already_have_an_account_log_in">Already have an account? <font color='#75daad'><u>Log In</u></font></string>
@@ -46,5 +47,7 @@
 
     <string name="settings">Settings</string>
     <string name="log_out">Log Out</string>
+    <string name="edit_post_4_tips">Share a quote \nWrite s Review \nAny moment \nAny feeling</string>
+    <string name="take_photo_3_tips">A book cover \nAny paragraph \nAny reading moment</string>
 
 </resources>

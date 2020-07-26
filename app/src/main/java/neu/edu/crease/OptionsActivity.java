@@ -20,7 +20,7 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         logout = findViewById(R.id.logout);
-        settings = findViewById(R.id.settings);
+//        settings = findViewById(R.id.settings);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

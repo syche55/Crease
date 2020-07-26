@@ -58,7 +58,7 @@ public class FollowersActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(this, userList);
+        userAdapter = new UserAdapter(this, userList, false);
         recyclerView.setAdapter(userAdapter);
 
         idList = new ArrayList<>();

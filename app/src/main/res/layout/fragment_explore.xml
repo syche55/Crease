@@ -40,15 +40,15 @@
                     android:fontFamily="@font/montserrat_bold"
                     />
 
-                <ImageView
-                    android:id="@+id/search_user_btn"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_baseline_search_24"
-                    android:layout_gravity="center"
-                    android:layout_column="1"
-                    android:layout_columnWeight="1"
-                    android:contentDescription="@string/title_add"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/search_user_btn"-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:src="@drawable/ic_baseline_search_24"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_column="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:contentDescription="@string/title_add"/>-->
 
             </GridLayout>
 

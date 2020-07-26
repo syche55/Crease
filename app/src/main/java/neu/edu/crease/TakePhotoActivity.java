@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +23,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,6 +33,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import neu.edu.crease.Adapter.SplashAdapter;
+import neu.edu.crease.Adapter.TakePhotoAdapter;
+import neu.edu.crease.ScrollActivity.ScrollLayoutManager;
+
 public class TakePhotoActivity extends AppCompatActivity {
 
     private static final int PERMISSION_CODE = 1000;
@@ -34,9 +45,11 @@ public class TakePhotoActivity extends AppCompatActivity {
     private static final int IMAGE_PICK_CODE = 1002;
     private Button mCaptureButton;
     private Button mGetFromGalleryButton;
-    private ImageView mimageView;
+    private ImageView mimageView, take_photo_tip;
     private Uri image_uri;
-    private Button mTakePhotoOk;
+    private Button mTakePhotoOk, tip_close;
+    private RecyclerView recyclerView;
+    private Dialog take_photo_tip_dialog;
 
 
     @Override
@@ -44,11 +57,21 @@ public class TakePhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
 
+        take_photo_tip_dialog = new Dialog(this);
+        take_photo_tip = findViewById(R.id.take_photo_tip);
+
+        recyclerView = findViewById(R.id.recycleView);
+        recyclerView.setAdapter(new TakePhotoAdapter(TakePhotoActivity.this));
+        recyclerView.setLayoutManager(new ScrollLayoutManager(TakePhotoActivity.this));
+
+        recyclerView.smoothScrollToPosition(Integer.MAX_VALUE / 2);
+
         mimageView = findViewById(R.id.image_view);
         mCaptureButton = findViewById(R.id.capture_image_btn);
         mGetFromGalleryButton = findViewById(R.id.get_from_gallery_btn);
         mTakePhotoOk = findViewById(R.id.take_photo_ok);
         mTakePhotoOk.setVisibility(View.GONE);
+
 
 
         // when user choose to take photo and click that button
@@ -108,6 +131,13 @@ public class TakePhotoActivity extends AppCompatActivity {
             }
 
 
+        });
+
+        take_photo_tip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
         });
     }
 
@@ -212,6 +242,30 @@ public class TakePhotoActivity extends AppCompatActivity {
             startActivity(intent);
     }
 
+    public static int getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        return width;
+    }
 
+    // show dialog
+    public void showDialog(){
+        take_photo_tip_dialog.setContentView(R.layout.dialog_take_photo_tip);
+        take_photo_tip_dialog.setTitle("Some tips");
+
+        tip_close = (Button) take_photo_tip_dialog.findViewById(R.id.tip_close);
+        tip_close.setEnabled(true);
+
+        tip_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                take_photo_tip_dialog.cancel();
+            }
+        });
+
+        take_photo_tip_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        take_photo_tip_dialog.show();
+
+    }
 
 }

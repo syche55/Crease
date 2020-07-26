@@ -58,24 +58,25 @@ public class StartActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
         }
 
-        // if we come from the searching activity, then just redirect to the target user profile
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Log.e("", "enter the  start activity to profile fragment part!");
-            String value = extras.getString("key");
-            //The key argument here must match that used in the other activity
-            mContext = StartActivity.this;
-            SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-            editor.putString("profileid", value);
-            boolean successPut = editor.commit();
-            Log.e("holder setOnClickListener ", String.valueOf(successPut));
-            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                    new ProfileFragment()).addToBackStack(null).commit();
-        }
-        // if we first come in, then just load the home fragment
-        else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
-        }
+        // activity - fragment: set in
+//        // if we come from the searching activity, then just redirect to the target user profile
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            Log.e("", "enter the  start activity to profile fragment part!");
+//            String value = extras.getString("key");
+//            //The key argument here must match that used in the other activity
+//            mContext = StartActivity.this;
+//            SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+//            editor.putString("profileid", value);
+//            boolean successPut = editor.commit();
+//            Log.e("holder setOnClickListener ", String.valueOf(successPut));
+//            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new ProfileFragment()).addToBackStack(null).commit();
+//        }
+//        // if we first come in, then just load the home fragment
+//        else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
+//        }
 
 
     }

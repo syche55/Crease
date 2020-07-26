@@ -5,23 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:layout_gravity="center"
     tools:context=".TakePhotoActivity">
 
     <!--  Image view in which image will be set  -->
+<!--    android:layout_width="624dp"-->
+<!--    android:layout_height="936dp"-->
 
-    <ImageView
-        android:id="@+id/take_photo_bg"
-        android:layout_width="640dp"
-        android:layout_height="960dp"
-        android:background="@drawable/photo_bg"
-        android:src="#80000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        android:contentDescription="@string/capture_image"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true" />
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/take_photo_bg"-->
+<!--        android:layout_width="624dp"-->
+<!--        android:layout_height="936dp"-->
+
+<!--        android:src="#80000000"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:contentDescription="@string/capture_image"/>-->
 
     <TextView
         android:id="@+id/textView"
@@ -36,6 +48,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/take_photo_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/show_tip"
+        android:src="@drawable/ic_baseline_info_24"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
     <GridLayout
         android:id="@+id/gridLayout"
