@@ -1,19 +1,34 @@
 package neu.edu.crease;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import neu.edu.crease.Model.Notification;
 import neu.edu.crease.ui.explore.ExploreFragment;
 import neu.edu.crease.ui.notification.NotificationFragment;
 import neu.edu.crease.ui.home.HomeFragment;
 import neu.edu.crease.ui.profile.ProfileFragment;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,12 +40,22 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class StartActivity extends AppCompatActivity {
 
     BottomNavigationView navView;
     Fragment selectedFragment = null;
     Context mContext;
+    Long notificationCounter;
+
+    com.google.android.material.bottomnavigation.BottomNavigationItemView notificationItem;
+
+    BottomNavigationMenuView bottomNavigationMenuView;
+    View v;
+    QBadgeView qb;
+
+    Long countChildrenOnFirstLogin;
 
 
     @Override
@@ -38,12 +63,24 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        notificationCounter=0L;
 
+        notificationItem = (BottomNavigationItemView) findViewById(R.id.navigation_notification);
 
         // Initialize And Assign Variable
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
         // Set Listener
         navView.setOnNavigationItemSelectedListener(navListener);
+
+
+        bottomNavigationMenuView = (BottomNavigationMenuView) navView.getChildAt(0); // number of menu from left
+        v = bottomNavigationMenuView.getChildAt(3);
+
+        qb = new QBadgeView(StartActivity.this);
+        qb.bindTarget(v).setBadgeNumber(0);
+
+
+        final Menu menu = navView.getMenu();
 
         // comment
         Bundle intent =  getIntent().getExtras();
@@ -78,6 +115,57 @@ public class StartActivity extends AppCompatActivity {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 //        }
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                countChildrenOnFirstLogin = snapshot.getChildrenCount();
+//                notificationCounter = countChildrenOnFirstLogin;
+                reference.removeEventListener(this);
+
+                reference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        notificationCounter ++;
+                        if (notificationCounter > countChildrenOnFirstLogin){
+                            qb.bindTarget(v).setBadgeText("!").setBadgeBackground(getDrawable(R.drawable.ic_notification_green)).setBadgeTextColor(-1);
+
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
 
     }
 
@@ -101,6 +189,9 @@ public class StartActivity extends AppCompatActivity {
                             break;
                         case R.id.navigation_notification:
                             selectedFragment = new NotificationFragment();
+                            //BottomMenuHelper.removeBadge(StartActivity.this, notificationItem);
+                            qb.bindTarget(v).hide(false);
+
 
                             break;
                         case R.id.navigation_profile:
