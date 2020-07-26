@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,7 +40,9 @@ public class HomeFragment extends Fragment {
     private ImageView search_user_btn;
 
     private List<String> followingList;
-    String signOnUserID;
+    public String signOnUserID;
+
+    public ProgressBar progressBar;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postLists);
         postAdapter.setHasStableIds(true);
         recyclerView.setAdapter(postAdapter);
+
+        progressBar = view.findViewById(R.id.progress_circular);
 
         search_user_btn = view.findViewById(R.id.search_user_btn);
 
@@ -119,6 +124,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 postAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override

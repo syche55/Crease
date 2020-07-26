@@ -42,6 +42,7 @@ import neu.edu.crease.Adapter.MySaveAdapter;
 import neu.edu.crease.EditProfileActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
+import neu.edu.crease.OptionsActivity;
 import neu.edu.crease.ProfileInitActivity;
 import neu.edu.crease.R;
 import neu.edu.crease.StartActivity;
@@ -159,6 +160,15 @@ public class ProfileFragment extends Fragment {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
                             .child("Followers").child(firebaseUser.getUid()).removeValue();
                 }
+            }
+        });
+
+        // logout & setting
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), OptionsActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -38,8 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:text="@string/username"
+                android:fontFamily="@font/montserrat"
                 android:textColor="@color/colorWhite"/>
 
             </LinearLayout>
@@ -55,11 +56,11 @@
             android:id="@+id/explore_book_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
             android:maxLines="2"
             android:text="@string/book_title"
             android:textColor="@color/colorBlack"
-            android:fontFamily="@font/montserrat"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/explore_post_context"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="@string/description"
-            android:textColor="@color/colorLightGray"
+            android:textColor="@color/colorGray"
             android:fontFamily="@font/montserrat"
             android:textSize="12sp"/>
 
@@ -90,20 +91,20 @@
                 android:src="@drawable/ic_baseline_bookmark_26"
                 android:layout_gravity="center"
                 android:paddingStart="2dp"
-                android:paddingEnd="2dp"
+                android:paddingEnd="1dp"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
             <TextView
                 android:id="@+id/explore_save_context"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="SAVED"
-                android:textSize="10sp"
-                android:textColor="@color/colorLightGray"
+                android:textSize="12sp"
+                android:textColor="@color/colorGray"
                 android:fontFamily="@font/montserrat"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
+                android:paddingStart="1dp"
+                android:paddingEnd="4dp"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
 
@@ -113,11 +114,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="123"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/colorLightGray"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
+                android:textColor="@color/colorGray"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
         </LinearLayout>

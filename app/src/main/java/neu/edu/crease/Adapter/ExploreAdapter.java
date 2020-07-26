@@ -75,8 +75,10 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         holder.bookName.setText(post.getPostTitle());
         // Update - set to # of being saved
         if(post.getPostBeingSaved().equals(0)){
-            holder.save.setText("");
+            holder.save.setVisibility(View.GONE);
+            // holder.save.setText("");
         }else{
+            holder.save.setVisibility(View.VISIBLE);
             holder.save.setText(String.valueOf(post.getPostBeingSaved()));
         }
 
