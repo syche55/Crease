@@ -6,41 +6,56 @@
     android:orientation="vertical"
     android:background="@color/colorWhite">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/bar"
+        android:background="?android:attr/windowBackground">
 
-        <TextView
-            android:id="@+id/explore_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/title_explore"
-            android:textSize="24sp"
-            android:textColor="@color/colorBlack"
-            android:fontFamily="@font/montserrat_bold"/>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/toolbar"
+            android:background="?android:attr/windowBackground">
 
-        <ImageView
-            android:id="@+id/explore_search"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_baseline_search_24"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-    </RelativeLayout>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="0dp"
+                android:columnCount="2"
+                android:rowCount="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/refreshLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-<!--        -->
-<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnWeight="5"
+                    android:text="@string/title_explore"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/montserrat_bold"
+                    />
+
+                <ImageView
+                    android:id="@+id/search_user_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:layout_gravity="center"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:contentDescription="@string/title_add"/>
+
+            </GridLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
