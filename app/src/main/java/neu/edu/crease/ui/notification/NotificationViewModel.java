@@ -1,14 +1,14 @@
-package neu.edu.crease.ui.favorite;
+package neu.edu.crease.ui.notification;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class FavoriteViewModel extends ViewModel {
+public class NotificationViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public FavoriteViewModel() {
+    public NotificationViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is favorite fragment");
     }

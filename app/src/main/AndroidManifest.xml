@@ -37,8 +37,8 @@
         <activity
             android:name=".EditProfileActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ProfileInitActivity"
+
+        <activity android:name=".ProfileInitActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -154,6 +156,8 @@ public class ProfileFragment extends Fragment {
                             .child("Following").child(profileid).setValue(true);
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
                             .child("Followers").child(firebaseUser.getUid()).setValue(true);
+
+                    addNotifications();
                 }
                 else if (btn.equals("following")) {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
@@ -215,6 +219,17 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private void addNotifications(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileid);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userID", firebaseUser.getUid());
+        hashMap.put("comment_text", "started following you");
+        hashMap.put("postID", "");
+        hashMap.put("isPost", false);
+
+        reference.push().setValue(hashMap);
+    }
 
 
     // get user and display username & profile image
@@ -408,4 +423,23 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        getView().setFocusableInTouchMode(true);
+//        getView().requestFocus();
+//        getView().setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+//                if (keyCode==KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP){
+//                    return true;
+//                }return false;
+//            }});
+//    }
+
+    public void onKeyDownChild(int keyCode, KeyEvent event) {
+
+    }
+
 }
