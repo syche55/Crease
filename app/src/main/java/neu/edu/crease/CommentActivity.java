@@ -110,7 +110,22 @@ public class CommentActivity extends AppCompatActivity {
         map.put("commentID", commentID);
 
         reference.child(commentID).setValue(map);
+//        reference.push().setValue(map);
+        //TODO
+        addNotifications();
         addComment.setText("");
+    }
+
+    private void addNotifications(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherID);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userID", firebaseUser.getUid());
+        hashMap.put("comment_text", "commented: " + addComment.getText().toString());
+        hashMap.put("postID", postID);
+        hashMap.put("isPost", true);
+
+        reference.push().setValue(hashMap);
     }
 
     private void getProfileImage(){
@@ -121,6 +136,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
+                assert user != null;
                 Glide.with(getApplicationContext()).load(user.getProfileImage()).into(imageProfile);
             }
 

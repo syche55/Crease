@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import neu.edu.crease.ui.add.AddFragment;
 import neu.edu.crease.ui.explore.ExploreFragment;
-import neu.edu.crease.ui.favorite.FavoriteFragment;
+import neu.edu.crease.ui.notification.NotificationFragment;
 import neu.edu.crease.ui.home.HomeFragment;
 import neu.edu.crease.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,7 +19,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -26,12 +32,13 @@ public class StartActivity extends AppCompatActivity {
     Fragment selectedFragment = null;
     Context mContext;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        Log.e("", "you entered into start activity!");
+
 
         // Initialize And Assign Variable
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
@@ -71,10 +78,9 @@ public class StartActivity extends AppCompatActivity {
         }
 
 
-
-
-
     }
+
+
 
     // Set bottom nav bar
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -92,17 +98,20 @@ public class StartActivity extends AppCompatActivity {
                             //selectedFragment = new AddFragment();
 
                             break;
-                        case R.id.navigation_favorite:
-                            selectedFragment = new FavoriteFragment();
+                        case R.id.navigation_notification:
+                            selectedFragment = new NotificationFragment();
+
                             break;
                         case R.id.navigation_profile:
                             SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                             editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             editor.apply();
                             selectedFragment = new ProfileFragment();
+
                             break;
                         case R.id.navigation_home:
                             selectedFragment = new HomeFragment();
+
                             break;
                     }
                     if(selectedFragment != null){
@@ -112,4 +121,9 @@ public class StartActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
 }
+
+
+

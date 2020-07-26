@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
@@ -42,6 +43,8 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import neu.edu.crease.Model.User;
+import neu.edu.crease.ui.postDetail.PostDetailFragment;
+import neu.edu.crease.ui.profile.ProfileFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -95,8 +98,7 @@ public class EditProfileActivity extends AppCompatActivity {
         close_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditProfileActivity.this, EditProfileActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -222,6 +224,11 @@ public class EditProfileActivity extends AppCompatActivity {
             profile_uri_edit = data.getData();
             profile_image_edit.setImageURI(profile_uri_edit);
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
     }
 }
