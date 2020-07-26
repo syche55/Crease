@@ -40,6 +40,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
     private Context mContext;
     private List<User> mUsers;
+    private boolean isFragment;
 
     private FirebaseUser firebaseUser;
 
@@ -87,6 +88,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 // we do not redirect here, because now we're in the search activity, and redirect will let the fragment contain
                 // the search activity container; but all fragments should be under the start activity container;
                 // so we first redirect to the start activity, and then open the user profile there
+
+//                if(isFragment){
+//                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+//                    editor.putString("profileid", user.getUserID());
+//                    editor.apply();
+//                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                            new ProfileFragment()).addToBackStack(null).commit();
+//                }else{
+//                    Intent intent = new Intent(mContext, StartActivity.class);
+//                    intent.putExtra("publisherID", user.getUserID());
+//                    mContext.startActivity(intent);
+//                }
 
                 String value = user.getUserID();
                 Intent i = new Intent(mContext, StartActivity.class);

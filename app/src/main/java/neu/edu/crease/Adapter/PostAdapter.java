@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import neu.edu.crease.CommentActivity;
+import neu.edu.crease.FollowersActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
@@ -180,6 +181,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                             .child(firebaseUser.getUid()).removeValue();
                             updateUserBeingLikedCancelled(post);
                 }
+            }
+        });
+
+        // click likes text - see who likes this post
+        holder.likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FollowersActivity.class);
+                intent.putExtra("id", post.getPostID());
+                intent.putExtra("title", "likes");
+                mContext.startActivity(intent);
             }
         });
 

@@ -40,6 +40,7 @@ import neu.edu.crease.Adapter.MyPhotoAdapter;
 import neu.edu.crease.Adapter.MySaveAdapter;
 
 import neu.edu.crease.EditProfileActivity;
+import neu.edu.crease.FollowersActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.OptionsActivity;
@@ -190,6 +191,27 @@ public class ProfileFragment extends Fragment {
                 my_photos.setImageResource(R.drawable.ic_grid);
             }
         });
+
+        // click on followers/following - see details
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileid);
+                intent.putExtra("title", "followers");
+                startActivity(intent);
+            }
+        });
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileid);
+                intent.putExtra("title", "following");
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 

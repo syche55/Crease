@@ -38,7 +38,7 @@ public class StartActivity extends AppCompatActivity {
         // Set Listener
         navView.setOnNavigationItemSelectedListener(navListener);
 
-        // comment - click user - profile
+        // comment
         Bundle intent =  getIntent().getExtras();
         if(intent != null){
             String publisher = intent.getString("publisherID");
