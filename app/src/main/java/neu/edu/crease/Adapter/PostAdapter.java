@@ -348,14 +348,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private void addNotifications(String userID, String postID){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userID);
-
+        if (!firebaseUser.getUid().equals(userID)){
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userID", firebaseUser.getUid());
         hashMap.put("comment_text", "liked your post");
         hashMap.put("postID", postID);
         hashMap.put("isPost", true);
 
+
         reference.push().setValue(hashMap);
+        }
     }
 
     private void postLikesDisplay(final TextView likes, final String postid){

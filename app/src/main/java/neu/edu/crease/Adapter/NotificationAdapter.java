@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +52,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final neu.edu.crease.Model.Notification notification = mNotification.get(position);
+
+
         holder.comment_notification.setText(notification.getComment_text());
         getUserInfo(holder.image_profile_notification, holder.username_notification, notification.getUserID());
 
@@ -63,14 +67,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Is this a post?", notification.getIsPost()+" "+notification.getComment_text());
                 if (notification.getIsPost()){
                     SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                     editor.putString("postID", notification.getPostID());
                     Log.e("notification.getPostID", notification.getPostID());
                     editor.apply();
-
-//                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container, new PostDetailFragment()).commit();
 
                     ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
                             new PostDetailFragment()).addToBackStack(null).commit();
@@ -85,6 +86,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         });
     }
+
 
 
     @Override
@@ -122,6 +124,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             }
         });
+
     }
 
     private void getPostImage(final ImageView imageView, String postID){
