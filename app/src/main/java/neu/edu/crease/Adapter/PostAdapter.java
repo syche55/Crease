@@ -355,7 +355,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         hashMap.put("postID", postID);
         hashMap.put("isPost", true);
 
-
         reference.push().setValue(hashMap);
         }
     }
