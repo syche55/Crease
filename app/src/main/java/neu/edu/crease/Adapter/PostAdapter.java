@@ -74,6 +74,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        // deal with the case if deleted the post
+        if (mPost.get(position) == null) return;
+
         Log.e("BindView", "Binding " + position + "th post with title " + mPost.get(position).getPostTitle());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         // get current post
@@ -252,10 +255,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                                                 }
                                             }
                                         });
-                                return true;
-                            // if click report
-                            case R.id.report:
-                                Toast.makeText(mContext, "Report Clicked!", Toast.LENGTH_SHORT).show();
                                 return true;
                              // not click anything
                             default:
