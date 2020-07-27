@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -24,10 +25,12 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -50,12 +53,15 @@ public class TakePhotoActivity extends AppCompatActivity {
     private Button mTakePhotoOk, tip_close;
     private RecyclerView recyclerView;
     private Dialog take_photo_tip_dialog;
+    private Button rotate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
+
+        rotate = findViewById(R.id.rotate);
 
         take_photo_tip_dialog = new Dialog(this);
         take_photo_tip = findViewById(R.id.take_photo_tip);
@@ -106,9 +112,11 @@ public class TakePhotoActivity extends AppCompatActivity {
                 // if not have permission
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                            PackageManager.PERMISSION_DENIED) {
+                            PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                    PackageManager.PERMISSION_DENIED) {
                         // request the permission
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permissions, GALLERY_PERMISSION_CODE);
                     }
                     else {
@@ -121,6 +129,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         mTakePhotoOk.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -139,6 +148,38 @@ public class TakePhotoActivity extends AppCompatActivity {
                 showDialog();
             }
         });
+    }
+
+    // when user choose to rotate the image
+    public void clickRotate(View view) {
+        try {
+            // get the image
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+            // rotate
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            // create new image
+            Bitmap resizedBitMap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                    matrix, true);
+            if (resizedBitMap != bitmap && bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+                bitmap = null;
+            }
+
+            // convert back to uri
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            resizedBitMap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), resizedBitMap, "Title", null);
+            image_uri = Uri.parse(path);
+
+            // display
+            mimageView.setImageURI(image_uri);
+        }
+        catch (Exception e)
+        {
+            //handle exception
+        }
+
     }
 
     // when user get the permission, now come to pick from gallery

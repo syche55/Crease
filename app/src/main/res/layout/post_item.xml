@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--  the image view for edit or delete post  -->
+    <!--  the image view for edit post  -->
     <ImageView
         android:id="@+id/more"
         android:layout_width="wrap_content"

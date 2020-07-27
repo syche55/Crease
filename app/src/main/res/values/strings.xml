@@ -49,6 +49,7 @@
     <string name="log_out">Log Out</string>
     <string name="edit_post_4_tips">Share a quote \nWrite s Review \nAny moment \nAny feeling</string>
     <string name="take_photo_3_tips">A book cover \nAny paragraph \nAny reading moment</string>
+    <string name="rotate">rotate</string>
 
     <string name="posts">posts</string>
     <string name="followers">followers</string>

@@ -4,46 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".TakePhotoActivity">
 
     <!--  Image view in which image will be set  -->
-<!--    android:layout_width="624dp"-->
-<!--    android:layout_height="936dp"-->
+    <!--    android:layout_width="624dp"-->
+    <!--    android:layout_height="936dp"-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#80000000"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-<!--    <ImageView-->
-<!--        android:id="@+id/take_photo_bg"-->
-<!--        android:layout_width="624dp"-->
-<!--        android:layout_height="936dp"-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/take_photo_bg"-->
+    <!--        android:layout_width="624dp"-->
+    <!--        android:layout_height="936dp"-->
 
-<!--        android:src="#80000000"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:contentDescription="@string/capture_image"/>-->
+    <!--        android:src="#80000000"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:contentDescription="@string/capture_image"/>-->
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="305dp"
-        android:layout_height="119dp"
+        android:layout_height="0dp"
         android:layout_marginTop="64dp"
+        android:layout_marginBottom="122dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/now_nrecord_nyour_reading_time"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/rotate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,12 +73,14 @@
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
         android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:columnCount="1"
         android:rowCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/rotate"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <!--  button to capture image  -->
@@ -108,8 +121,8 @@
         android:id="@+id/image_view"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:padding="1dp"
         android:contentDescription="@string/capture_image"
+        android:padding="1dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="@+id/textView"
@@ -130,6 +143,19 @@
         app:layout_constraintEnd_toEndOf="@+id/image_view"
         app:layout_constraintStart_toStartOf="@+id/image_view"
         app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+    <Button
+        android:id="@+id/rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="378dp"
+        android:onClick="clickRotate"
+        android:text="@string/rotate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

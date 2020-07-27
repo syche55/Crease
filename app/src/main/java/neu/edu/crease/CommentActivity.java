@@ -110,7 +110,6 @@ public class CommentActivity extends AppCompatActivity {
         map.put("commentID", commentID);
 
         reference.child(commentID).setValue(map);
-//        reference.push().setValue(map);
         //TODO
         addNotifications();
         addComment.setText("");
