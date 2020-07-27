@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:id="@+id/post_image"/>
+        android:id="@+id/post_image"
+        android:contentDescription="@string/photo"/>
 
 </RelativeLayout>

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ import neu.edu.crease.R;
 import neu.edu.crease.SearchUserActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -62,6 +64,19 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postLists);
         postAdapter.setHasStableIds(true);
         recyclerView.setAdapter(postAdapter);
+
+        final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // func
+                // Collections.shuffle(postLists);
+                checkFollowing();
+                postAdapter.notifyDataSetChanged();
+                //IMPORTANT - otherwise infinite refresh
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
         progressBar = view.findViewById(R.id.progress_circular);
 

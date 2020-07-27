@@ -19,13 +19,13 @@
 
 
     <string name="todo">TODO</string>
-    <string name="photo" />
+    <string name="photo">photo</string>
     <string name="capture_image">TAKE PHOTOS \nCAMERA</string>
     <string name="get_from_gallery">OPEN ALBUM \nPHOTO</string>
     <string name="got_it">Got It</string>
     <string name="book_title">Book Title</string>
     <string name="description">Description</string>
-    <string name="what_s_on_your_thought">What\'s on your thought?...</string>
+    <string name="what_s_on_your_thought">What\'s on your thought?…</string>
 
     <string name="cancel_post">Cancel Post</string>
     <string name="show_tip">Show Tip</string>
@@ -41,7 +41,7 @@
     <string name="password">Password</string>
     <string name="sign_up">Sign up</string>
 
-    <string name="add_a_comment">Say something...</string>
+    <string name="add_a_comment">Say something …</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -49,5 +49,28 @@
     <string name="log_out">Log Out</string>
     <string name="edit_post_4_tips">Share a quote \nWrite s Review \nAny moment \nAny feeling</string>
     <string name="take_photo_3_tips">A book cover \nAny paragraph \nAny reading moment</string>
+
+    <string name="posts">posts</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
+    <string name="liked">liked</string>
+
+    <string name="post">Post</string>
+    <string name="search_for_friends_on_crease">Search for friends on Crease</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">SAVE</string>
+
+    <string name="more">more</string>
+    <string name="saved">SAVED</string>
+
+    <string name="random">Random</string>
+    <string name="upload">Upload</string>
+    <string name="bio">Bio</string>
+    <string name="_1_choose_a_profile_image_to_represent_yourself">1. Choose a profile image to represent yourself</string>
+    <string name="_2_give_one_sentence_to_describe_yourself">2. Give one sentence to describe yourself</string>
+    <string name="let_other_book_lovers_know_you_better">Let other book lovers know you better</string>
+    <string name="looking_good">Looking Good!</string>
+    <string name="introduce_myself">Introduce myself</string>
+
 
 </resources>

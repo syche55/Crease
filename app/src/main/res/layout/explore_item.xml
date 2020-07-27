@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="8dp"
@@ -17,6 +16,7 @@
             android:id="@+id/explore_post_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/photo"
             android:src="@drawable/ic_tempura" />
 
         <LinearLayout
@@ -82,7 +82,8 @@
             android:clickable="true"
             android:layout_gravity="top"
             android:orientation="horizontal"
-            android:contextClickable="true">
+            android:contextClickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/explore_save_icon"
@@ -93,32 +94,34 @@
                 android:paddingStart="2dp"
                 android:paddingEnd="1dp"
                 android:paddingTop="2dp"
-                android:paddingBottom="2dp"/>
+                android:paddingBottom="2dp"
+                android:contentDescription="@string/save"/>
+
             <TextView
                 android:id="@+id/explore_save_context"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="SAVED"
+                android:text="@string/saved"
                 android:textSize="12sp"
                 android:textColor="@color/colorGray"
                 android:fontFamily="@font/montserrat"
                 android:paddingStart="1dp"
-                android:paddingEnd="4dp"
+                android:paddingEnd="6dp"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
 
             <TextView
                 android:id="@+id/explore_save_count"
-                android:layout_width="24dp"
+                android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="123"
                 android:textSize="12sp"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/colorGray"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"/>
+
         </LinearLayout>
 
     </LinearLayout>

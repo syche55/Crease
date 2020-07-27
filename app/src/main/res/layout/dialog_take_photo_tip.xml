@@ -2,7 +2,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@null"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,31 +15,25 @@
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/colorPrimary"
         android:layout_alignParentTop ="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="24sp"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:text="@string/photo_tips"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"/>
+                android:fontFamily="@font/montserrat_bold"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:text="@string/photo_tips"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
 
 <!--                <TextView-->
 <!--                    android:layout_width="100dp"-->
@@ -53,42 +46,41 @@
 <!--                    android:gravity="center"-->
 <!--                    android:layout_gravity="center"/>-->
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:foregroundGravity="center"
-                    android:id="@+id/tip_logo"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_tempura"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:foregroundGravity="center"
+                android:id="@+id/tip_logo"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_tempura"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/take_photo_3_tips"
-                    android:gravity="center"
-                    android:lines="4"
-                    android:maxLines="6"
-                    android:id="@+id/tip_description"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/take_photo_3_tips"
+                android:gravity="center"
+                android:lines="4"
+                android:maxLines="6"
+                android:id="@+id/tip_description"/>
 
-                <Button
-                    android:id="@+id/tip_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/take_photo_album"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:text="@string/got_it"
-                    android:textColor="@color/colorPrimaryDark"/>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/tip_close"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/take_photo_album"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:text="@string/got_it"
+                android:textColor="@color/colorPrimaryDark"/>
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

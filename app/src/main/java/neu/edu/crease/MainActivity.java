@@ -2,16 +2,12 @@ package neu.edu.crease;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import neu.edu.crease.Adapter.SliderAdapter;
 import neu.edu.crease.Adapter.SplashAdapter;
 import neu.edu.crease.ScrollActivity.ScrollLayoutManager;
 

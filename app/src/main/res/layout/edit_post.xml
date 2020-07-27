@@ -47,8 +47,6 @@
 
     </GridLayout>
 
-
-
     <ImageView
         android:id="@+id/edit_post_photo_add"
         android:layout_width="match_parent"
@@ -78,7 +76,6 @@
     <View
         android:id="@+id/edit_post_divider"
         style="@style/Divider" />
-
 
     <EditText
         android:id="@+id/edit_post_description"
@@ -115,6 +112,5 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/edit_post_publish"
         android:textColor="@color/colorPrimaryDark" />
-
 
 </LinearLayout>

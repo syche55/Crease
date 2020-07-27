@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="8dp">
@@ -16,8 +17,10 @@
         <ImageView
             android:id="@+id/save_post_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_tempura" />
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_tempura"
+            android:contentDescription="@string/photo" />
 
         <TextView
             android:id="@+id/save_background"
@@ -27,13 +30,11 @@
             android:clickable="true"
             android:focusable="true" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal">
-
 
             <TextView
                 android:fontFamily="@font/montserrat"
@@ -41,8 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="@string/username"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
@@ -50,4 +53,5 @@
         </LinearLayout>
 
     </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

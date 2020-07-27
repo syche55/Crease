@@ -62,7 +62,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat"
-                android:text="1. Choose a profile image to represent yourself"
+                android:text="@string/_1_choose_a_profile_image_to_represent_yourself"
                 app:layout_constraintHorizontal_bias="0.563"
 
                 app:layout_constraintTop_toTopOf="parent" />
@@ -75,6 +75,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/profile_image_background"
+                android:contentDescription="@string/photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,28 +93,30 @@
                     android:id="@+id/random_profile_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
-                    android:text="Random"
+                    android:layout_marginEnd="1dp"
+                    android:text="@string/random"
                     android:fontFamily="@font/montserrat"
                     android:background="@drawable/main_register_button"
                     app:layout_constraintEnd_toStartOf="@+id/upload_profile_image"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/upload_profile_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Upload"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/upload"
                     android:fontFamily="@font/montserrat"
                     android:background="@drawable/main_register_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/profile_image_init"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_init"
+                    tools:ignore="ButtonStyle" />
+
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,7 +132,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat"
-                    android:text="2. Give one sentence to describe yourself"
+                    android:text="@string/_2_give_one_sentence_to_describe_yourself"
                     app:layout_constraintHorizontal_bias="0.491"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profile_image_init" />
@@ -143,18 +146,14 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="48dp"
                 android:fontFamily="@font/montserrat"
-                android:hint="Let other book lovers know you better"
+                android:hint="@string/let_other_book_lovers_know_you_better"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textColor="@color/colorLightGreen"
                 android:textSize="14sp"
-
-                />
-
-
-
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/continue_button"
@@ -166,14 +165,12 @@
                 android:paddingEnd="16dp"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="48dp"
-                android:text="Looking Good!"
+                android:text="@string/looking_good"
                 android:background="@drawable/take_photo_ok_button"
                 android:fontFamily="@font/montserrat_bold" />
 
-
-
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

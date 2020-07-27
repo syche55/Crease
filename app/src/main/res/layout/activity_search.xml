@@ -36,9 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
+        android:paddingStart="12dp"
+        android:fontFamily="@font/montserrat"
         android:background="@android:color/transparent"
-        android:hint="Search for friends on Crease" />
+        android:hint="@string/search_for_friends_on_crease" />
     </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

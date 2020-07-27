@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,29 +18,38 @@
             android:background="?android:attr/windowBackground"
             android:id="@+id/toolbar">
 
-            <RelativeLayout
+            <GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="0dp"
+                android:columnCount="2"
+                android:rowCount="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
 
                 <TextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:layout_column="0"
+                    android:layout_columnWeight="5"
+                    android:textSize="24sp"
                     android:maxLines="1"
-                    android:textStyle="bold"
-                    android:id="@+id/username"
-                    android:textColor="@color/colorPrimaryDark"/>
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/montserrat_bold" />
 
                 <ImageView
+                    android:id="@+id/options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/options"
                     android:src="@drawable/ic_options"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_gravity="center"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:contentDescription="@string/title_add"/>
 
-            </RelativeLayout>
-
+            </GridLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -72,8 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="4dp">
+                    android:paddingStart="8dp"
+                    android:paddingEnd="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -91,21 +100,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/montserrat"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="posts" />
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/posts" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="35dp"
+                            android:layout_marginStart="24dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -113,14 +124,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/montserrat"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="followers" />
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/followers" />
 
                         </LinearLayout>
 
@@ -128,7 +141,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="35dp"
+                            android:layout_marginStart="24dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -136,21 +149,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/montserrat"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="following" />
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/following" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="35dp"
+                            android:layout_marginStart="24dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -158,26 +173,27 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/montserrat"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="liked" />
+                                android:fontFamily="@font/montserrat"
+                                android:text="@string/liked" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-
                     <Button
                         android:id="@+id/edit_profile"
+                        android:background="@drawable/main_register_button"
                         android:layout_width="match_parent"
-                        android:layout_height="38dp"
+                        android:layout_height="32dp"
                         android:layout_marginTop="8dp" />
-
 
                 </LinearLayout>
 
@@ -202,20 +218,22 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/my_photos"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/my_photos"
                     android:src="@drawable/ic_grid"
-                    style="?android:attr/buttonBarButtonStyle"/>
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:contentDescription="@string/photo" />
 
                 <ImageButton
+                    android:id="@+id/saved_photos"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/saved_photos"
                     android:src="@drawable/ic_save"
-                    style="?android:attr/buttonBarButtonStyle"/>
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:contentDescription="@string/save"/>
 
             </LinearLayout>
 
