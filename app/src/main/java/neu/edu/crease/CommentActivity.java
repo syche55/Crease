@@ -109,7 +109,7 @@ public class CommentActivity extends AppCompatActivity {
         map.put("publisherID", firebaseUser.getUid());
         map.put("commentID", commentID);
 
-        reference.push().setValue(map);
+        reference.child(commentID).setValue(map);
         //TODO
         addNotifications();
         addComment.setText("");

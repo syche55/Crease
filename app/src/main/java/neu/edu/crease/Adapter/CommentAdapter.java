@@ -82,46 +82,46 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
 
-//        // if the user want to delete the comment
-//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                // if the user is the comment publisher
-//                if (comment.getPublisherID().equals(firebaseUser.getUid())) {
-//                    // make an alert message
-//                    AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
-//                    alertDialog.setTitle("Do you want to delete?");
-//                    // if user choose no, then do not delete
-//                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "No",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    dialog.dismiss();
-//                                }
-//                            });
-//                    // if user choose yes, then delete
-//                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    FirebaseDatabase.getInstance().getReference("Comments").child(postID)
-//                                            .child(comment.getCommentID())
-//                                            .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            if (task.isSuccessful()) {
-//                                                Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        }
-//                                    });
-//                                    dialog.dismiss();
-//                                }
-//                            });
-//                    alertDialog.show();
-//                }
-//                return true;
-//            }
-//        });
+        // if the user want to delete the comment
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // if the user is the comment publisher
+                if (comment.getPublisherID().equals(firebaseUser.getUid())) {
+                    // make an alert message
+                    AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+                    alertDialog.setTitle("Do you want to delete?");
+                    // if user choose no, then do not delete
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "No",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    // if user choose yes, then delete
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseDatabase.getInstance().getReference("Comments").child(postID)
+                                            .child(comment.getCommentID())
+                                            .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                return true;
+            }
+        });
 
     }
 
