@@ -11,73 +11,93 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
+        android:layout_height="482dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         app:cardBackgroundColor="@color/colorPrimary"
-        android:layout_alignParentTop ="true"
-        android:layout_alignParentStart="true">
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="462dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:textSize="24sp"
-                android:textAlignment="center"
                 android:layout_gravity="center"
-                android:text="@string/photo_tips"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/photo_tips"
+                android:textAlignment="center"
+                android:textSize="24sp" />
 
-<!--                <TextView-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="@font/bangers"-->
-<!--                    android:text="@string/app_name"-->
-<!--                    android:textColor="@color/colorAccent"-->
-<!--                    android:textSize="32sp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:gravity="center"-->
-<!--                    android:layout_gravity="center"/>-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="100dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:fontFamily="@font/bangers"-->
+            <!--                    android:text="@string/app_name"-->
+            <!--                    android:textColor="@color/colorAccent"-->
+            <!--                    android:textSize="32sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:layout_gravity="center"/>-->
 
             <ImageView
+                android:id="@+id/tip_logo"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:foregroundGravity="center"
-                android:id="@+id/tip_logo"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_tempura"/>
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_tempura" />
 
             <TextView
+                android:id="@+id/tip_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="227dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:lines="12"
+                android:maxLines="12"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat"
                 android:text="@string/take_photo_3_tips"
-                android:gravity="center"
-                android:lines="4"
-                android:maxLines="6"
-                android:id="@+id/tip_description"/>
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/tip_close"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/take_photo_album"
-                android:fontFamily="@font/montserrat_bold"
-                android:gravity="center"
-                android:text="@string/got_it"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/tip_close"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/take_photo_album"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="@string/got_it"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Button
+                    android:id="@+id/tip_no_more_reminder"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/take_photo_album"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="stop showing"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

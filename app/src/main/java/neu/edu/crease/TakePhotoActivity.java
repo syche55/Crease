@@ -40,6 +40,8 @@ import neu.edu.crease.Adapter.SplashAdapter;
 import neu.edu.crease.Adapter.TakePhotoAdapter;
 import neu.edu.crease.ScrollActivity.ScrollLayoutManager;
 
+import static neu.edu.crease.StartActivity.stop_checked;
+
 public class TakePhotoActivity extends AppCompatActivity {
 
     private static final int PERMISSION_CODE = 1000;
@@ -54,6 +56,9 @@ public class TakePhotoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Dialog take_photo_tip_dialog;
     private Button rotate;
+    private Button tip_no_more_reminder;
+
+
 
 
     @Override
@@ -62,6 +67,8 @@ public class TakePhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_photo);
 
         rotate = findViewById(R.id.rotate);
+
+
 
         take_photo_tip_dialog = new Dialog(this);
         take_photo_tip = findViewById(R.id.take_photo_tip);
@@ -77,7 +84,11 @@ public class TakePhotoActivity extends AppCompatActivity {
         mGetFromGalleryButton = findViewById(R.id.get_from_gallery_btn);
         mTakePhotoOk = findViewById(R.id.take_photo_ok);
         mTakePhotoOk.setVisibility(View.GONE);
+        rotate.setVisibility(View.GONE);
 
+        if (!stop_checked){
+            showDialog();
+        }
 
 
         // when user choose to take photo and click that button
@@ -148,7 +159,11 @@ public class TakePhotoActivity extends AppCompatActivity {
                 showDialog();
             }
         });
+
+
     }
+
+
 
     // when user choose to rotate the image
     public void clickRotate(View view) {
@@ -179,6 +194,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         {
             //handle exception
         }
+
 
     }
 
@@ -271,6 +287,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 mimageView.setImageURI(image_uri);
             }
             mTakePhotoOk.setVisibility(View.VISIBLE);
+            rotate.setVisibility(View.VISIBLE);
         }
 
     }
@@ -294,19 +311,52 @@ public class TakePhotoActivity extends AppCompatActivity {
         take_photo_tip_dialog.setContentView(R.layout.dialog_take_photo_tip);
         take_photo_tip_dialog.setTitle("Some tips");
 
+        tip_no_more_reminder =take_photo_tip_dialog.findViewById(R.id.tip_no_more_reminder);
+        //tip_no_more_reminder.setEnabled(true);
+
         tip_close = (Button) take_photo_tip_dialog.findViewById(R.id.tip_close);
         tip_close.setEnabled(true);
 
+        if (stop_checked){
+            tip_no_more_reminder.setVisibility(View.GONE);
+        }
         tip_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 take_photo_tip_dialog.cancel();
             }
         });
+        tip_no_more_reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stop_checked = true;
+                Log.e("here", stop_checked+"");
+                take_photo_tip_dialog.dismiss();
+            }
+        });
 
         take_photo_tip_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         take_photo_tip_dialog.show();
 
+
+
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        savedInstanceState.putBoolean("STOP_CHECKED", stop_checked);
+//
+//        // Always call the superclass so it can save the view hierarchy state
+//        super.onSaveInstanceState(savedInstanceState);
+//    }
+//
+//    public void onRestoreInstanceState(Bundle savedInstanceState) {
+//    // Always call the superclass so it can restore the view hierarchy
+//        super.onRestoreInstanceState(savedInstanceState);
+//
+//// Restore state members from saved instance
+//        stop_checked = savedInstanceState.getBoolean("STOP_CHECKED");
+//    }
+
 
 }

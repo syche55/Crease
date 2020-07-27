@@ -3,6 +3,8 @@ package neu.edu.crease;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +18,8 @@ import neu.edu.crease.ui.profile.ProfileFragment;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,20 +31,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -48,6 +64,12 @@ public class StartActivity extends AppCompatActivity {
     Fragment selectedFragment = null;
     Context mContext;
     Long notificationCounter;
+    boolean stop = false;
+    ActivityManager activityManager;
+
+    public static boolean stop_checked;
+
+    public static String PACKAGE_NAME;
 
     com.google.android.material.bottomnavigation.BottomNavigationItemView notificationItem;
 
@@ -57,13 +79,13 @@ public class StartActivity extends AppCompatActivity {
 
     Long countChildrenOnFirstLogin;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
         notificationCounter=0L;
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         notificationItem = (BottomNavigationItemView) findViewById(R.id.navigation_notification);
 
@@ -79,8 +101,7 @@ public class StartActivity extends AppCompatActivity {
         qb = new QBadgeView(StartActivity.this);
         qb.bindTarget(v).setBadgeNumber(0);
 
-
-        final Menu menu = navView.getMenu();
+        stop_checked = false;
 
         // comment
         Bundle intent =  getIntent().getExtras();
@@ -94,6 +115,9 @@ public class StartActivity extends AppCompatActivity {
         }else{
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
         }
+
+        activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        new Thread(new AppStatus()).start();
 
         // activity - fragment: set in
 //        // if we come from the searching activity, then just redirect to the target user profile
@@ -130,7 +154,8 @@ public class StartActivity extends AppCompatActivity {
                         notificationCounter ++;
                         if (notificationCounter > countChildrenOnFirstLogin){
                             qb.bindTarget(v).setBadgeText("!").setBadgeBackground(getDrawable(R.drawable.ic_notification_green)).setBadgeTextColor(-1);
-
+                            if (!appOnForeground()){
+                            notificationPhone();}
                         }
                     }
 
@@ -164,6 +189,24 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w("TokenFailed", "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//
+//                        // Get new Instance ID token
+//                        String token = task.getResult().getToken();
+//
+////                        // Log and toast
+////                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Log.d("Token is", token);
+//                        Toast.makeText(StartActivity.this, token, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
 
 
@@ -184,12 +227,10 @@ public class StartActivity extends AppCompatActivity {
                         case R.id.navigation_add:
                             selectedFragment = null;
                             startActivity(new Intent(StartActivity.this, TakePhotoActivity.class));
-                            //selectedFragment = new AddFragment();
 
                             break;
                         case R.id.navigation_notification:
                             selectedFragment = new NotificationFragment();
-                            //BottomMenuHelper.removeBadge(StartActivity.this, notificationItem);
                             qb.bindTarget(v).hide(false);
 
 
@@ -215,6 +256,65 @@ public class StartActivity extends AppCompatActivity {
             };
 
 
+
+    private void notificationPhone(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentTitle("Crease")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setLargeIcon(BitmapFactory.decodeResource(StartActivity.this
+                        .getResources(),R.drawable.ic_tempura))
+                .setAutoCancel(true)
+                .setContentText("You have a new notification, check it out!");
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999, builder.build());
+
+    }
+
+
+
+    // app running in background status check
+    private class AppStatus implements Runnable {
+        @Override
+        public void run() {
+            stop = false;
+            while (!stop) {
+                try {
+                    if (appOnForeground()) {
+                        // do nothing
+                    } else {
+                        // do nothing
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private boolean appOnForeground() {
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+
+        if (appProcesses == null)
+            return false;
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(PACKAGE_NAME) && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 
