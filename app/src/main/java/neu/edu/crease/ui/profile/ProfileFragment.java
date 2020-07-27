@@ -111,7 +111,7 @@ public class ProfileFragment extends Fragment {
 
         recyclerView_saves = view.findViewById(R.id.recycler_view_save);
         recyclerView_saves.setHasFixedSize(true);
-        // OR set to same layout as explore - ICE
+        // StaggeredGrid will make the layout messy - So finally use GridLayout
         // StaggeredGridLayoutManager linearLayoutManager_saves = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager linearLayoutManager_saves = new GridLayoutManager(getContext(), 2);
         recyclerView_saves.setLayoutManager(linearLayoutManager_saves);

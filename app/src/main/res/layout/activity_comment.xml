@@ -44,6 +44,7 @@
             android:background="@android:color/transparent"
             android:hint="@string/add_a_comment"
             android:inputType="text"
+            android:textSize="14sp"
             android:autofillHints="" />
 
         <TextView

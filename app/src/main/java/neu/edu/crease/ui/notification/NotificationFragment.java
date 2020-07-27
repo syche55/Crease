@@ -31,7 +31,6 @@ public class NotificationFragment extends Fragment {
     private RecyclerView recyclerView;
     private NotificationAdapter notificationAdapter;
     private List<Notification> notificationList;
-    private NotificationViewModel notificationViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,9 +73,5 @@ public class NotificationFragment extends Fragment {
             }
         });
     }
-
-
-
-
 
 }

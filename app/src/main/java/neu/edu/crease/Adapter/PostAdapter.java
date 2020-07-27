@@ -296,8 +296,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // set to invisible later
-                comments.setText("View all " + snapshot.getChildrenCount() + " comments");
+                // set to invisible is troublesome
+                if(snapshot.getChildrenCount() == 0){
+                    comments.setVisibility(View.GONE);
+                }else{
+                    comments.setVisibility(View.VISIBLE);
+                    comments.setText("View all " + snapshot.getChildrenCount() + " comments");
+                }
             }
 
             @Override
@@ -354,7 +359,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                likes.setText(snapshot.getChildrenCount() + " likes");
+                if(snapshot.getChildrenCount() == 0){
+                    likes.setVisibility(View.GONE);
+                }else{
+                    likes.setVisibility(View.VISIBLE);
+                    likes.setText(snapshot.getChildrenCount() + " likes");
+                }
             }
 
             @Override
