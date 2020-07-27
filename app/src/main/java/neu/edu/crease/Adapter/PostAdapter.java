@@ -74,8 +74,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        // deal with the case if deleted the post
-        if (mPost.get(position) == null) return;
 
         Log.e("BindView", "Binding " + position + "th post with title " + mPost.get(position).getPostTitle());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -231,7 +229,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        // if the user click the "more" (edit or delete post)
+        // if the user click the "more" (edit or post)
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,18 +242,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                             case R.id.edit:
                                 editPost(post.getPostID());
                                 return true;
-                             // if click delete, just delete post from db
-                            case R.id.delete:
-                                FirebaseDatabase.getInstance().getReference("Posts").child(post.getPostID()).removeValue()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                                return true;
                              // not click anything
                             default:
                                 return false;
@@ -263,10 +249,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
                 });
                 popupMenu.inflate(R.menu.post_menu);
-                // if the user is not the publisher of the post, then hide the edit and delete menu
+                // if the user is not the publisher of the post, then hide the edit menu
                 if (!post.getPostPublisher().equals(firebaseUser.getUid())) {
                     popupMenu.getMenu().findItem(R.id.edit).setVisible(false);
-                    popupMenu.getMenu().findItem(R.id.delete).setVisible(false);
                 }
                 popupMenu.show();
             }

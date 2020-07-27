@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -50,12 +51,15 @@ public class TakePhotoActivity extends AppCompatActivity {
     private Button mTakePhotoOk, tip_close;
     private RecyclerView recyclerView;
     private Dialog take_photo_tip_dialog;
+    private Button rotate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
+
+        rotate = findViewById(R.id.rotate);
 
         take_photo_tip_dialog = new Dialog(this);
         take_photo_tip = findViewById(R.id.take_photo_tip);
@@ -119,6 +123,14 @@ public class TakePhotoActivity extends AppCompatActivity {
                 else {
                     pickImageFromGallery();
                 }
+            }
+        });
+
+        // when user choose to rotate the image
+        rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mimageView.setRotation(mimageView.getRotation() + 90);
             }
         });
 
