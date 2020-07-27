@@ -53,6 +53,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public Context mContext;
     public List<Post> mPost;
 
+
+
     private FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPost) {
@@ -340,8 +342,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         hashMap.put("isPost", true);
 
         reference.push().setValue(hashMap);
+
         }
     }
+
+
 
     private void postLikesDisplay(final TextView likes, final String postid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes")
