@@ -48,7 +48,7 @@
     <string name="settings">Settings</string>
     <string name="log_out">Log Out</string>
     <string name="edit_post_4_tips">Share a quote \nWrite s Review \nAny moment \nAny feeling</string>
-    <string name="take_photo_3_tips">A book cover \nAny paragraph \nAny reading moment</string>
+    <string name="take_photo_3_tips"><b>Photo Idea Tips</b>\nA book cover \nAny paragraph \nAny reading moment \n \n<b>Photo Taking Tips</b>\nClear and readable photos\n Flat book page \nA brighter place</string>
     <string name="rotate">rotate</string>
 
     <string name="posts">posts</string>
