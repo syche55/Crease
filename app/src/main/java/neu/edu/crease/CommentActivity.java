@@ -117,14 +117,14 @@ public class CommentActivity extends AppCompatActivity {
 
     private void addNotifications(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherID);
-
+        if (firebaseUser.getUid() != publisherID){
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userID", firebaseUser.getUid());
         hashMap.put("comment_text", "commented: " + addComment.getText().toString());
         hashMap.put("postID", postID);
         hashMap.put("isPost", true);
 
-        reference.push().setValue(hashMap);
+        reference.push().setValue(hashMap);}
     }
 
     private void getProfileImage(){
