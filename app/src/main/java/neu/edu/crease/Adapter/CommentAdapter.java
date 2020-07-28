@@ -40,6 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private FirebaseUser firebaseUser;
     private String postID;
 
+    // connect comment with post
     public CommentAdapter(Context mContext, List<Comment> mComment, String postID) {
         this.mContext = mContext;
         this.mComment = mComment;
@@ -60,10 +61,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         final Comment comment = mComment.get(position);
 
         holder.comment.setText(comment.getComment());
+
         // MATCH Comment model - Otherwise null string comment.getPublisherID()
-        Log.e( "onBindViewHolder: comment", comment + " " + comment.getComment() + " " +comment.getPublisherID());
+        Log.i( "onBindViewHolder: comment", comment + " " + comment.getComment() + " " +comment.getPublisherID());
         getUserInfo(holder.imageProfile, holder.username, comment.getPublisherID());
 
+        // add comment
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
 
+        // click comment item - comment publisher's profile
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +148,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 
+    // load comment with publisher info
     private void getUserInfo(final ImageView imageProfile, final TextView username, final String publisherID){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(publisherID);
 

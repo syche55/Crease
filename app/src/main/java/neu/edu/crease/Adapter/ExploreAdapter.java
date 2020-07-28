@@ -1,12 +1,10 @@
 package neu.edu.crease.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.media.Image;
+
 import android.util.Log;
-import android.net.Uri;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +39,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     private FirebaseUser firebaseUser;
 
+    // mPost - exploreList
     public ExploreAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
         this.mPost = mPost;
@@ -73,10 +72,10 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         }
 
         holder.bookName.setText(post.getPostTitle());
+
         // Update - set to # of being saved
         if(post.getPostBeingSaved().equals(0)){
             holder.save.setVisibility(View.GONE);
-            // holder.save.setText("");
         }else{
             holder.save.setVisibility(View.VISIBLE);
             holder.save.setText(String.valueOf(post.getPostBeingSaved()));
@@ -84,6 +83,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
         publisherInfo(holder.imageProfile, holder.username, post.getPostPublisher(), position);
 
+        // load save # and save func - same as home page - click save to save the post
         isSaved(post.getPostID(), holder.saveBtn, holder.saveIcon);
         holder.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +99,6 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                 }
             }
         });
-
 
         // if user click the post image in the explore page, then direct to the detail of the post
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
@@ -144,6 +143,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         }
     }
 
+    // load post - user's info
     private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId, final int position){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         reference.addValueEventListener(new ValueEventListener() {
@@ -153,7 +153,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                 assert user != null;
                 Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
-                Log.e("Publisher:", "postion: " + position + " user: " + user.getUserName());
+                Log.i("Publisher:", "postion: " + position + " user: " + user.getUserName());
             }
 
             @Override
@@ -163,6 +163,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         });
     }
 
+    // load user's saved post - profile
     private void isSaved(final String postid, final LinearLayout linearLayout, final ImageView saveIcon) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
@@ -189,6 +190,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     }
 
+    // when user click the save btn to save the post - update save in db
     public void updatePostBeingSaved(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
                 .child(post.getPostID()).child("postBeingSaved");
@@ -198,8 +200,8 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
                 Integer prevCount = snapshot.getValue(Integer.class);
                 reference.removeEventListener(this);
                 reference.setValue(prevCount+1);
-                Log.e("prevCount", prevCount+"");
-                Log.e("currentCount", ""+snapshot.getValue(Integer.class));
+                Log.i("prevCount", prevCount+"");
+                Log.i("currentCount", ""+snapshot.getValue(Integer.class));
             }
 
             @Override
@@ -210,6 +212,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
 
     }
 
+    // when user click the save btn to cancel save  - update save in db
     public void updatePostBeingSavedCancelled(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
                 .child(post.getPostID()).child("postBeingSaved");

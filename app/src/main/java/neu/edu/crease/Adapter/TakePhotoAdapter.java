@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import neu.edu.crease.R;
 
+/**
+ * same logic with splashAdapter
+ */
 public class TakePhotoAdapter extends RecyclerView.Adapter<TakePhotoAdapter.ViewHolder>{
     private int imgWidth;
     public Context context;

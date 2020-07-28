@@ -22,6 +22,10 @@ import java.util.List;
 import neu.edu.crease.Adapter.UserAdapter;
 import neu.edu.crease.Model.User;
 
+/**
+ * For likes / followers / following's detail
+ * match different title when enter - user info list
+ */
 public class FollowersActivity extends AppCompatActivity {
 
     private String id;
@@ -38,6 +42,7 @@ public class FollowersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
 
+        // title are matched with different route
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         title = intent.getStringExtra("title");
@@ -63,6 +68,7 @@ public class FollowersActivity extends AppCompatActivity {
 
         idList = new ArrayList<>();
 
+        // different title cases
         switch(title){
             case "likes":
                 getLikes();
@@ -77,6 +83,7 @@ public class FollowersActivity extends AppCompatActivity {
 
     }
 
+    // load who like this post - users
     private void getLikes() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Likes")
                 .child(id);
@@ -97,6 +104,7 @@ public class FollowersActivity extends AppCompatActivity {
         });
     }
 
+    // load who cur user is following - users
     private void getFollowing() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
                 .child(id).child("Following");
@@ -117,7 +125,7 @@ public class FollowersActivity extends AppCompatActivity {
         });
     }
 
-
+    // load who follows cur user - users
     private void getFollowers(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
                 .child(id).child("Followers");
@@ -138,6 +146,7 @@ public class FollowersActivity extends AppCompatActivity {
         });
     }
 
+    // read user's info from db
     private void showUsers(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener(){
