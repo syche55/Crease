@@ -194,14 +194,18 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        edit_post_tip_dialog.dismiss();
-        pd.dismiss();
+        if (edit_post_tip_dialog !=null){
+        edit_post_tip_dialog.dismiss();}
+        if (pd !=null){
+        pd.dismiss();}
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        edit_post_tip_dialog.dismiss();
-        pd.dismiss();
+        if (edit_post_tip_dialog !=null){
+            edit_post_tip_dialog.dismiss();}
+        if (pd !=null){
+            pd.dismiss();}
     }
 }
