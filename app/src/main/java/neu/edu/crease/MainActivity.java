@@ -34,13 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        // check if user is null
+        // check if user is null - to keep this device's user keep logged in
         if (firebaseUser != null) {
             Intent intent = new Intent(MainActivity.this, StartActivity.class);
             startActivity(intent);
             finish();
         }
 
+        // set background
         mRecyclerView = findViewById(R.id.recycleView);
         mRecyclerView.setAdapter(new SplashAdapter(MainActivity.this));
         mRecyclerView.setLayoutManager(new ScrollLayoutManager(MainActivity.this));

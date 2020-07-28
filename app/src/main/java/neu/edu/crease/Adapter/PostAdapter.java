@@ -11,23 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public Context mContext;
     public List<Post> mPost;
-
 
 
     private FirebaseUser firebaseUser;
@@ -84,7 +79,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
 
-        // for pre-load pics
+        // for pre-load pics but the pic will be the same size as the preload one - so remove this part
 //        Glide.with(mContext).load(post.getPostImage())
 //                .apply(new RequestOptions().placeholder(R.drawable.ic_tempura))
 //                .into(holder.postImage);
@@ -165,6 +160,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
+        // click save button
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,22 +270,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(itemView);
 
             imageProfile = itemView.findViewById(R.id.imageProfile);
+            username = itemView.findViewById(R.id.username);
+
             postImage = itemView.findViewById(R.id.postImage);
             bookName = itemView.findViewById(R.id.bookName);
+
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
             save = itemView.findViewById(R.id.save);
-            username = itemView.findViewById(R.id.username);
+            more = itemView.findViewById(R.id.more);
+
             likes = itemView.findViewById(R.id.likes);
-//            publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
             time = itemView.findViewById(R.id.time);
-            more = itemView.findViewById(R.id.more);
         }
     }
 
-    // comments
+    // load comments
     private void getComments(String postID, final TextView comments){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postID);
         reference.addValueEventListener(new ValueEventListener() {
