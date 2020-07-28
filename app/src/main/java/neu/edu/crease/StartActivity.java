@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.RemoteMessage;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -44,6 +45,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,6 +66,7 @@ public class StartActivity extends AppCompatActivity {
     BottomNavigationView navView;
     Fragment selectedFragment = null;
     Context mContext;
+    Intent notificationIntent;
     Long notificationCounter;
     boolean stop = false;
     ActivityManager activityManager;
@@ -154,8 +158,10 @@ public class StartActivity extends AppCompatActivity {
                         notificationCounter ++;
                         if (notificationCounter > countChildrenOnFirstLogin){
                             qb.bindTarget(v).setBadgeText("!").setBadgeBackground(getDrawable(R.drawable.ic_notification_green)).setBadgeTextColor(-1);
+                            Log.i( "onChildAdded: ", notificationCounter.toString());
                             if (!appOnForeground()){
-                            notificationPhone();}
+                                notificationPhone();
+                            }
                         }
                     }
 
@@ -257,24 +263,44 @@ public class StartActivity extends AppCompatActivity {
 
 
 
+    String CHANNEL_ID = "n";
+    NotificationManager manager;
+
     private void notificationPhone(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager manager = getSystemService(NotificationManager.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
+            manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            // activity manager for app running in background check
+            assert manager != null;
             manager.createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
-                .setContentTitle("Crease")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+
+        Context context = getApplicationContext();
+        Intent intent = new Intent(context, StartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        builder.setContentTitle("Crease")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setLargeIcon(BitmapFactory.decodeResource(StartActivity.this
                         .getResources(),R.drawable.ic_tempura))
                 .setAutoCancel(true)
-                .setContentText("You have a new notification, check it out!");
+                .setSound(defaultSoundUri)
+                .setContentText("You have a new notification, check it out!")
+                .setContentIntent(pIntent);
 
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        managerCompat.notify(999, builder.build());
+        manager.notify(999, builder.build());
 
+    }
+
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (remoteMessage.getData().size() > 0) {
+            notificationPhone() ;
+        }
     }
 
 
