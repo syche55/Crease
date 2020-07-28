@@ -1,6 +1,5 @@
 package neu.edu.crease.Adapter;
 
-import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -15,8 +14,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,17 +43,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.notification_item, parent, false);
 
-        return new NotificationAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final neu.edu.crease.Model.Notification notification = mNotification.get(position);
 
-
+        // display notification content and user information
         holder.comment_notification.setText(notification.getComment_text());
         getUserInfo(holder.image_profile_notification, holder.username_notification, notification.getUserID());
 
+        // if notification isPost tag is true, we display the post image in the notification
         if (notification.getIsPost()){
             holder.post_image_notification.setVisibility(View.VISIBLE);
             getPostImage(holder.post_image_notification, notification.getPostID());
@@ -64,13 +62,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.post_image_notification.setVisibility(View.GONE);
         }
 
+        // if notification is comment or like, click directs to post;
+        // if notification is follow info, click directs to user profile
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (notification.getIsPost()){
                     SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                     editor.putString("postID", notification.getPostID());
-                    Log.e("notification.getPostID", notification.getPostID());
                     editor.apply();
 
                     ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
@@ -87,14 +86,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return mNotification.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView image_profile_notification, post_image_notification;
         public TextView username_notification, comment_notification;
 
@@ -115,8 +112,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                Glide.with(mContext).load(user.getProfileImage()).into(imageView);
-                username.setText((user.getUserName()));
+                if (user != null) {
+                    Glide.with(mContext).load(user.getProfileImage()).into(imageView);
+                    username.setText((user.getUserName()));
+                }
             }
 
             @Override
@@ -133,7 +132,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Post post = snapshot.getValue(Post.class);
-                Glide.with(mContext).load(post.getPostImage()).into(imageView);
+                if (post != null) {
+                    Glide.with(mContext).load(post.getPostImage()).into(imageView);
+                }
             }
 
             @Override

@@ -1,5 +1,6 @@
 package neu.edu.crease.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,7 +58,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.user_item, parent, false);
-        return new UserAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -67,30 +68,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.btn_follow.setVisibility(View.VISIBLE);
         holder.username_display.setText(user.getUserName());
         holder.user_self_description.setText(user.getUserSelfDescription());
-//        Log.e("what is null", Uri.parse(user.getProfileImage()).toString());
+
         Glide.with(mContext).load(user.getProfileImage()).into(holder.user_profile_image);
         isFollowing(user.getUserID(), holder.btn_follow);
-
-//        Log.e("mUsers.getUserID", user.getUserID());
-//        Log.e("getUID", firebaseUser.getUid());
-        if (user.getUserID().equals(firebaseUser.getUid())){
-            holder.btn_follow.setVisibility(View.GONE);
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-//                editor.putString("profileid", user.getUserID());
-//                boolean successPut = editor.commit();
-//                Log.e("holder setOnClickListener ", String.valueOf(successPut));
-
                 // when click a user, go to his / her profile
                 // we do not redirect here, because now we're in the search activity, and redirect will let the fragment contain
                 // the search activity container; but all fragments should be under the start activity container;
                 // so we first redirect to the start activity, and then open the user profile there
-
                 if(isFragment){
                     SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                     editor.putString("profileid", user.getUserID());
@@ -102,35 +90,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     intent.putExtra("publisherID", user.getUserID());
                     mContext.startActivity(intent);
                 }
-//
-//                String value = user.getUserID();
-//                Intent i = new Intent(mContext, StartActivity.class);
-//                i.putExtra("key",value);
-//                mContext.startActivity(i);
-
-
-//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container_search,
-//                        new ProfileFragment()).addToBackStack(null).commit();
-
-//                // create a frame layout
-//                FrameLayout fragmentLayout = new FrameLayout(mContext);
-//
-//                // set the layout params to fill the activity
-//                fragmentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//                // set an id to the layout
-//                fragmentLayout.setId(R.id.fragmentLayout); // some positive integer
-//                // set the layout as Activity content
-//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-//                activity.setContentView(fragmentLayout);
-//                // Finally , add the fragment
-//                ProfileFragment newFragment = new ProfileFragment();
-//                activity.getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.fragmentLayout, newFragment).addToBackStack(null).commit();  // 1000 - is the id set for the container layout
-
 
             }
         });
+
+        // only show follow button if the profile is not the current sign on user's
+        if (user.getUserID().equals(firebaseUser.getUid())){
+            holder.btn_follow.setVisibility(View.GONE);
+        }
 
         holder.btn_follow.setOnClickListener(new View.OnClickListener(){
 
@@ -152,45 +119,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         });
     }
 
-    private void addNotifications(String userID){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userID);
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userID", firebaseUser.getUid());
-        hashMap.put("comment_text", "started following you");
-        hashMap.put("postID", "");
-        hashMap.put("isPost", false);
-
-        reference.push().setValue(hashMap);
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return mUsers.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-        public CircleImageView user_profile_image;
-        public TextView username_display;
-        public TextView user_self_description;
-        public Button btn_follow;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            user_profile_image = itemView.findViewById(R.id.user_profileImage);
-            username_display = itemView.findViewById(R.id.username_display);
-            user_self_description = itemView.findViewById(R.id.user_self_description);
-            btn_follow = itemView.findViewById(R.id.btn_follow);
-        }
-    }
-
+    // display following button
     private void isFollowing(final String userid, final Button btn_follow){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Follow").child(firebaseUser.getUid()).child("Following");
         reference.addValueEventListener(new ValueEventListener(){
-            public void onDataChange(DataSnapshot dataSnapshot){
+            @SuppressLint("SetTextI18n")
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
                 if (dataSnapshot.child(userid).exists()){
                     btn_follow.setText("following");
                 } else {
@@ -203,5 +138,38 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
             }
         });
+    }
+
+    // add following notification to database
+    private void addNotifications(String userID){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userID);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userID", firebaseUser.getUid());
+        hashMap.put("comment_text", "started following you");
+        hashMap.put("postID", "");
+        hashMap.put("isPost", false);
+
+        reference.push().setValue(hashMap);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mUsers.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        public CircleImageView user_profile_image;
+        public TextView username_display;
+        public TextView user_self_description;
+        public Button btn_follow;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            user_profile_image = itemView.findViewById(R.id.user_profileImage);
+            username_display = itemView.findViewById(R.id.username_display);
+            user_self_description = itemView.findViewById(R.id.user_self_description);
+            btn_follow = itemView.findViewById(R.id.btn_follow);
+        }
     }
 }
