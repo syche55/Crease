@@ -52,9 +52,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public Context mContext;
     public List<Post> mPost;
-
-
-
     private FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPost) {
@@ -71,13 +68,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
-        return new PostAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        Log.e("BindView", "Binding " + position + "th post with title " + mPost.get(position).getPostTitle());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         // get current post
         final Post post = mPost.get(position);
@@ -239,15 +235,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            // if click edit, direct to edit method
-                            case R.id.edit:
-                                editPost(post.getPostID());
-                                return true;
-                             // not click anything
-                            default:
-                                return false;
+                        // if click edit, direct to edit method
+                        if (item.getItemId() == R.id.edit) {
+                            editPost(post.getPostID());
+                            return true;
+                            // not click anything
                         }
+                        return false;
                     }
                 });
                 popupMenu.inflate(R.menu.post_menu);
@@ -265,7 +259,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return mPost.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imageProfile, postImage, like, comment, save, more;
         public TextView username, bookName, likes, description, comments, time;
@@ -312,6 +306,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // display if the post is liked by the current logon user
     private void isLiked(String postid, final ImageView imageView){
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -321,12 +316,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(firebaseUser.getUid()).exists()){
-                    imageView.setImageResource(R.drawable.ic_liked_green);
-                    imageView.setTag("liked");
-                } else{
-                    imageView.setImageResource(R.drawable.ic_like);
-                    imageView.setTag(("like"));
+                if (firebaseUser != null) {
+                    if (snapshot.child(firebaseUser.getUid()).exists()){
+                        imageView.setImageResource(R.drawable.ic_liked_green);
+                        imageView.setTag("liked");
+                    } else{
+                        imageView.setImageResource(R.drawable.ic_like);
+                        imageView.setTag(("like"));
+                    }
                 }
             }
 
@@ -337,6 +334,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // add like notification to database
     private void addNotifications(String userID, String postID){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userID);
         if (!firebaseUser.getUid().equals(userID)){
@@ -351,12 +349,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
-
-
+    // display how many likes the post received
     private void postLikesDisplay(final TextView likes, final String postid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes")
                 .child(postid);
         reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getChildrenCount() == 0){
@@ -373,6 +371,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
     }
+
+    // display publisher information
     private void publisherInfo(final ImageView imageProfile, final  TextView username, final String userId, final int position){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
@@ -380,11 +380,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                assert user != null;
-                Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
-                username.setText(user.getUserName());
-//                publisher.setText(user.getUserName());
-                Log.e("Publisher:", "postion: " + position + " user: " + user.getUserName());
+                if (user != null) {
+                    Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
+                    username.setText(user.getUserName());
+                }
             }
 
             @Override
@@ -394,6 +393,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // display if the post is saved by the current logon user
     private void isSaved(final String postid, final ImageView imageView) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Saves")
@@ -458,6 +458,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
+    // post being saved, postBeingSaved +1
     public void updatePostBeingSaved(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
                 .child(post.getPostID()).child("postBeingSaved");
@@ -467,8 +468,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Integer prevCount = snapshot.getValue(Integer.class);
                 reference.removeEventListener(this);
                 reference.setValue(prevCount+1);
-                Log.e("prevCount", prevCount+"");
-                Log.e("currentCount", ""+snapshot.getValue(Integer.class));
             }
 
             @Override
@@ -479,6 +478,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     }
 
+    // post being unsaved, postBeingSaved -1
     public void updatePostBeingSavedCancelled(Post post){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts")
                 .child(post.getPostID()).child("postBeingSaved");

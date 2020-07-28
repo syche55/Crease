@@ -77,15 +77,15 @@ public class EditProfileActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 User user = snapshot.getValue(User.class);
 
                 // display the username and user profile image
-                assert user != null;
-                Glide.with(EditProfileActivity.this).load(Uri.parse(user.getProfileImage())).into(profile_image_edit);
-                username_edit.setText(user.getUserName());
-                if (!user.getUserSelfDescription().equals("")) {
-                    self_intro_edit.setText(user.getUserSelfDescription());
+                if (user != null) {
+                    Glide.with(EditProfileActivity.this).load(Uri.parse(user.getProfileImage())).into(profile_image_edit);
+                    username_edit.setText(user.getUserName());
+                    if (!user.getUserSelfDescription().equals("")) {
+                        self_intro_edit.setText(user.getUserSelfDescription());
+                    }
                 }
             }
 
@@ -95,6 +95,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // cancel edit
         close_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +103,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // edit profile image with random picture
         random_profile_image_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // edit profile image with upload picture
         upload_profile_image_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // save profile edit
         save_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +153,7 @@ public class EditProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 
+    // once finish edit, update user profile in database
     public void updateProfile(final Uri profile_uri_edit, final String self_intro_edited, final String username_edited){
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
                 .child(currentUser.getUid());
@@ -221,7 +226,9 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
-            profile_uri_edit = data.getData();
+            if (data != null) {
+                profile_uri_edit = data.getData();
+            }
             profile_image_edit.setImageURI(profile_uri_edit);
         }
 

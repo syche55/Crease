@@ -27,12 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText password_register, email_register;
-    private Button login;
-    private TextView signup_text;
-    private ImageView back;
-
     private FirebaseAuth auth;
-
     private ProgressDialog pd;
 
     @Override
@@ -43,9 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         // init fields
         email_register = findViewById(R.id.email_register);
         password_register = findViewById(R.id.password_register);
-        login = findViewById(R.id.login_button);
-        signup_text = findViewById(R.id.signup_text);
-
+        Button login = findViewById(R.id.login_button);
+        TextView signup_text = findViewById(R.id.signup_text);
         auth = FirebaseAuth.getInstance();
 
         // if user click the register button, just direct to register page
@@ -57,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // back to main page
-        back = findViewById(R.id.login_back_to_main);
+        ImageView back = findViewById(R.id.login_back_to_main);
         back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
