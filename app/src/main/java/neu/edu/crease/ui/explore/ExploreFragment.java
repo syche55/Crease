@@ -1,15 +1,10 @@
 package neu.edu.crease.ui.explore;
 
-import android.content.Intent;
-import android.gesture.GestureOverlayView;
-import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,7 +12,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +26,6 @@ import java.util.List;
 
 import neu.edu.crease.Adapter.ExploreAdapter;
 import neu.edu.crease.Model.Post;
-import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
 
 public class ExploreFragment extends Fragment {
@@ -64,6 +57,7 @@ public class ExploreFragment extends Fragment {
         exploreAdapter.setHasStableIds(true);
         recyclerView.setAdapter(exploreAdapter);
 
+        //refresh layout
         final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -73,7 +67,6 @@ public class ExploreFragment extends Fragment {
                 exploreAdapter.notifyDataSetChanged();
                 //IMPORTANT - otherwise infinite refresh
                 refreshLayout.setRefreshing(false);
-
             }
         });
 
@@ -82,7 +75,7 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
-
+    // read posts from db
     private void readPost(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
@@ -92,7 +85,7 @@ public class ExploreFragment extends Fragment {
                 signOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for(DataSnapshot datasnapshot: snapshot.getChildren()){
                     Post post = datasnapshot.getValue(Post.class);
-                    // do not load current sign user
+                    // do not load current sign user's post in explore
                     if(!(post.getPostPublisher().equals(signOnUserID))){
                         exploreLists.add(post);
                     }
@@ -109,10 +102,4 @@ public class ExploreFragment extends Fragment {
         });
     }
 
-    public void addItemAtPosition(int position, String item) {
-        Collections.shuffle(exploreLists);
-        exploreAdapter.notifyItemChanged(position);
-        layoutManager.scrollToPosition(position);
-
-    }
 }

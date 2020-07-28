@@ -98,11 +98,11 @@ public class CommentActivity extends AppCompatActivity {
 
     }
 
+    // add comment - match with this post
     private void addComment(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postID);
 
         String commentID = reference.push().getKey();
-
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("comment", addComment.getText().toString());
@@ -126,6 +126,7 @@ public class CommentActivity extends AppCompatActivity {
         reference.push().setValue(hashMap);}
     }
 
+    //get current user's profile image
     private void getProfileImage(){
         //DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -145,6 +146,7 @@ public class CommentActivity extends AppCompatActivity {
         });
     }
 
+    // load this post's comments from db
     private void readComment(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postID);
         reference.addValueEventListener(new ValueEventListener() {

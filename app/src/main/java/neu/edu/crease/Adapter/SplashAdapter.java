@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Random;
-
 import neu.edu.crease.R;
 
 
@@ -55,6 +53,7 @@ public class SplashAdapter extends RecyclerView.Adapter<SplashAdapter.ViewHolder
 
     }
 
+    // get user's Screen size
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
