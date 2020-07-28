@@ -131,19 +131,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-//        // if user clicks the publisher of a post, then direct to the publisher's profile
-//        holder.publisher.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-//                editor.putString("profileid", post.getPostPublisher());
-//                editor.apply();
-//
-//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.container,
-//                        new ProfileFragment()).addToBackStack(null).commit();
-//            }
-//        });
-
         // if user clicks the image of a post, then direct to the detail of that post
         holder.postImage.setOnClickListener(new View.OnClickListener() {
             @Override
