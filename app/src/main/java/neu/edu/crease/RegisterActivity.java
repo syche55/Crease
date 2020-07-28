@@ -46,13 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // init fields
-
         username_register = findViewById(R.id.username_register);
         email_register = findViewById(R.id.email_register);
         password_register = findViewById(R.id.password_register);
         register = findViewById(R.id.login_button);
         login_text = findViewById(R.id.login_text);
-
         auth = FirebaseAuth.getInstance();
 
         // when user click the login text, just direct them to login page
@@ -130,25 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
                             User newUser = new User(userid, username);
                             Log.e("enter: ", "into firebase database user create");
                             reference.setValue(newUser);
-//                            reference.push().setValue(newUser);
                             pd.dismiss();
                             Intent intent = new Intent(RegisterActivity.this, ProfileInitActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-
-//                            reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    Log.e("create user: ", "reference set value");
-//                                    if (task.isSuccessful()) {
-//                                        Log.e("create user: ", "enter into new intent");
-//                                        pd.dismiss();
-//                                        Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                        startActivity(intent);
-//                                    }
-//                                }
-//                            });
                         }
                         else {
                             // register failed

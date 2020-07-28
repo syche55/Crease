@@ -23,14 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private Button register;
     public FirebaseUser firebaseUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -45,19 +43,15 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycleView);
         mRecyclerView.setAdapter(new SplashAdapter(MainActivity.this));
         mRecyclerView.setLayoutManager(new ScrollLayoutManager(MainActivity.this));
-
         mRecyclerView.smoothScrollToPosition(Integer.MAX_VALUE / 2);
-
         login = findViewById(R.id.slideLogin);
         register = findViewById(R.id.slideRegister);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login(v);
             }
         });
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,7 +23,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,12 +32,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
-import neu.edu.crease.Adapter.SplashAdapter;
 import neu.edu.crease.Adapter.TakePhotoAdapter;
 import neu.edu.crease.ScrollActivity.ScrollLayoutManager;
 
-import static neu.edu.crease.StartActivity.stop_checked;
+import static neu.edu.crease.StartActivity.STOP_CHECKED;
 
 public class TakePhotoActivity extends AppCompatActivity {
 
@@ -48,50 +45,42 @@ public class TakePhotoActivity extends AppCompatActivity {
     private static final int GALLERY_PERMISSION_CODE = 1003;
     private static final int IMAGE_CAPTURE_CODE = 1;
     private static final int IMAGE_PICK_CODE = 1002;
-    private Button mCaptureButton;
-    private Button mGetFromGalleryButton;
-    private ImageView mimageView, take_photo_tip;
+    private ImageView mimageView;
     private Uri image_uri;
-    private Button mTakePhotoOk, tip_close;
-    private RecyclerView recyclerView;
+    private Button mTakePhotoOk;
     private Dialog take_photo_tip_dialog;
     private Button rotate;
-    private Button tip_no_more_reminder;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
 
+        // rotate image button
         rotate = findViewById(R.id.rotate);
 
-
-
         take_photo_tip_dialog = new Dialog(this);
-        take_photo_tip = findViewById(R.id.take_photo_tip);
+        ImageView take_photo_tip = findViewById(R.id.take_photo_tip);
 
-        recyclerView = findViewById(R.id.recycleView);
+        RecyclerView recyclerView = findViewById(R.id.recycleView);
         recyclerView.setAdapter(new TakePhotoAdapter(TakePhotoActivity.this));
         recyclerView.setLayoutManager(new ScrollLayoutManager(TakePhotoActivity.this));
 
         recyclerView.smoothScrollToPosition(Integer.MAX_VALUE / 2);
 
         mimageView = findViewById(R.id.image_view);
-        mCaptureButton = findViewById(R.id.capture_image_btn);
-        mGetFromGalleryButton = findViewById(R.id.get_from_gallery_btn);
+        Button mCaptureButton = findViewById(R.id.capture_image_btn);
+        Button mGetFromGalleryButton = findViewById(R.id.get_from_gallery_btn);
         mTakePhotoOk = findViewById(R.id.take_photo_ok);
         mTakePhotoOk.setVisibility(View.GONE);
         rotate.setVisibility(View.GONE);
 
-        if (!stop_checked){
+        // if no show next time is not checked / first time open take photo
+        if (!STOP_CHECKED){
             showDialog();
         }
 
-
-        // when user choose to take photo and click that button
+        // when user chooses to take photo and click that button
         mCaptureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +105,7 @@ public class TakePhotoActivity extends AppCompatActivity {
             }
         });
 
-        // when user choose to get from gallery and click that button
+        // when user chooses to get from gallery and click that button
         mGetFromGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +130,7 @@ public class TakePhotoActivity extends AppCompatActivity {
             }
         });
 
-
+        // continue with the chosen photo
         mTakePhotoOk.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -153,17 +142,14 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         });
 
+        // user can click on the tip button to see the tip dialog again
         take_photo_tip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
         });
-
-
     }
-
-
 
     // when user choose to rotate the image
     public void clickRotate(View view) {
@@ -194,8 +180,6 @@ public class TakePhotoActivity extends AppCompatActivity {
         {
             //handle exception
         }
-
-
     }
 
     // when user get the permission, now come to pick from gallery
@@ -292,32 +276,29 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     }
 
+    // parse image to PostActivity
     private void connectToPostActivity(Uri imageUri){
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setClass(TakePhotoActivity.this,  PostActivity.class);
             intent.putExtra("imagePath", imageUri.toString());
-            Log.e("connect", " "+imageUri);
             startActivity(intent);
     }
 
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
-        return width;
+        return wm.getDefaultDisplay().getWidth();
     }
 
-    // show dialog
+    // show tip dialog
     public void showDialog(){
         take_photo_tip_dialog.setContentView(R.layout.dialog_take_photo_tip);
         take_photo_tip_dialog.setTitle("Some tips");
 
-        tip_no_more_reminder =take_photo_tip_dialog.findViewById(R.id.tip_no_more_reminder);
-        //tip_no_more_reminder.setEnabled(true);
-
-        tip_close = (Button) take_photo_tip_dialog.findViewById(R.id.tip_close);
+        Button tip_no_more_reminder = take_photo_tip_dialog.findViewById(R.id.tip_no_more_reminder);
+        Button tip_close = (Button) take_photo_tip_dialog.findViewById(R.id.tip_close);
         tip_close.setEnabled(true);
 
-        if (stop_checked){
+        if (STOP_CHECKED){
             tip_no_more_reminder.setVisibility(View.GONE);
         }
         tip_close.setOnClickListener(new View.OnClickListener() {
@@ -326,37 +307,16 @@ public class TakePhotoActivity extends AppCompatActivity {
                 take_photo_tip_dialog.cancel();
             }
         });
+        // check no more reminder
         tip_no_more_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stop_checked = true;
-                Log.e("here", stop_checked+"");
+                STOP_CHECKED = true;
                 take_photo_tip_dialog.dismiss();
             }
         });
 
-        take_photo_tip_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(take_photo_tip_dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         take_photo_tip_dialog.show();
-
-
-
     }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        savedInstanceState.putBoolean("STOP_CHECKED", stop_checked);
-//
-//        // Always call the superclass so it can save the view hierarchy state
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
-//
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//    // Always call the superclass so it can restore the view hierarchy
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//// Restore state members from saved instance
-//        stop_checked = savedInstanceState.getBoolean("STOP_CHECKED");
-//    }
-
-
 }

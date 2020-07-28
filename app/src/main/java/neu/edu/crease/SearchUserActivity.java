@@ -29,8 +29,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> mUsers;
-    private String singOnUserID;
-
+    private String signOnUserID;
 
     private EditText search_bar;
     @Override
@@ -41,9 +40,7 @@ public class SearchUserActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         search_bar = findViewById(R.id.search_bar);
-
         mUsers = new ArrayList<>();
         userAdapter = new UserAdapter(this, mUsers, false);
         recyclerView.setAdapter(userAdapter);
@@ -68,6 +65,7 @@ public class SearchUserActivity extends AppCompatActivity {
             }
         });
     }
+
     // search user in database
     private void searchUsers(String s){
         Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("userName")
@@ -102,11 +100,11 @@ public class SearchUserActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (search_bar.getText().toString().equals("")){
                     mUsers.clear();
-                    singOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    signOnUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         User user = dataSnapshot.getValue(User.class);
                         // do not load current signon user
-                        if (!user.getUserID().equals(singOnUserID)) {
+                        if (!user.getUserID().equals(signOnUserID)) {
                             mUsers.add(user);
                         }
                     }

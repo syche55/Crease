@@ -31,14 +31,6 @@ public class User {
         this.userName = userName;
     }
 
-//    public String getUserProfileImage() {
-//        return userProfileImage;
-//    }
-//
-//    public void setUserProfileImage(String userProfileImage) {
-//        this.userProfileImage = userProfileImage;
-//    }
-
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }

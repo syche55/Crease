@@ -8,9 +8,9 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="50dp"
         android:layout_marginTop="0dp"
+        android:layout_weight="1"
         android:columnCount="3"
         android:rowCount="1">
 
@@ -50,7 +50,7 @@
     <ImageView
         android:id="@+id/edit_post_photo_add"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
         android:contentDescription="@string/capture_image"
         android:src="@drawable/ic_tempura" />
 
@@ -85,7 +85,7 @@
         android:background="@drawable/edit_post_input_background"
         android:gravity="top|start"
         android:hint="@string/what_s_on_your_thought"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:lines="8"
         android:maxLines="10"
         android:minHeight="120dp"
