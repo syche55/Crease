@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,12 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import neu.edu.crease.Adapter.PostAdapter;
 import neu.edu.crease.Model.Post;
-import neu.edu.crease.Model.User;
+
 import neu.edu.crease.R;
 import neu.edu.crease.SearchUserActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -65,12 +63,12 @@ public class HomeFragment extends Fragment {
         postAdapter.setHasStableIds(true);
         recyclerView.setAdapter(postAdapter);
 
+        // refresh layout
         final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // func
-                // Collections.shuffle(postLists);
+                // func - by added time
                 checkFollowing();
                 postAdapter.notifyDataSetChanged();
                 //IMPORTANT - otherwise infinite refresh
@@ -78,6 +76,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // load before the post loaded
         progressBar = view.findViewById(R.id.progress_circular);
 
         search_user_btn = view.findViewById(R.id.search_user_btn);
@@ -95,6 +94,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    // check current user's following, load followings and self posts
     private void checkFollowing(){
         followingList = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow")
@@ -118,6 +118,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // read posts from db
     private  void readPost(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {

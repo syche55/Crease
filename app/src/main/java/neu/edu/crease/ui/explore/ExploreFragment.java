@@ -64,7 +64,9 @@ public class ExploreFragment extends Fragment {
             public void onRefresh() {
                 // func
                 Collections.shuffle(exploreLists);
-                exploreAdapter.notifyDataSetChanged();
+                // exploreAdapter.notifyDataSetChanged();
+                // if adapter, will call two listener, when refresh and save, will shuffle twice
+                readPost();
                 //IMPORTANT - otherwise infinite refresh
                 refreshLayout.setRefreshing(false);
             }

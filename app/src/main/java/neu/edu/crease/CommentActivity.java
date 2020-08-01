@@ -114,6 +114,7 @@ public class CommentActivity extends AppCompatActivity {
         addComment.setText("");
     }
 
+    // if others post comments, send notification to post publisher
     private void addNotifications(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherID);
         if (!firebaseUser.getUid().equals(publisherID) ){
