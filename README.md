@@ -7,6 +7,10 @@
 Design by Tempura Team.
 Member: Siyu Chen, Zongwei Fan, Jing Shen
 
+## Diagram
+
+
+
 ## Features
 
 <a href="https://ibb.co/GkTgZzZ"><img src="https://i.ibb.co/BjN8h0h/open.png" alt="open" border="0" height="500"></a><a href="https://ibb.co/J3V09zN"><img src="https://i.ibb.co/CPgNfnq/add.png" alt="add" border="0" height="500"></a>
@@ -22,3 +26,5 @@ Member: Siyu Chen, Zongwei Fan, Jing Shen
 
  ## Other Info
 **Copyright 2020 © Tempura**
+
+Contact Email: tempuracrease@gmail.com
