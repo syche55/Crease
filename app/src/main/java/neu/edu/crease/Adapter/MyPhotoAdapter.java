@@ -44,7 +44,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Post post = mPosts.get(position);
 
-        Glide.with(context).load(post.getPostImage()).into(holder.post_image);
+        Glide.with(context.getApplicationContext()).load(post.getPostImage()).into(holder.post_image);
 
         // if user click the post image in the profile, then direct to the detail of the post
         holder.post_image.setOnClickListener(new View.OnClickListener() {

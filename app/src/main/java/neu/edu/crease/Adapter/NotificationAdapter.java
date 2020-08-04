@@ -113,7 +113,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    Glide.with(mContext).load(user.getProfileImage()).into(imageView);
+                    Glide.with(mContext.getApplicationContext()).load(user.getProfileImage()).into(imageView);
                     username.setText((user.getUserName()));
                 }
             }
@@ -133,7 +133,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Post post = snapshot.getValue(Post.class);
                 if (post != null) {
-                    Glide.with(mContext).load(post.getPostImage()).into(imageView);
+                    Glide.with(mContext.getApplicationContext()).load(post.getPostImage()).into(imageView);
                 }
             }
 

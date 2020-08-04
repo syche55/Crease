@@ -219,9 +219,9 @@ public class StartActivity extends AppCompatActivity {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         builder.setContentTitle(appName)
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.ic_notifications_green)
                 .setLargeIcon(BitmapFactory.decodeResource(StartActivity.this
-                        .getResources(),R.drawable.ic_tempura))
+                        .getResources(),R.mipmap.ic_launcher))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentText("You have a new notification, check it out!")
@@ -229,12 +229,6 @@ public class StartActivity extends AppCompatActivity {
 
         manager.notify(999, builder.build());
 
-    }
-
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getData().size() > 0) {
-            notificationPhone() ;
-        }
     }
 
     // app running in background status check

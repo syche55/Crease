@@ -1,6 +1,7 @@
 package neu.edu.crease.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import neu.edu.crease.FollowersActivity;
 import neu.edu.crease.Model.Post;
 import neu.edu.crease.Model.User;
 import neu.edu.crease.R;
+import neu.edu.crease.StartActivity;
 import neu.edu.crease.ui.postDetail.PostDetailFragment;
 import neu.edu.crease.ui.profile.ProfileFragment;
 
@@ -54,6 +56,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public PostAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
         this.mPost = mPost;
+
+
     }
 
     @Override
@@ -75,7 +79,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         // get current post
         final Post post = mPost.get(position);
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+        if (mContext !=null){
+            Glide.with(mContext.getApplicationContext()).load(post.getPostImage()).into(holder.postImage);
+        }
 
         // for pre-load pics but the pic will be the same size as the preload one - so remove this part
 //        Glide.with(mContext).load(post.getPostImage())
@@ -296,7 +302,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     // display if the post is liked by the current logon user
     private void isLiked(String postid, final ImageView imageView){
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Likes")
                 .child(postid);
 
@@ -311,14 +317,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         imageView.setImageResource(R.drawable.ic_like);
                         imageView.setTag(("like"));
                     }
+//                    reference.removeEventListener(this);
+
                 }
+
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
+
     }
 
     // add like notification to database
@@ -368,8 +380,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
-                    username.setText(user.getUserName());
+//                    final Context  context = mContext.getApplicationContext();
+
+//                    if (isValidContextForGlide(context)) {
+                        // Load image via Glide lib using context
+
+                        Glide.with(mContext.getApplicationContext()).load(user.getProfileImage()).into(imageProfile);
+                        username.setText(user.getUserName());
+//                    }
+
                 }
             }
 
@@ -539,5 +558,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
     }
+
 }
 

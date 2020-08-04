@@ -43,7 +43,7 @@ public class MySaveAdapter extends RecyclerView.Adapter<MySaveAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Post post = mPosts.get(position);
 
-        Glide.with(context).load(post.getPostImage()).into(holder.post_image);
+        Glide.with(context.getApplicationContext()).load(post.getPostImage()).into(holder.post_image);
         holder.bookName.setText(post.getPostTitle());
 
         // if user click the post image in the profile, then direct to the detail of the post

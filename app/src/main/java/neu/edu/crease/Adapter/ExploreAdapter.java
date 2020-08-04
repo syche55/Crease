@@ -62,7 +62,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final Post post = mPost.get(position);
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+        Glide.with(mContext.getApplicationContext()).load(post.getPostImage()).into(holder.postImage);
 
         if(post.getPostContent().equals("")){
             holder.description.setVisibility(View.GONE);
@@ -101,7 +101,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         });
 
         // if user click the post image in the explore page, then direct to the detail of the post
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+        Glide.with(mContext.getApplicationContext()).load(post.getPostImage()).into(holder.postImage);
 
         holder.postImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +151,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 assert user != null;
-                Glide.with(mContext).load(user.getProfileImage()).into(imageProfile);
+                Glide.with(mContext.getApplicationContext()).load(user.getProfileImage()).into(imageProfile);
                 username.setText(user.getUserName());
                 Log.i("Publisher:", "postion: " + position + " user: " + user.getUserName());
             }
