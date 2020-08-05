@@ -95,6 +95,10 @@ public class StartActivity extends AppCompatActivity {
             editor.putString("profileid", publisher);
             editor.apply();
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new ProfileFragment()).commit();
+            String noti = intent.getString("menuFragment");
+            if(noti != null && noti.equals("notificationMenuItem")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new NotificationFragment()).commit();
+            }
         }else{
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
         }
@@ -213,6 +217,7 @@ public class StartActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
         Intent intent = new Intent(context, StartActivity.class);
+        intent.putExtra("menuFragment", "notificationMenuItem");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         // click notification, direct to app
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
