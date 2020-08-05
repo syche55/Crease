@@ -14,15 +14,17 @@ public class Post {
     private String postContent = "";
     private String postImage;
     private String postTime; //post publish time
+    private Integer postBeingSaved;
     private ArrayList<Comment> commentsUnderPost;
 
-    public Post(String postID, String postPublisher, String postImage, String postTitle, String postContent, String postTime){
+    public Post(String postID, String postPublisher, String postImage, String postTitle, String postContent, String postTime, Integer postBeingSaved){
         this.postID = postID;
         this.postPublisher = postPublisher;
         this.postImage = postImage;
         this.postContent = postContent;
         this.postTitle = postTitle;
         this.postTime = postTime;
+        this.postBeingSaved = postBeingSaved;
     }
     public Post(){
 
@@ -85,6 +87,15 @@ public class Post {
         result.put("postContent", postContent);
         result.put("postImage", postImage);
         result.put("postTime", postTime);
+        result.put("postBeingSaved", postBeingSaved);
         return result;
+    }
+
+    public Integer getPostBeingSaved() {
+        return postBeingSaved;
+    }
+
+    public void setPostBeingSaved(Integer postBeingSaved) {
+        this.postBeingSaved = postBeingSaved;
     }
 }

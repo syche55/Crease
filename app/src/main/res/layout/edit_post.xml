@@ -8,9 +8,9 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="50dp"
         android:layout_marginTop="0dp"
+        android:layout_weight="1"
         android:columnCount="3"
         android:rowCount="1">
 
@@ -47,12 +47,10 @@
 
     </GridLayout>
 
-
-
     <ImageView
         android:id="@+id/edit_post_photo_add"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="260dp"
         android:contentDescription="@string/capture_image"
         android:src="@drawable/ic_tempura" />
 
@@ -61,16 +59,17 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:autofillHints=""
+        android:autofillHints="Untitled"
         android:background="@null"
         android:ems="10"
         android:gravity="center|start"
         android:hint="@string/book_title"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
+        android:maxLines="1"
         android:textSize="20sp"
         android:textStyle="italic" />
 
@@ -78,16 +77,15 @@
         android:id="@+id/edit_post_divider"
         style="@style/Divider" />
 
-
     <EditText
         android:id="@+id/edit_post_description"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="300dp"
         android:autofillHints=""
         android:background="@drawable/edit_post_input_background"
         android:gravity="top|start"
         android:hint="@string/what_s_on_your_thought"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:lines="8"
         android:maxLines="10"
         android:minHeight="120dp"
@@ -100,7 +98,6 @@
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
         android:textSize="18sp"
-        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/edit_post_submit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -115,6 +112,5 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/edit_post_publish"
         android:textColor="@color/colorPrimaryDark" />
-
 
 </LinearLayout>

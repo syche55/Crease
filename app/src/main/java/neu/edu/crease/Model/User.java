@@ -1,31 +1,22 @@
 package neu.edu.crease.Model;
 
-import android.net.Uri;
+import com.google.firebase.database.Exclude;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String userID;
     private String userName = "";
-    private Uri userProfileImage;
-    private ArrayList<Post> postsUserLiked;
+    private String profileImage;
     private int userBeingLiked;
     private String userSelfDescription = "";
 
     public User()
     {
-        this.postsUserLiked = new ArrayList<>();
-    }
-
-    public User(String userName, Uri userProfileImage){
-        this.userName = userName;
-        this.userProfileImage = userProfileImage;
-        this.postsUserLiked = new ArrayList<>();
-        this.userBeingLiked=0;
     }
 
     public User(String userID, String userName) {
-        this.postsUserLiked = new ArrayList<>();
         this.userID = userID;
         this.userName = userName;
     }
@@ -40,12 +31,12 @@ public class User {
         this.userName = userName;
     }
 
-    public Uri getUserProfileImage() {
-        return userProfileImage;
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
-    public void setUserProfileImage(Uri userProfileImage) {
-        this.userProfileImage = userProfileImage;
+    public String getProfileImage() {
+        return profileImage;
     }
 
     public int getUserBeingLiked() {
@@ -70,5 +61,13 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("userProfileImage", profileImage);
+        result.put("userSelfDescription", userSelfDescription);
+        return result;
     }
 }

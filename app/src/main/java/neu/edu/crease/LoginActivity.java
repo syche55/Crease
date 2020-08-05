@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText password_register, email_register;
-    private Button login;
-    private TextView signup_text;
-
     private FirebaseAuth auth;
-
     private ProgressDialog pd;
 
     @Override
@@ -41,9 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         // init fields
         email_register = findViewById(R.id.email_register);
         password_register = findViewById(R.id.password_register);
-        login = findViewById(R.id.login_button);
-        signup_text = findViewById(R.id.signup_text);
-
+        Button login = findViewById(R.id.login_button);
+        TextView signup_text = findViewById(R.id.signup_text);
         auth = FirebaseAuth.getInstance();
 
         // if user click the register button, just direct to register page
@@ -51,6 +47,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        // back to main page
+        ImageView back = findViewById(R.id.login_back_to_main);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -24,7 +24,7 @@ public class BottomActivity extends AppCompatActivity {
                 R.id.navigation_home,
                 R.id.navigation_explore,
                 R.id.navigation_add,
-                R.id.navigation_favorite,
+                R.id.navigation_notification,
                 R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
