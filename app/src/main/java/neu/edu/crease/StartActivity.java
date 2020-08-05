@@ -226,7 +226,7 @@ public class StartActivity extends AppCompatActivity {
         builder.setContentTitle(appName)
                 .setSmallIcon(R.drawable.ic_notifications_green)
                 .setLargeIcon(BitmapFactory.decodeResource(StartActivity.this
-                        .getResources(),R.mipmap.ic_launcher))
+                        .getResources(),R.drawable.ic_icon))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentText("You have a new notification, check it out!")
