@@ -4,8 +4,12 @@
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80" />](https://play.google.com/store/apps/details?id=neu.edu.crease)
 
+**A quick demo on Youtube. <a href="https://www.youtube.com/watch?v=YSlzd1GJ5As&feature=youtu.be"> Click here<a>**
+
 Design by Tempura Team.
+
 Member: Siyu Chen, Zongwei Fan, Jing Shen
+
 
 ## Prototype
 <a href="https://ibb.co/DK9SCPq"><img src="https://i.ibb.co/XJ7vsfw/prototype.png" alt="prototype" border="0"></a>
